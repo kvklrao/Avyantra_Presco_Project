@@ -9,7 +9,7 @@ Predicting neonatal sepsis is a challenge which leads to administration of panic
 
 In order to train the machine learning algorithm, we've developed a data collection portal (coded in AngularJS). This portal is supported by a nodeJS API backend and finally the data is saved in MySQL database.
 
-Training and predicting the probability of a baby having neonatal sepsis was done using in Python.
+Training and predicting the probability of a baby having neonatal sepsis was done using in Python. Finally, we've also built a few interactive and intuitice reports and dashboards. We have prepared a separate front-end for the dashboards and feel these reports and charts will help the medical professionals look at case trends and draw more value out of the data.
 
 # What you will find in this Repo
 
@@ -20,4 +20,5 @@ In this repository you will the code and also the data models for our solution.
 - 00_Database_Schema - Contains the schema definition
 - 01_Web_Portal - Front End code (AngularJS)
 - 02_Backend - Backend API code (NodeJS)
+- 03_Dashboard_Backend - API for the Dashboards
 
