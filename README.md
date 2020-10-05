@@ -19,4 +19,5 @@ In this repository you will the code and also the data models for our solution.
 
 - 00_Database_Schema - Contains the schema definition
 - 01_Web_Portal - Front End code (AngularJS)
+- 02_Backend - Backend API code (NodeJS)
 
