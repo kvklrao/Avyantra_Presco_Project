@@ -1,0 +1,19 @@
+.text-area{
+    resize: none;
+}
+.button-text{
+    color: white;
+}
+
+.custom_hyperlink{
+    text-decoration: underline  !important;
+     text-decoration-color: black  !important;
+     color: #858796 !important;
+   }
+
+.custom_hyperlink:hover{
+    text-decoration: underline  !important;
+     text-decoration-color: #858796  !important;
+     color: darkblue !important;
+     cursor: pointer !important;
+   }
