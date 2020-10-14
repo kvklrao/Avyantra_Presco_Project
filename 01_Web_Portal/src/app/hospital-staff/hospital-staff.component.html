@@ -310,8 +310,7 @@
 </ng-template>
 
 <ng-template #content let-c="close" let-d="dismiss">
-	<form class="form-css" [formGroup]="addStaffForm" (ngSubmit)="f.form.valid && addStaff()" #f="ngForm" novalidate
-	 novalidate>
+	<form class="form-css" [formGroup]="addStaffForm" >
 		<div class="modal-header custom-modal-header add-btn">
 			<!-- <button type="submit" class="btn btn-primary">Save</button> -->
 			<h5 *ngIf="!isEdit" class="modal-title">Add Hospital Staff</h5>
@@ -603,7 +602,7 @@
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="d('Cross click');close()">Cancel</button>
-			<button *ngIf="!isEdit" id="addStaff" class="btn btn-primary" type="submit" [disabled]="addStaffForm.invalid">Add
+			<button *ngIf="!isEdit"  class="btn btn-primary"  (click)="addStaff2()" type="button" [disabled]="addStaffForm.invalid">Create
 				Staff</button>
 			<button *ngIf="isEdit" class="btn btn-primary" type="button" (click)="updateStaff()" [disabled]="addStaffForm.invalid">Update</button>
 

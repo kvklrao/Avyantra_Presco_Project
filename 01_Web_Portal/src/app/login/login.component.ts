@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterContentInit, ViewChild,ElementRef, Injector} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../shared/service/login.service";
 import { Router } from "@angular/router";
@@ -8,13 +8,16 @@ import { CookieService } from 'ngx-cookie-service';
 import { ReadingDataService } from '../shared/service/reading-data.service';
 import { AppConstant } from '../shared/constant/app-constant';
 
+import * as ReactDOM from 'react-dom';
+import ReactApplication from './MyComponent';
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
   providers: [LoginService]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterContentInit {
   loginForm: FormGroup;
   submitted = false;
   password = "password";
@@ -23,6 +26,7 @@ export class LoginComponent implements OnInit {
   cookieValue = 'UNKNOWN';
   checked: boolean;
   constructor(
+    public injector: Injector,
     private formBuilder: FormBuilder,
     private loginApi: LoginService,
     private router: Router,
@@ -44,6 +48,10 @@ export class LoginComponent implements OnInit {
     });
     this.checkCookies();
 
+  }
+
+  ngAfterContentInit(){
+    ReactApplication.initialize('my-react-component', this.injector);
   }
 
   async login() {

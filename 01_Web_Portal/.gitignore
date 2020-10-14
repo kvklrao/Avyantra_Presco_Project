@@ -2,6 +2,9 @@
 
 *.sublime-project
 
+# dist folder
+dist
+
 # dependencies
 node_modules
 

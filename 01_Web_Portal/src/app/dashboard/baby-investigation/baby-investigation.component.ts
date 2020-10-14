@@ -10,6 +10,10 @@ import { Subscription } from 'rxjs';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
 import { AppConstant } from 'src/app/shared/constant/app-constant';
+import { HttpClientModule } from '@angular/common/http';
+import axios from "axios";
+import { async } from '@angular/core/testing';
+
 
 @Component({
   selector: "app-baby-investigation",
@@ -69,9 +73,9 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
 
   isPositiveBactFreeField: boolean = false;
   isNegativeBactFreeField: boolean = false;
-  loggedInUserId:number;
-  isprothrombin=false;
-  isActiveProthrombin=false
+  loggedInUserId: number;
+  isprothrombin = false;
+  isActiveProthrombin = false
 
   @Input() id;
   @Input() hospital_id;
@@ -82,11 +86,11 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
   temp_study_id = 0;
 
   login_hospital: any = {};
-  content:any;
+  content: any;
   public dataServiceObj;
   public readingDataObj;
-  isEditClicked=false;
-  phcUser=false;
+  isEditClicked = false;
+  phcUser = false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -95,7 +99,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     private modalService: NgbModal,
     private commonAsyn: Common,
     private dataService: DataService,
-    public readingDataService:ReadingDataService,private constant:AppConstant
+    public readingDataService: ReadingDataService, private constant: AppConstant,
   ) {
     this.dataServiceObj = dataService.getOption();
   }
@@ -103,116 +107,48 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
   ngOnInit() {
     const vim = this;
     vim.dataServiceObj = vim.dataService.getOption();
-    vim.readingDataObj=vim.readingDataService.getReadingFormData('baby_investigation') ;
+    vim.readingDataObj = vim.readingDataService.getReadingFormData('baby_investigation');
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
-    vim.loggedInUserId=vim.login_hospital['user_id'];
+    vim.loggedInUserId = vim.login_hospital['user_id'];
     this.checkUser();
     vim.id = vim.dataServiceObj.study_id;
     vim.createForm(vim.dataServiceObj.study_id);
-    if(vim.readingDataObj!=undefined){
-      vim.getMedicalRecordNumber=vim.dataServiceObj.baby_medical_record_number;
+    if (vim.readingDataObj != undefined) {
+      vim.getMedicalRecordNumber = vim.dataServiceObj.baby_medical_record_number;
       vim.getReadingFormData(this.readingDataObj);
-  }
-  else{
-    if ( vim.dataServiceObj.study_id != undefined) {
-      vim.getMedicalRecordNumber=vim.dataServiceObj.baby_medical_record_number;
-      vim.get_investigation(vim.dataServiceObj.study_id, vim.login_hospital['id'], vim.page, vim.readingDataService.reading);
     }
-}
+    else {
+      if (vim.dataServiceObj.study_id != undefined) {
+        vim.getMedicalRecordNumber = vim.dataServiceObj.baby_medical_record_number;
+        vim.get_investigation(vim.dataServiceObj.study_id, vim.login_hospital['id'], vim.page, vim.readingDataService.reading);
+      }
+    }
     vim.temp_study_id = vim.id;
 
-    this.fungiList = [
-      { "id": 1, "itemName": "Candida auris" },
-      { "id": 2, "itemName": "Candida non albicans spp" },
-      { "id": 3, "itemName": "Candida spp" },
-      { "id": 4, "itemName": "Candida Tropicalis" },
-      { "id": 5, "itemName": "Candida Pelliculosa" },
-      //{ "id": 6, "itemName": "NA" },
-    ];
-    
-    this.gramNegBacList = [
-      { "id": 1, "itemName": "Acinetobacter baumanii" },
-      { "id": 2, "itemName": "Acinetobacter haemolyticus" },
-      { "id": 3, "itemName": "urkholderia cepacia" },
-      { "id": 4, "itemName": "E Coli" },
-      { "id": 5, "itemName": "Enterobacter spp" },
-      { "id": 6, "itemName": "Klebsiella_spp_10_5_CFU_ml" },
-      { "id": 7, "itemName": "Klebsiella pneumoniae" },
-      { "id": 8, "itemName": "Non fermenting Gram negative bacilli" },
-      { "id": 9, "itemName": "Pseudomonas aeruginosa" },
-      { "id": 10, "itemName": "Skin flora" },
-      { "id": 11, "itemName": "Sphingomonas paucimobilis" },
-      { "id": 12, "itemName": "Candida Pelliculosa" },
-      { "id": 13, "itemName": "Others" },
-     // { "id": 14, "itemName": "NA" },
-    ];
 
-    this.gramPostBacteriaList = [
-      { "id": 1, "itemName": "Coagulase negative Staphylococci" },
-      { "id": 2, "itemName": "Cocci" },
-      { "id": 3, "itemName": "Staphylococcus aureus" },
-      { "id": 4, "itemName": "Staphylococcus epidermidis" },
-      { "id": 5, "itemName": "Staphylococcus hominis hominis" },
-      { "id": 6, "itemName": "Others" },
-      //{ "id": 7, "itemName": "NA" }
-    ];
+    let thisClass = this;
 
-    this.dropdownList = [
-      { "id": 1, "itemName": "Amikacin" },
-      { "id": 2, "itemName": "Amoxyclav" },
-      { "id": 3, "itemName": "Amphotericin B" },
-      { "id": 4, "itemName": "Ampicillin" },
-      { "id": 5, "itemName": "Aztreonam" },
-      { "id": 6, "itemName": "Caspofungin" },
-      { "id": 7, "itemName": "Cefepime" },
-      { "id": 8, "itemName": "cefixime" },
-      { "id": 9, "itemName": "Cefuroxime Axetil" },
-      { "id": 10, "itemName": "Cephepime" },
-      { "id": 11, "itemName": "Cephoperazone" },
-      { "id": 12, "itemName": "Ciprofloxacin" },
-      { "id": 13, "itemName": "Clavulanic acid" },
-      { "id": 14, "itemName": "Clindamycin" },
-      { "id": 15, "itemName": "Colistin" },
-      { "id": 16, "itemName": "Comoxicillin" },
-      { "id": 17, "itemName": "Cotrimoxazole" },
-      { "id": 18, "itemName": "Erythromycin" },
-      { "id": 19, "itemName": "Fluconazole" },
-      { "id": 20, "itemName": "Gentamicin" },
-      { "id": 21, "itemName": "Imipenem" },
-      { "id": 22, "itemName": "Levofloxacin" },
-      { "id": 23, "itemName": "Linezolid" },
-      { "id": 24, "itemName": "Meropenem" },
-      { "id": 25, "itemName": "Micafungin" },
-      { "id": 26, "itemName": "Netilmicin" },
-      { "id": 27, "itemName": "Ofloxacin" },
-      { "id": 28, "itemName": "Oxacillin" },
-      { "id": 29, "itemName": "Pencillin" },
-      { "id": 30, "itemName": "Piperacillin" },
-      { "id": 31, "itemName": "PolymyzinB" },
-      { "id": 32, "itemName": "Sulbactam" },
-      { "id": 33, "itemName": "Sulfamethoxazole" },
-      { "id": 34, "itemName": "Tazobactam" },
-      { "id": 35, "itemName": "Tetracycline" },
-      { "id": 36, "itemName": "Tigecycline" },
-      { "id": 37, "itemName": "Tobramycin" },
-      { "id": 38, "itemName": "Trimethoprim" },
-      { "id": 39, "itemName": "Vancomycin" },
-      { "id": 40, "itemName": "Voriconalzole" },
-      { "id": 41, "itemName": "Tericoplanin" },
-      { "id": 42, "itemName": "Cloxacillin" },
-      { "id": 43, "itemName": "Methicillin" },
-      { "id": 44, "itemName": "Cefotaxime" },
-      { "id": 45, "itemName": "Ceftriazone" },
-      { "id": 46, "itemName": "Chloranpenicol" },
-      { "id": 47, "itemName": "Teicoplanin" },
-      { "id": 48, "itemName": "Ceftazibime" },
-      { "id": 49, "itemName": "Chlorampenicol" },
-      { "id": 50, "itemName": "Nalidic acid" },
-      { "id": 51, "itemName": "Nitrofuranton" },
-      { "id": 52, "itemName": "Norfloxacin" },
-      //{ "id": 53, "itemName": "NA" },
+    console.log(this.fungiList);
 
-    ];
+
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/old/bacteriaList',
+    })
+      .then(function (response) {
+
+        thisClass.fungiList = response.data.results.fungi_list;
+        thisClass.gramNegBacList = response.data.results.gram_negative_bac_list;
+        thisClass.gramPostBacteriaList = response.data.results.gram_positive_bac_list;
+        thisClass.dropdownList = response.data.results.antibiotics_list;
+
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
 
     this.settings = {
       limitSelection: false,
@@ -222,9 +158,9 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     vim.onChanges();
   }
 
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
+  checkUser() {
+    if (this.login_hospital['user_type'] == this.constant.phc_worker) {
+      this.phcUser = true;
     }
   }
 
@@ -249,8 +185,8 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     vim.isBilirubin = true;
     vim.isCord = true;
     vim.isTSBValue = true;
-    vim.isprothrombin=true;
-    vim.isActiveProthrombin=true;
+    vim.isprothrombin = true;
+    vim.isActiveProthrombin = true;
     vim.selectedGramPosBacteria = [];
     vim.selectedItems = [];
     vim.selectedGramNegBacItems = [];
@@ -303,7 +239,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
       baby_c_reactive_protien_result: ['', Validators.required],
       prothrombin_type: ['', Validators.required],
       activated_partial_prothrombine_type: ['', Validators.required],
-      
+
     });
   }
 
@@ -598,7 +534,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["antibiotic_status_value"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let anitbiotic=obj["antibiotic_status_value"]
+      let anitbiotic = obj["antibiotic_status_value"]
       vim.selectedItems = JSON.parse(anitbiotic);
     } else {
       vim.selectedItems = [];
@@ -607,7 +543,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["antibiotic_status_intermediate"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let intermediateItems=obj["antibiotic_status_intermediate"];
+      let intermediateItems = obj["antibiotic_status_intermediate"];
       vim.selectedIntermediateItems = JSON.parse(intermediateItems);
     } else {
       vim.selectedIntermediateItems = [];
@@ -616,7 +552,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["antibiotic_status_resisitant"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let resistentItems=obj["antibiotic_status_resisitant"]
+      let resistentItems = obj["antibiotic_status_resisitant"]
       vim.selectedResisitantItems = JSON.parse(resistentItems);
     } else {
       vim.selectedResisitantItems = [];
@@ -625,7 +561,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["gram_positive_bacteria"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let gramPosBacteria=obj["gram_positive_bacteria"];
+      let gramPosBacteria = obj["gram_positive_bacteria"];
       vim.selectedGramPosBacteria = JSON.parse(gramPosBacteria);
     } else {
       vim.selectedGramPosBacteria = [];
@@ -635,7 +571,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["gram_negative_bacteria"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let gramNegBacteria=obj["gram_negative_bacteria"];
+      let gramNegBacteria = obj["gram_negative_bacteria"];
       vim.selectedGramNegBacItems = JSON.parse(gramNegBacteria);
     } else {
       vim.selectedGramNegBacItems = [];
@@ -644,7 +580,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (/^[\],:{}\s]*$/.test(obj["fungi"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        let fungiList=obj["fungi"];
+      let fungiList = obj["fungi"];
       vim.selectedFungiItem = JSON.parse(fungiList);
     } else {
       vim.selectedFungiItem = [];
@@ -736,8 +672,8 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
       arrhythmia: obj["arrhythmia"],
       csf_culture: obj["csf_culture"],
       csf_culture_tsb_value: obj["csf_culture_tsb_value"],
-      baby_c_reactive_protien_result:obj['baby_c_reactive_protien_result'],
-      prothrombin_type : obj["prothrombin_type"],
+      baby_c_reactive_protien_result: obj['baby_c_reactive_protien_result'],
+      prothrombin_type: obj["prothrombin_type"],
       activated_partial_prothrombine_type: obj["activated_partial_prothrombine_type"]
     });
   }
@@ -1177,8 +1113,8 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
         vim.invetigationForm.controls["activated_partial_prothrombine_type"].setValidators([Validators.required]);
         vim.invetigationForm.controls["activated_partial_prothrombine_type"].updateValueAndValidity();
       }
-    
-  }
+
+    }
   }
 
   onItemSelect(item: any, id) {
@@ -1263,7 +1199,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (!_.isEmpty(obj)) {
       this.isBabyInvestEdit = true;
       this.updateForm(obj);
-      this.isEditClicked=true;
+      this.isEditClicked = true;
     } else {
       this.isBabyInvestEdit = true;
       this.createForm(this.id);
@@ -1276,7 +1212,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (vim.invetigationForm.invalid) {
       return;
     }
-  //  vim.commonAsyn.showLoader();
+    //  vim.commonAsyn.showLoader();
 
     vim.invetigationForm.value["tab_name"] = "final";
 
@@ -1386,7 +1322,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     //   }
     // );
     vim.invetigationForm.value["reading"] = localStorage.getItem('reading');
-   vim.goToNextReadingForm();
+    vim.goToNextReadingForm();
   }
   /**
    *
@@ -1419,7 +1355,7 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
         if (this.page == 1) {
           vim.responseArray = [];
           vim.responseArray = response["response"];
-          vim.isBabyInvestEdit=false;
+          vim.isBabyInvestEdit = false;
         } else {
           if (response["status"] == 404) {
             // vim.responseArray = [];
@@ -1596,40 +1532,40 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     }
   }
 
-  getReadingFormData(formData){
-    this.responseArray[0]=formData;
+  getReadingFormData(formData) {
+    this.responseArray[0] = formData;
     this.checkMultiselectData();
     this.updateForm(this.responseArray[0]);
-    this.isBabyInvestEdit=true;
+    this.isBabyInvestEdit = true;
   }
 
-  checkMultiselectData(){
-    if(typeof this.responseArray[0]['antibiotic_status_value'] != 'string'){
-      this.responseArray[0]['antibiotic_status_value']=JSON.stringify(this.responseArray[0]['antibiotic_status_value']);
-      }
-    if(typeof this.responseArray[0]['antibiotic_status_intermediate'] != 'string'){
-        this.responseArray[0]['antibiotic_status_intermediate']=JSON.stringify(this.responseArray[0]['antibiotic_status_intermediate']);
-      }
-    if(typeof this.responseArray[0]['antibiotic_status_resisitant'] != 'string'){
-          this.responseArray[0]['antibiotic_status_resisitant']=JSON.stringify(this.responseArray[0]['antibiotic_status_resisitant']);
-        }
-     if(typeof this.responseArray[0]['gram_positive_bacteria'] != 'string'){
-            this.responseArray[0]['gram_positive_bacteria']=JSON.stringify(this.responseArray[0]['gram_positive_bacteria']);
-          }
-      if(typeof this.responseArray[0]['gram_negative_bacteria'] != 'string'){
-              this.responseArray[0]['gram_negative_bacteria']=JSON.stringify(this.responseArray[0]['gram_negative_bacteria']);
-         }
-      if(typeof this.responseArray[0]['fungi'] != 'string'){
-          this.responseArray[0]['fungi']=JSON.stringify(this.responseArray[0]['fungi']);
-     }
+  checkMultiselectData() {
+    if (typeof this.responseArray[0]['antibiotic_status_value'] != 'string') {
+      this.responseArray[0]['antibiotic_status_value'] = JSON.stringify(this.responseArray[0]['antibiotic_status_value']);
+    }
+    if (typeof this.responseArray[0]['antibiotic_status_intermediate'] != 'string') {
+      this.responseArray[0]['antibiotic_status_intermediate'] = JSON.stringify(this.responseArray[0]['antibiotic_status_intermediate']);
+    }
+    if (typeof this.responseArray[0]['antibiotic_status_resisitant'] != 'string') {
+      this.responseArray[0]['antibiotic_status_resisitant'] = JSON.stringify(this.responseArray[0]['antibiotic_status_resisitant']);
+    }
+    if (typeof this.responseArray[0]['gram_positive_bacteria'] != 'string') {
+      this.responseArray[0]['gram_positive_bacteria'] = JSON.stringify(this.responseArray[0]['gram_positive_bacteria']);
+    }
+    if (typeof this.responseArray[0]['gram_negative_bacteria'] != 'string') {
+      this.responseArray[0]['gram_negative_bacteria'] = JSON.stringify(this.responseArray[0]['gram_negative_bacteria']);
+    }
+    if (typeof this.responseArray[0]['fungi'] != 'string') {
+      this.responseArray[0]['fungi'] = JSON.stringify(this.responseArray[0]['fungi']);
+    }
   }
 
-  saveReadingFormData(formData){
-    this.readingDataService.setReadingFormData('baby_investigation',formData);
+  saveReadingFormData(formData) {
+    this.readingDataService.setReadingFormData('baby_investigation', formData);
   }
 
-  goToNextReadingForm(){
-    let vim=this;
+  goToNextReadingForm() {
+    let vim = this;
     vim.saveReadingFormData(vim.invetigationForm['value']);
     vim.readingDataService.setComponentFlag('baby-antibiotic')
     vim.readingDataService.setActiveTab("anitibiotic-administration");
@@ -1638,19 +1574,19 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
 
   onChanges(): void {
     this.invetigationForm.statusChanges.subscribe(val => {
-      if(val==='INVALID'){
-        this.readingDataService.setFormValidationStatus('baby_investigation',false)
-          if(this.readingDataObj!=undefined){
-           this.checkNAObject();
-            this.invetigationForm.value["reading"] = localStorage.getItem('reading');
-            this.invetigationForm.value["tab_name"] = "final";
-            this.saveReadingFormData(this.invetigationForm['value']);
-          }
+      if (val === 'INVALID') {
+        this.readingDataService.setFormValidationStatus('baby_investigation', false)
+        if (this.readingDataObj != undefined) {
+          this.checkNAObject();
+          this.invetigationForm.value["reading"] = localStorage.getItem('reading');
+          this.invetigationForm.value["tab_name"] = "final";
+          this.saveReadingFormData(this.invetigationForm['value']);
+        }
       }
-      else{
-        this.readingDataService.setFormValidationStatus('baby_investigation',true)
-        if(this.readingDataObj!=undefined){
-         this.checkNAObject();
+      else {
+        this.readingDataService.setFormValidationStatus('baby_investigation', true)
+        if (this.readingDataObj != undefined) {
+          this.checkNAObject();
           this.invetigationForm.value["reading"] = localStorage.getItem('reading');
           this.invetigationForm.value["tab_name"] = "final";
           this.saveReadingFormData(this.invetigationForm['value']);
@@ -1659,28 +1595,28 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     });
   }
 
-  checkNAObject(){
-    if(this.invetigationForm.value["antibiotic_status_value"]!='NA'){
+  checkNAObject() {
+    if (this.invetigationForm.value["antibiotic_status_value"] != 'NA') {
       this.invetigationForm.value["antibiotic_status_value"] = JSON.stringify(this.selectedItems);
-      }
-      if(this.invetigationForm.value["antibiotic_status_resisitant"]!='NA'){
+    }
+    if (this.invetigationForm.value["antibiotic_status_resisitant"] != 'NA') {
       this.invetigationForm.value["antibiotic_status_resisitant"] = JSON.stringify(this.selectedResisitantItems);
-      }
-      if(this.invetigationForm.value["antibiotic_status_intermediate"]!='NA'){
+    }
+    if (this.invetigationForm.value["antibiotic_status_intermediate"] != 'NA') {
       this.invetigationForm.value["antibiotic_status_intermediate"] = JSON.stringify(this.selectedIntermediateItems);
-      }
-      if(this.invetigationForm.value["gram_positive_bacteria"]!='NA'){
+    }
+    if (this.invetigationForm.value["gram_positive_bacteria"] != 'NA') {
       this.invetigationForm.value["gram_positive_bacteria"] = JSON.stringify(this.selectedGramPosBacteria);
-      }
-      if(this.invetigationForm.value["gram_negative_bacteria"]!='NA'){
+    }
+    if (this.invetigationForm.value["gram_negative_bacteria"] != 'NA') {
       this.invetigationForm.value["gram_negative_bacteria"] = JSON.stringify(this.selectedGramNegBacItems);
-      }
-      if(this.invetigationForm.value["fungi"]!='NA'){
-        this.invetigationForm.value["fungi"] = JSON.stringify(this.selectedFungiItem);
-      }
+    }
+    if (this.invetigationForm.value["fungi"] != 'NA') {
+      this.invetigationForm.value["fungi"] = JSON.stringify(this.selectedFungiItem);
+    }
   }
 
-  updateInvestigationForm(){
+  updateInvestigationForm() {
     this.invetigationForm.value["reading"] = localStorage.getItem('reading');
     this.invetigationForm.value["tab_name"] = "baby_investigation";
 
@@ -1775,27 +1711,27 @@ export class BabyInvestigationComponent implements OnInit, OnChanges {
     if (this.invetigationForm.value["activated_partial_prothrombine_type"] == '') {
       this.invetigationForm.value["activated_partial_prothrombine_type"] = 'NA';
     }
-    if(!this.invetigationForm.valid){
-      this.submitted=true;
-      return ;
+    if (!this.invetigationForm.valid) {
+      this.submitted = true;
+      return;
     }
-    else{
+    else {
       console.log(this.invetigationForm['value'])
-      this.common_api.updateFormData('patient/update/baby_investigation/',this.id,this.readingDataService.reading,this.invetigationForm['value'],this.loggedInUserId).subscribe(result=>{
-          if(result['status']!=200){
-              this.toastr.error('Error','Some error occured.Please check');
-          }
-          else{
-            this.updateSuccessResponse(result);
-          }
+      this.common_api.updateFormData('patient/update/baby_investigation/', this.id, this.readingDataService.reading, this.invetigationForm['value'], this.loggedInUserId).subscribe(result => {
+        if (result['status'] != 200) {
+          this.toastr.error('Error', 'Some error occured.Please check');
+        }
+        else {
+          this.updateSuccessResponse(result);
+        }
       })
     }
   }
 
-  updateSuccessResponse(result){
-    this.toastr.success('','Data Updated Successfully');
+  updateSuccessResponse(result) {
+    this.toastr.success('', 'Data Updated Successfully');
     this.get_investigation(this.dataServiceObj.study_id, this.login_hospital['id'], this.page, this.readingDataService.reading);
-    this.isEditClicked=false;
-  //  this.saveReadingFormData(undefined);
+    this.isEditClicked = false;
+    //  this.saveReadingFormData(undefined);
   }
 }

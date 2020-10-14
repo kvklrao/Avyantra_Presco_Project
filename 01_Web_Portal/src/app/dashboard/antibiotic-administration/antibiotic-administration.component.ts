@@ -103,6 +103,8 @@ loggedInUserId:number;
    // vim.onChanges();
 }
     vim.temp_study_id = vim.id;
+  
+
 
     this.antibioticNameList = [
       { "id": 1, "itemName": "Amikacin" },

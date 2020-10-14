@@ -112,6 +112,7 @@ export class HospitalStaffComponent implements OnInit {
     this.addStaffForm['value']['branch'] = _.pluck(this.selectedBranches, 'hospital_branch_id');
     this.commomService.adsStaff(this.hospitalId, this.hospitalBranchId, this.addStaffForm['value'],this.userType).subscribe(result => {
       if (this.helper.success(result)) {
+        console.log(result);
         this.success(result, 'addStaff')
         this.setBranchData();
        // this.selectedBranches = [];
@@ -154,6 +155,7 @@ export class HospitalStaffComponent implements OnInit {
   }
   success(response, apitype) {
     if (apitype == 'addStaff') {
+      console.log(response);
       this.toasty.success(response['message'], '')
     }
     if (apitype == 'getStaff') {
@@ -240,6 +242,35 @@ export class HospitalStaffComponent implements OnInit {
         this.helper.errorHandler(result);
       }
     });}
+
+    addStaff2() {
+     
+      console.log("hi");
+      if (!this.addStaffForm.valid) {
+        return;
+      }
+      this.addStaffForm['value']['branch'] = _.pluck(this.selectedBranches, 'hospital_branch_id');
+      this.commomService.adsStaff(this.hospitalId, this.hospitalBranchId, this.addStaffForm['value'],this.userType).subscribe(result => {
+        console.log("in response");
+        console.log(result);
+        console.log(this)
+
+        if (this.helper.success(result)) {
+          //let result = "success";
+          console.log(result);
+          this.success(result, 'updateStaff')
+         // this.success('Hello world!', 'Toastr fun!');
+          this.setBranchData();
+         // this.selectedBranches = [];
+          this.close();
+          this.getBranchStaffCount(null);
+        } else {
+          this.helper.errorHandler(result);
+        }
+      })
+
+  
+     }
    getSelectedBranch(branch_id) {
     this.selectedBranches = [];
     var vim = this;

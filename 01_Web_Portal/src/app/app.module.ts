@@ -81,6 +81,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ScoreAnalysisComponent } from './score-analysis/score-analysis.component';
 import { RessetPasswordComponent } from './resset-password/resset-password.component';
 import { ScorePercentage } from './shared/pipes/score-percentage.pipe';
+import { ButtonCursorDirective } from './shared/directives/button-cursor.directive';
 import { HeadingComponent } from './shared/core/components/heading/heading.component';
 import { AshaPhcDashboardComponent } from './user-dashboards/asha-phc-dashboard/asha-phc-dashboard.component';
 import { HealthParametersComponent } from './dashboard/health-parameters/health-parameters.component';
@@ -102,7 +103,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BabyGitComponent,
     BabyInvestigationComponent,
     FinalComponent,   
-    UserInfoComponent,
+   UserInfoComponent,
     DateLevelPipe,
     AntibioticAdministrationComponent,
     TopNavBarComponent,
@@ -115,7 +116,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SettingsComponent,
     MedicalRecordsComponent,
     ReferralDoctorStaffComponent,
-    MyProfileComponent,passwordPipe,userTypePipe, HospitalStaffDashboardComponent, StaffProfileComponent, BranchAdminProfileComponent, ReferralProfileComponent, HospitalConnectComponent,emptyDataPipe,MessageCenterComponent,statusPipe, ScoreAnalysisComponent, RessetPasswordComponent,ScorePercentage, HeadingComponent, AshaPhcDashboardComponent, HealthParametersComponent],
+    MyProfileComponent,passwordPipe,userTypePipe, HospitalStaffDashboardComponent, StaffProfileComponent, BranchAdminProfileComponent, ReferralProfileComponent, HospitalConnectComponent,emptyDataPipe,MessageCenterComponent,statusPipe, ScoreAnalysisComponent, RessetPasswordComponent,ScorePercentage, ButtonCursorDirective, HeadingComponent, AshaPhcDashboardComponent, HealthParametersComponent],
     imports: [
     BrowserModule,
     ReactiveFormsModule,
