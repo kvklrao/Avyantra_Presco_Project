@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
 const centered = {
-    margin: '20%',
-    marginTop: '5%'
-    // marginLeft:'2%'
+    // margin: '10%',
+    // marginTop: '5%'
 }
 
 export default class PreTermPieGraph extends Component {
@@ -16,25 +15,16 @@ export default class PreTermPieGraph extends Component {
             series: [this.props.sum_preterm_no_count, this.props.sum_preterm_yes_count],
             options: {
                 chart: {
-                    width: 400,
                     type: 'pie',
                 },
-                colors: ['#8b4513', '#d2691e'],
+                colors: ['#FFA500', '#32CD32'],
                 fill: {
-                    colors: ['#8b4513', '#d2691e']
+                    colors: ['#FFA500', '#32CD32']
                 },
-                labels: ['Yes', 'No'],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 400
-                        },
-                        legend: {
-                            position: 'bottom'
-                        },
-                    }
-                }]
+                labels: ['Pre-Term Yes', 'Pre-Term No'],
+                legend: {
+                    position: 'top',
+                  }
             },
         }
     }
@@ -42,13 +32,12 @@ export default class PreTermPieGraph extends Component {
     render() {
 
         return (
-            <div>
-                <ReactApexChart
-                    options={this.state.options}
-                    series={this.state.series}
-                    type="pie" width={350}
-                    style={centered} />
-            </div>
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                type="pie"
+                style={centered}
+                width={'100%'} />
         );
     }
 }

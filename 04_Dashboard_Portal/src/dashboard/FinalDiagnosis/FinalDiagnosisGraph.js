@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Select, Row, Col, Card, Spin } from 'antd';
+import { Form, Button, Select, Row, Col, Card, Spin, Layout, Empty } from 'antd';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DatePicker } from 'antd';
 import axios from 'axios';
@@ -12,6 +12,8 @@ import {
 import FinalDiagnosisBarGraph from './FinalDiagnosisBarGraph'
 
 const { Option } = Select;
+const { Content } = Layout;
+
 
 const mainDivStyle = {
     width: '100%',
@@ -28,17 +30,14 @@ export default class FinalDiagnosisGraph extends Component {
         super(props);
 
         this.state = {
-            selectValue: "",
             range: 4,
-            // startDate: moment(new Date()),
-            // endDate: moment(new Date()).subtract(7, "days"),
-            startDate: '2018-01-01',
-            endDate: '2019-12-31',
+            startDate: '',
+            endDate: '',
             data: [],
             isLoaded: true,
-            parameter: 'final_diagnosis_sepsis'
+            parameter: 'final_diagnosis_sepsis',
+            apply_clicked: false,
         }
-        this.handleBranchChange = this.handleBranchChange.bind(this);
         this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
         this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
         this.handleRangeChange = this.handleRangeChange.bind(this);
@@ -48,8 +47,19 @@ export default class FinalDiagnosisGraph extends Component {
         this.handleParametersChange = this.handleParametersChange.bind(this);
     }
 
+    static getDerivedStateFromProps(props, state) {
+        return { apply_clicked: props.apply_clicked }
+    }
+
     componentDidMount() {
         this.apply()
+    }
+
+    componentDidUpdate(prevState) {
+        if (prevState.apply_clicked !== this.state.apply_clicked) {
+            this.apply()
+        }
+        return false;
     }
 
     handleRangeChange = value => {
@@ -60,9 +70,6 @@ export default class FinalDiagnosisGraph extends Component {
         this.setState({ parameter: value });
     }
 
-    handleBranchChange = value => {
-        this.setState({ selectValue: value });
-    }
 
     async handleChangeStartDate(date, dateString) {
 
@@ -74,7 +81,6 @@ export default class FinalDiagnosisGraph extends Component {
             var monthStartDay = moment([year, month - 1, 1]).format("YYYY-MM-DD");
             const daysInMonth = moment(startDate).daysInMonth();
             const monthEndDay = moment(startDate).add(daysInMonth - 1, 'days').format("YYYY-MM-DD");
-            console.log(year, month, monthStartDay, monthEndDay)
             await this.setState({ startDate: monthStartDay, endDate: monthEndDay });
         }
         if (this.state.range == 3) {
@@ -92,7 +98,6 @@ export default class FinalDiagnosisGraph extends Component {
             let endMonthDays = moment(year + '-' + endMonth).daysInMonth(); // Last month days
             let endDays = year + '-' + endMonth + '-' + endMonthDays //Full year, month, day integration
             var endDate = moment(moment(endDays).toDate()).format("yyyy-MM-DD");
-            console.log(firstDate, endDate)
             await this.setState({ startDate: firstDate, endDate: endDate });
         }
         if (this.state.range == 4) {
@@ -100,25 +105,20 @@ export default class FinalDiagnosisGraph extends Component {
             await this.setState({ startDate: dateString });
         }
 
-        console.log(this.state.startDate);
     }
 
     async handleChangeEndDate(date, dateString) {
-        console.log(dateString)
         if (this.state.range == 4) {
             dateString = dateString + "-12-31"
         }
         endDate = dateString;
         await this.setState({ endDate: dateString });
-        console.log(this.state.endDate);
     }
 
     async changeDates(date, dateString) {
-        console.log(date, dateString);
     }
 
     async refresh() {
-        console.log("refrresh");
         await this.setState({ startDate: '', endDate: '', selectValue: '', range: '' })
     }
 
@@ -135,21 +135,20 @@ export default class FinalDiagnosisGraph extends Component {
 
     apply = function () {
         this.setState({ isLoaded: false });
-        console.log("clicked apply");
-        console.log(this.state.startDate);
-        console.log(this.state.endDate);
-        console.log(this.state.selectValue);
-        console.log(this.state.range);
-        console.log(this.state.parameter);
+        // console.log("clicked apply");
+        // console.log(this.state.startDate);
+        // console.log(this.state.endDate);
+        // console.log(this.state.selectValue);
+        // console.log(this.state.range);
+        // console.log(this.state.parameter);
 
         if (this.state.range == 1) {
             var date1 = new Date(this.state.startDate);
             var date2 = new Date(this.state.endDate);
             var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10);
             if (diffDays >= 15) {
-                console.log("coming here")
                 errors = true;
-                console.log(errors)
+                // console.log(errors)
             } else {
                 errors = false;
             }
@@ -159,31 +158,30 @@ export default class FinalDiagnosisGraph extends Component {
         rangedates = [];
         if (errors == false) {
             axios.get(
-                'http://localhost:8080/api/finalDiagnosisGraph?parameter=' + this.state.parameter + '&range=' + this.state.range + '&date_from=' + this.state.startDate + '&date_to=' + this.state.endDate,
+                process.env.REACT_APP_URL + '/finalDiagnosisGraph?parameter=' + this.state.parameter + '&range=' +
+                this.state.range + '&date_from=' + this.state.startDate + '&date_to=' + this.state.endDate +
+                '&hospital_id=' + this.props.hospital_id + '&branch_id=' + this.props.branch_id +
+                '&all_hospitals=' + localStorage.getItem('all_hospitals') + '&all_branches=' + localStorage.getItem('all_branches'),
                 { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
             ).then(response => {
-                console.log("Success ========>", response);
+                // console.log("Success ========>", response);
 
                 if (this.state.range == 1) {
-                    console.log("on select dates");
+                    // console.log("on select dates");
                     this.setState({ data: response.data.results });
                     // rangedates = this.getDates(startDate, endDate);
                     // for (var d = 0; d < rangedates.length; d++) {
                     for (var i = 0; i < this.state.data.length; i++) {
                         rangedates[i] = this.state.data[i].baby_adm_date;
                         if (rangedates[i] == this.state.data[i].baby_adm_date) {
-                            final_diagnosis_positive_count[d] = this.state.data[i].final_diagnosis_positive_count;
-                            final_diagnosis_negative_count[d] = this.state.data[i].final_diagnosis_negative_count;
-                            preliminary_diagnosis_positive_count[d] = this.state.data[i].preliminary_diagnosis_positive_count;
-                            preliminary_diagnosis_negative_count[d] = this.state.data[i].preliminary_diagnosis_negative_count;
+                            final_diagnosis_positive_count[d] = this.state.data[i].sepsis_final_positive_count;
+                                final_diagnosis_negative_count[d] = this.state.data[i].sepsis_final_negative_count;
+                                preliminary_diagnosis_positive_count[d] = this.state.data[i].sepsis_prelim_positive_count;
+                                preliminary_diagnosis_negative_count[d] = this.state.data[i].sepsis_prelim_negative_count;
                         }
                     }
-                    // }
-                    console.log(final_diagnosis_positive_count);
-                    console.log(final_diagnosis_negative_count);
-
                 } else if (this.state.range == 2) {
-                    console.log("monthly");
+                    // console.log("monthly");
                     let weekArray = [];
                     this.setState({ data: response.data.results2 });
                     for (var i = 0; i < this.state.data.length; i++) {
@@ -195,21 +193,20 @@ export default class FinalDiagnosisGraph extends Component {
                     }
                     rangedates = rangedates.filter(function (e) { return e != null; });
                     weekArray = weekArray.filter(function (e) { return e != null; });
-                    console.log(rangedates);
                     for (var d = 0; d < rangedates.length; d++) {
                         for (var i = 0; i < this.state.data.length; i++) {
                             if (rangedates[d] === this.state.data[i].week) {
-                                final_diagnosis_positive_count[d] = this.state.data[i].final_diagnosis_positive_count;
-                                final_diagnosis_negative_count[d] = this.state.data[i].final_diagnosis_negative_count;
-                                preliminary_diagnosis_positive_count[d] = this.state.data[i].preliminary_diagnosis_positive_count;
-                                preliminary_diagnosis_negative_count[d] = this.state.data[i].preliminary_diagnosis_negative_count;
+                                final_diagnosis_positive_count[d] = this.state.data[i].sepsis_final_positive_count;
+                                final_diagnosis_negative_count[d] = this.state.data[i].sepsis_final_negative_count;
+                                preliminary_diagnosis_positive_count[d] = this.state.data[i].sepsis_prelim_positive_count;
+                                preliminary_diagnosis_negative_count[d] = this.state.data[i].sepsis_prelim_negative_count;
                             }
                         }
                     }
 
                     rangedates = weekArray;
                 } else if (this.state.range == 3) {
-                    console.log("quarterly");
+                    // console.log("quarterly");
                     let monthQArray = [];
                     this.setState({ data: response.data.results2 });
                     if (quarterCal == 1) {
@@ -231,19 +228,33 @@ export default class FinalDiagnosisGraph extends Component {
 
                     for (var d = 0; d < rangedates.length; d++) {
                         for (var i = 0; i < this.state.data.length; i++) {
+                            // console.log(rangedates[d],this.state.data[i].month)
                             if (rangedates[d] === this.state.data[i].month) {
-                                final_diagnosis_positive_count[d] = this.state.data[i].final_diagnosis_positive_count;
-                                final_diagnosis_negative_count[d] = this.state.data[i].final_diagnosis_negative_count;
-                                preliminary_diagnosis_positive_count[d] = this.state.data[i].preliminary_diagnosis_positive_count;
-                                preliminary_diagnosis_negative_count[d] = this.state.data[i].preliminary_diagnosis_negative_count;
+                                final_diagnosis_positive_count[d] = this.state.data[i].sepsis_final_positive_count;
+                                final_diagnosis_negative_count[d] = this.state.data[i].sepsis_final_negative_count;
+                                preliminary_diagnosis_positive_count[d] = this.state.data[i].sepsis_prelim_positive_count;
+                                preliminary_diagnosis_negative_count[d] = this.state.data[i].sepsis_prelim_negative_count;
+                            }
+                            else {
+                                if (final_diagnosis_positive_count[d] == null) {
+                                    final_diagnosis_positive_count[d] = 0;
+                                }
+                                if (final_diagnosis_negative_count[d] == null) {
+                                    final_diagnosis_negative_count[d] = 0;
+                                }
+                                if (preliminary_diagnosis_positive_count[d] == null) {
+                                    preliminary_diagnosis_positive_count[d] = 0;
+                                }
+                                if (preliminary_diagnosis_negative_count[d] == null) {
+                                    preliminary_diagnosis_negative_count[d] = 0;
+                                }
                             }
                         }
                     }
 
                     rangedates = monthQArray;
-                    console.log(rangedates);
                 } else if (this.state.range == 4) {
-                    console.log("yearly");
+                    // console.log("yearly");
                     this.setState({ data: response.data.results2 });
                     for (var i = 0; i < this.state.data.length; i++) {
                         xaxis_dates[i] = this.state.data[i].year;
@@ -255,21 +266,20 @@ export default class FinalDiagnosisGraph extends Component {
                     for (var d = 0; d < rangedates.length; d++) {
                         for (var i = 0; i < this.state.data.length; i++) {
                             if (rangedates[d] === this.state.data[i].year) {
-                                final_diagnosis_positive_count[d] = this.state.data[i].final_diagnosis_positive_count;
-                                final_diagnosis_negative_count[d] = this.state.data[i].final_diagnosis_negative_count;
-                                preliminary_diagnosis_positive_count[d] = this.state.data[i].preliminary_diagnosis_positive_count;
-                                preliminary_diagnosis_negative_count[d] = this.state.data[i].preliminary_diagnosis_negative_count;
+                                final_diagnosis_positive_count[d] = this.state.data[i].sepsis_final_positive_count;
+                                final_diagnosis_negative_count[d] = this.state.data[i].sepsis_final_negative_count;
+                                preliminary_diagnosis_positive_count[d] = this.state.data[i].sepsis_prelim_positive_count;
+                                preliminary_diagnosis_negative_count[d] = this.state.data[i].sepsis_prelim_negative_count;
                             }
                         }
                     }
 
                 }
                 this.setState({ isLoaded: true });
-                console.log(rangedates)
+                // console.log(rangedates)
             })
                 .catch(error => {
                     this.setState({ isLoaded: true });
-                    console.log(this.state.isLoaded)
                     console.log("Error ========>", error);
                 }
                 )
@@ -278,164 +288,166 @@ export default class FinalDiagnosisGraph extends Component {
 
     render() {
         return (
-            <div style={mainDivStyle}>
-                <Card>
-                    <Form>
-                        <Row gutter={16}>
-                            <Col span={4}>
-                                <div style={{ padding: 10 }}>
-                                    <h6>Branch</h6>
-                                    <Select style={{ width: '100%' }}
-                                        placeholder="Select Branch"
-                                        onChange={this.handleBranchChange} allowClear>
-                                        <Option value="Branch">Branch</Option>
-                                        <Option value="1">Lakidikapool</Option>
-                                    </Select>
-                                </div>
-                            </Col>
+            <Content
+                className="site-layout-background"
+                style={{
+                    margin: '35px 25px',
+                    padding: 24,
+                    minHeight: '80vh',
+                }}>
+                <div style={mainDivStyle}>
+                    <Card>
+                        <Form>
+                            <Row>
 
-                            <Col span={4}>
-                                <div style={{ padding: 10 }}>
-                                    <h6>Parameters</h6>
-                                    <Select style={{ width: '100%' }}
-                                        placeholder="Select Sepsis Status"
-                                        onChange={this.handleParametersChange} allowClear>
-                                        <Option value="final_diagnosis_sepsis">Sepsis</Option>
-                                        <Option value="final_diagnosis_eos_los">EOS LOS</Option>
-                                        <Option value="final_diagnosis_gastroenteritis">Gastroenteritis</Option>
-                                        <Option value="final_diagnosis_rds">RDS</Option>
-                                        <Option value="final_diagnosis_ttnb">TTNB</Option>
-                                        <Option value="final_diagnosis_jaundice">Jaundice</Option>
-                                        <Option value="final_diagnosis_lbw">LBW</Option>
-                                        <Option value="final_diagnosis_lga">LGA</Option>
-                                        <Option value="final_diagnosis_aga">AGA</Option>
-                                        <Option value="final_diagnosis_sga">SGA</Option>
-                                        <Option value="final_diagnosis_anemia">Anemia</Option>
-                                        <Option value="final_diagnosis_dextochordia">Dextochordia</Option>
-                                        <Option value="final_diagnosis_hypoglycemia">Hypoglycemia</Option>
-                                        <Option value="final_diagnosis_hypocalcemia">Hypocalcemia</Option>
-                                        <Option value="final_diagnosis_perinatal_respiratory_depression">Respiratory Depression</Option>
-                                        <Option value="final_diagnosis_shock">Shock</Option>
-                                        <Option value="final_diagnosis_feeding_intolerence">Feeding Intolerence</Option>
-                                    </Select>
-                                </div>
-                            </Col>
-
-                            <Col span={4}>
-                                <div style={{ padding: 10 }}>
-                                    <h6>Range</h6>
-                                    <Select style={{ width: '100%' }} placeholder="Select Range"
-                                        onChange={this.handleRangeChange} allowClear>
-                                        <Option value="1">Select Dates</Option>
-                                        <Option value="2">Monthly</Option>
-                                        <Option value="3">Quarterly</Option>
-                                        <Option value="4">Yearly</Option>
-                                    </Select>
-                                </div>
-                            </Col>
-
-                            {this.state.range == 1 ?
-                                <Col span={4}>
+                                <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
                                     <div style={{ padding: 10 }}>
-                                        <h6>From</h6>
-                                        <DatePicker onChange={this.handleChangeStartDate} allowClear
-                                            disabledDate={d => !d || d.isAfter(new Date())} />
+                                        <h6>Parameters</h6>
+                                        <Select style={{ width: '100%' }}
+                                            placeholder="Select Parameter"
+                                            onChange={this.handleParametersChange} allowClear>
+                                            <Option value="final_diagnosis_sepsis">Sepsis</Option>
+                                            <Option value="final_diagnosis_eos_los">EOS LOS</Option>
+                                            <Option value="final_diagnosis_gastroenteritis">Gastroenteritis</Option>
+                                            <Option value="final_diagnosis_rds">RDS</Option>
+                                            <Option value="final_diagnosis_ttnb">TTNB</Option>
+                                            <Option value="final_diagnosis_jaundice">Jaundice</Option>
+                                            <Option value="final_diagnosis_lbw">LBW</Option>
+                                            <Option value="final_diagnosis_lga">LGA</Option>
+                                            <Option value="final_diagnosis_aga">AGA</Option>
+                                            <Option value="final_diagnosis_sga">SGA</Option>
+                                            <Option value="final_diagnosis_anemia">Anemia</Option>
+                                            <Option value="final_diagnosis_dextochordia">Dextochordia</Option>
+                                            <Option value="final_diagnosis_hypoglycemia">Hypoglycemia</Option>
+                                            <Option value="final_diagnosis_hypocalcemia">Hypocalcemia</Option>
+                                            <Option value="final_diagnosis_perinatal_respiratory_depression">Respiratory Depression</Option>
+                                            <Option value="final_diagnosis_shock">Shock</Option>
+                                            <Option value="final_diagnosis_feeding_intolerence">Feeding Intolerence</Option>
+                                        </Select>
                                     </div>
                                 </Col>
-                                : null}
-                            {this.state.range == 1 ?
-                                <Col span={4}>
-                                    <div style={{ padding: 10 }}>
-                                        <h6>To</h6>
-                                        <DatePicker onChange={this.handleChangeEndDate}
-                                            disabledDate={d => !d || d.isBefore(this.state.startDate) || d.isAfter(new Date())} /></div>
-                                </Col>
-                                : null}
 
-                            {this.state.range == 2 ?
-                                <Col span={4}>
+                                <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
                                     <div style={{ padding: 10 }}>
-                                        <h6>Choose Month</h6>
-                                        <DatePicker onChange={this.handleChangeStartDate} allowClear picker="month"
-                                            disabledDate={m => !m || m.isAfter(new Date())} />
+                                        <h6>Range</h6>
+                                        <Select style={{ width: '100%' }} placeholder="Select Range"
+                                            onChange={this.handleRangeChange} allowClear>
+                                            <Option value="1">Select Dates</Option>
+                                            <Option value="2">Monthly</Option>
+                                            <Option value="3">Quarterly</Option>
+                                            <Option value="4">Yearly</Option>
+                                        </Select>
                                     </div>
                                 </Col>
-                                : null}
 
-                            {this.state.range == 3 ?
-                                <Col span={4}>
-                                    <div style={{ padding: 10 }}>
-                                        <h6>Choose Quarter</h6>
-                                        <DatePicker onChange={this.handleChangeStartDate} allowClear picker="quarter"
-                                            disabledDate={q => !q || q.isAfter(new Date())} />
-                                    </div>
-                                </Col>
-                                : null}
+                                {this.state.range == 1 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>From</h6>
+                                            <DatePicker onChange={this.handleChangeStartDate} allowClear style={{ width: '100%' }}
+                                                disabledDate={d => !d || d.isAfter(new Date())} />
+                                        </div>
+                                    </Col>
+                                    : null}
+                                {this.state.range == 1 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>To</h6>
+                                            <DatePicker onChange={this.handleChangeEndDate} style={{ width: '100%' }}
+                                                disabledDate={d => !d || d.isBefore(this.state.startDate) || d.isAfter(new Date())} /></div>
+                                    </Col>
+                                    : null}
 
-                            {this.state.range == 4 ?
-                                <Col span={4}>
-                                    <div style={{ padding: 10 }}>
-                                        <h6>From</h6>
-                                        <DatePicker onChange={this.handleChangeStartDate} allowClear picker="year"
-                                            disabledDate={y => !y || y.isAfter(new Date())} />
-                                    </div>
-                                </Col>
-                                : null}
-                            {this.state.range == 4 ?
-                                <Col span={4}>
-                                    <div style={{ padding: 10 }}>
-                                        <h6>To</h6>
-                                        <DatePicker onChange={this.handleChangeEndDate} picker="year"
-                                            disabledDate={y => !y || y.isAfter(new Date()) || y.isBefore(startDate)} /></div>
-                                </Col>
-                                : null}
+                                {this.state.range == 2 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>Choose Month</h6>
+                                            <DatePicker onChange={this.handleChangeStartDate} allowClear picker="month" style={{ width: '100%' }}
+                                                disabledDate={m => !m || m.isAfter(new Date())} />
+                                        </div>
+                                    </Col>
+                                    : null}
 
-                            <Col span={2}>
-                                <Button style={{ marginTop: 35, width: '100%' }} type="primary" onClick={this.apply}>Apply</Button> </Col>
-                        </Row>
-                        {errors ? <h6 style={{ color: 'red', fontSize: 10, marginLeft: '35%' }}>*Difference b/w dates should not be greater than 15</h6> : null}
-                    </Form>
-                </Card>
-                {this.state.isLoaded ?
-                    <div >
-                        {this.state.data.length == 0 ?
-                            <div>
-                                <center><InboxOutlined style={{ fontSize: '100px', color: '#DCDCDC', margin: '10%' }} />
-                                    <h4 style={{ margin: '-10%', color: '#DCDCDC' }}>No Data</h4></center></div> :
-                            <Row gutter={16}>
-                                <Col span={24}>
-                                    <Card title="Final Diagnosis vs Preliminary Diagnosis" style={{ marginTop: '2%' }}>
-                                        <FinalDiagnosisBarGraph
-                                            final_diagnosis_positive_count={final_diagnosis_positive_count}
-                                            final_diagnosis_negative_count={final_diagnosis_negative_count}
-                                            preliminary_diagnosis_negative_count={preliminary_diagnosis_negative_count}
-                                            preliminary_diagnosis_positive_count={preliminary_diagnosis_positive_count}
-                                            parameter={this.state.parameter}
-                                            xaxis_dates={rangedates}
-                                        >
-                                        </FinalDiagnosisBarGraph>
-                                    </Card>
-                                </Col>
+                                {this.state.range == 3 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>Choose Quarter</h6>
+                                            <DatePicker onChange={this.handleChangeStartDate} allowClear picker="quarter" style={{ width: '100%' }}
+                                                disabledDate={q => !q || q.isAfter(new Date())} />
+                                        </div>
+                                    </Col>
+                                    : null}
+
+                                {this.state.range == 4 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>From</h6>
+                                            <DatePicker onChange={this.handleChangeStartDate} allowClear picker="year" style={{ width: '100%' }}
+                                                disabledDate={y => !y || y.isAfter(new Date())} />
+                                        </div>
+                                    </Col>
+                                    : null}
+                                {this.state.range == 4 ?
+                                    <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                        <div style={{ padding: 10 }}>
+                                            <h6>To</h6>
+                                            <DatePicker onChange={this.handleChangeEndDate} picker="year" style={{ width: '100%' }}
+                                                disabledDate={y => !y || y.isAfter(new Date()) || y.isBefore(startDate)} /></div>
+                                    </Col>
+                                    : null}
+
+                                <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4}>
+                                    <Button style={{ marginTop: 35, width: '100%' }} type="primary" onClick={this.apply}>Apply</Button> </Col>
                             </Row>
-                        }
-                    </div>
-                    : <Spin size="large" style={{ margin: '50px' }}>
-                        <Row gutter={16}>
-                            <Col span={24}>
-                                <Card title="Final Diagnosis vs Preliminary Diagnosis" style={{ marginTop: '2%' }}>
-                                    <FinalDiagnosisBarGraph
-                                        final_diagnosis_positive_count={final_diagnosis_positive_count}
-                                        final_diagnosis_negative_count={final_diagnosis_negative_count}
-                                        preliminary_diagnosis_negative_count={preliminary_diagnosis_negative_count}
-                                        preliminary_diagnosis_positive_count={preliminary_diagnosis_positive_count}
-                                        xaxis_dates={rangedates}
-                                    >
-                                    </FinalDiagnosisBarGraph>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Spin>}
-            </div>
+                            {errors ? <h6 style={{ color: 'red', fontSize: 10, marginLeft: '35%' }}>*Difference b/w dates should not be greater than 15</h6> : null}
+                        </Form>
+                    </Card>
+                    {this.state.startDate != '' && this.state.endDate != '' ?
+                        <>
+                            {this.state.isLoaded ?
+                                <div >
+                                    {this.state.data.length == 0 ?
+                                        <Empty style={{ margin: 100 }} image={Empty.PRESENTED_IMAGE_SIMPLE} /> :
+                                        <Row justify="space-between">
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Card title="Final Diagnosis vs Preliminary Diagnosis" style={{ marginTop: '2%' }}>
+                                                    <FinalDiagnosisBarGraph
+                                                        final_diagnosis_positive_count={final_diagnosis_positive_count}
+                                                        final_diagnosis_negative_count={final_diagnosis_negative_count}
+                                                        preliminary_diagnosis_negative_count={preliminary_diagnosis_negative_count}
+                                                        preliminary_diagnosis_positive_count={preliminary_diagnosis_positive_count}
+                                                        parameter={this.state.parameter}
+                                                        xaxis_dates={rangedates}
+                                                    >
+                                                    </FinalDiagnosisBarGraph>
+                                                </Card>
+                                            </Col>
+                                        </Row>
+                                    }
+                                </div>
+                                : <Spin size="large" style={{ margin: '50px' }}>
+                                    <Row justify="space-between">
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Card title="Final Diagnosis vs Preliminary Diagnosis" style={{ marginTop: '2%' }}>
+                                                <FinalDiagnosisBarGraph
+                                                    // final_diagnosis_positive_count={final_diagnosis_positive_count}
+                                                    // final_diagnosis_negative_count={final_diagnosis_negative_count}
+                                                    // preliminary_diagnosis_negative_count={preliminary_diagnosis_negative_count}
+                                                    // preliminary_diagnosis_positive_count={preliminary_diagnosis_positive_count}
+                                                    // xaxis_dates={rangedates}
+                                                >
+                                                </FinalDiagnosisBarGraph>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </Spin>}
+                        </> :
+                        <Empty style={{ margin: 100 }}
+                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                            description="Please select filters to see the reports!" />
+                    }
+                </div>
+            </Content>
         );
     }
 }

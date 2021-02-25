@@ -17,16 +17,14 @@ function BabyDetailsAsha(props) {
         getBabyData(props.baby_record, props.reading);
     }, []);
 
-    console.log(props)
 
     const { TabPane } = Tabs;
     const style = { padding: '2px 0' }
 
     const getBabyData = async (baby_record, reading) => {
-        console.log(baby_record, reading)
 
         await axios.get(
-            'http://localhost:8080/api/babyRecordAsha?baby_record=' + baby_record + '&reading=' + reading,
+            process.env.REACT_APP_URL+'/babyRecordAsha?baby_record=' + baby_record + '&reading=' + reading,
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {
@@ -35,7 +33,7 @@ function BabyDetailsAsha(props) {
                     res.data.results
                 );
                 setVisible(true);
-                console.log(res)
+                // console.log(res)
             }
         );
     };

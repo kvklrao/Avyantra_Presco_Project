@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
 const centered = {
-    margin: '20%',
-    marginTop: '5%'
-    // marginLeft:'2%'
+    // margin: '10%',
+    // marginTop: '5%'
 }
 
 export default class EosLosPieGraph extends Component {
@@ -16,7 +15,6 @@ export default class EosLosPieGraph extends Component {
             series: [this.props.sum_eos_count, this.props.sum_los_count],
             options: {
                 chart: {
-                    width: 400,
                     type: 'pie',
                 },
                 colors: ['#00ffff', '#58D68D'],
@@ -24,17 +22,9 @@ export default class EosLosPieGraph extends Component {
                     colors: ['#00ffff', '#58D68D']
                 },
                 labels: ['LOS', 'EOS'],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 400
-                        },
-                        legend: {
-                            position: 'bottom'
-                        },
-                    }
-                }]
+                legend: {
+                    position: 'top',
+                  }
             },
         }
     }
@@ -42,13 +32,12 @@ export default class EosLosPieGraph extends Component {
     render() {
 
         return (
-            <div>
-                <ReactApexChart
-                    options={this.state.options}
-                    series={this.state.series}
-                    type="pie" width={350}
-                    style={centered} />
-            </div>
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                type="pie"
+                style={centered}
+                width={'100%'} />
         );
     }
 }

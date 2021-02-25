@@ -1,30 +1,37 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
+
 const centered = {
-    // margin: '10%',
-    // marginTop: '5%'
+  //  margin: '5%',
+    //marginTop: '5%',
 }
 
-export default class GenderPieGraph extends Component {
+export default class PieChart extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            series: [this.props.sum_male_count, this.props.sum_female_count],
+            series: [this.props.sum_positive_sepsis_count, this.props.sum_negative_sepsis_count],
             options: {
                 chart: {
                     type: 'pie',
+                }, plotOptions: {
+                    pie: {
+                        size: 650
+
+                    }
                 },
-                colors: ['#5e66ed', '#f395e6'],
+                colors: ['#FFA500', '#32CD32'],
                 fill: {
-                    colors: ['#5e66ed', '#f395e6']
+                    colors: ['#FFA500', '#32CD32']
                 },
-                labels: ['Male', 'Female'],
+                labels: ['Sepsis Positive', 'Sepsis Negative'],
                 legend: {
                     position: 'top',
                   }
             },
+         
         }
     }
 

@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
-export default class EosLosLineGraph extends Component {
+class LineChart extends Component {
     constructor(props) {
 
         super(props);
         this.state = {
 
             series: [{
-                name: "EOS",
-                data: this.props.eos_count
+                name: "Sepsis Positive",
+                data: this.props.positive_sepsis_count
             },
             {
-                name: "LOS",
-                data: this.props.los_count
+                name: "Sepsis Negative",
+                data: this.props.negative_sepsis_count
             }
             ],
             options: {
@@ -29,12 +29,12 @@ export default class EosLosLineGraph extends Component {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ['#00ffff', '#58D68D'],
+                colors: ['#FFA500', '#32CD32'],
                 legend: {
                     position: 'top',
                   },
                 fill: {
-                    colors: ['#00ffff', '#58D68D']
+                    colors: ['#FFA500', '#32CD32']
                 },
                 stroke: {
                     curve: 'straight'
@@ -50,11 +50,11 @@ export default class EosLosLineGraph extends Component {
                     },
                 },
                 xaxis: {
-                    categories: this.props.xaxis_dates,
+                    categories: this.props.sepsis_dates,
                 },
                 yaxis: {
                     title: {
-                        text: 'Count of EOS & LOS'
+                        text: 'Count of sepsis cases'
                     }
                 }
 
@@ -68,10 +68,12 @@ export default class EosLosLineGraph extends Component {
             <ReactApexChart
                 options={this.state.options}
                 series={this.state.series}
+                type="line"
                 style={{marginTop:30}}
-                type="line" />
-
+            />
         );
     }
 }
+
+export default LineChart;
 

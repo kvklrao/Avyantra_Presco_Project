@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
-const centered = {
-    margin: '18%',
-    marginLeft: '4%',
-    marginTop: '5%'
-}
-
 class PreTermLineGraph extends Component {
     constructor(props) {
 
@@ -14,18 +8,20 @@ class PreTermLineGraph extends Component {
         this.state = {
 
             series: [{
-                name: "Yes",
+                name: "Pre-Term Yes",
                 data: this.props.preterm_yes_count
             },
             {
-                name: "No",
+                name: "Pre-Term No",
                 data: this.props.preterm_no_count
             }
             ],
             options: {
                 chart: {
-                    height: 350,
                     type: 'line',
+                    toolbar: {
+                        show: false,
+                    },
                     zoom: {
                         enabled: false
                     }
@@ -33,9 +29,12 @@ class PreTermLineGraph extends Component {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ['#8b4513', '#d2691e'],
+                colors: ['#FFA500', '#32CD32'],
+                legend: {
+                    position: 'top',
+                  },
                 fill: {
-                    colors: ['#8b4513', '#d2691e']
+                    colors: ['#FFA500', '#32CD32']
                 },
                 stroke: {
                     curve: 'straight'
@@ -52,26 +51,24 @@ class PreTermLineGraph extends Component {
                 },
                 xaxis: {
                     categories: this.props.xaxis_dates,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Count (Readings)'
+                    }
                 }
 
-            }
+            },
         }
     }
 
     render() {
 
         return (
-            // <Spin tip="Loading..." >
-            <div>
-                <center>
-                    <ReactApexChart
-                        options={this.state.options}
-                        series={this.state.series}
-                        type="line" width={440}
-                        style={centered} />
-                </center>
-            </div>
-            //    </Spin>
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                type="line" />
         );
     }
 }

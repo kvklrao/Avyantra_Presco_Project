@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
-const centered = {
-    margin: '18%',
-    marginLeft:'4%',
-    marginTop:'5%'
-}
-
 class GenderLineGraph extends Component {
     constructor(props) {
 
         super(props);
         this.state = {
-            
+
             series: [{
                 name: "Male",
                 data: this.props.male_count
@@ -24,13 +18,18 @@ class GenderLineGraph extends Component {
             ],
             options: {
                 chart: {
-                    height: 350,
                     type: 'line',
+                    toolbar: {
+                        show: false,
+                    },
                     zoom: {
                         enabled: false
                     }
                 },
                 colors: ['#5e66ed', '#f395e6'],
+                legend: {
+                    position: 'top',
+                  },
                 fill: {
                     colors: ['#5e66ed', '#f395e6']
                 },
@@ -52,26 +51,25 @@ class GenderLineGraph extends Component {
                 },
                 xaxis: {
                     categories: this.props.xaxis_dates,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Count of Male & Female'
+                    }
                 }
 
-            }
+            },
         }
     }
 
     render() {
-        
+
         return (
-            // <Spin tip="Loading..." >
-                <div>
-                    <center>
-                        <ReactApexChart
-                            options={this.state.options}
-                            series={this.state.series}
-                            type="line" width={440}
-                            style={centered} />
-                    </center>
-                </div>
-        //    </Spin>
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                style={{marginTop:30}}
+                type="line" />
         );
     }
 }

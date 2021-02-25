@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
 const centered = {
-    margin: '18%',
-    marginLeft: '4%',
-    marginTop: '2%'
+    // margin: '20%',
+   // marginTop: '2%'
 }
 
-let parameter_name = 'Sepsis',eos=false;
+let parameter_name = 'Sepsis', eos = false;
 export default class FinalDiagnosisBarGraph extends Component {
     constructor(props) {
         super(props);
@@ -29,18 +28,22 @@ export default class FinalDiagnosisBarGraph extends Component {
             ],
             options: {
                 chart: {
+                    // height:'100%',
                     type: 'bar',
+                    toolbar: {
+                        show: false,
+                    },
                 },
-                colors: ['#ff634d', '#663399',
-                    '#d2b715', '#ffd732'],
+                colors: ['#ff2400', '#006400',
+                '#FFA500', '#32CD32'],
                 fill: {
-                    colors: ['#ff634d', '#663399',
-                        '#d2b715', '#ffd732'],
+                    colors: ['#ff2400', '#006400',
+                    '#FFA500', '#32CD32'],
                 },
                 plotOptions: {
                     bar: {
                         horizontal: false,
-                        columnWidth: '35%',
+                        columnWidth: '25%',
                         endingShape: 'rounded',
                         dataLabels: {
                             position: 'top', // top, center, bottom
@@ -67,9 +70,9 @@ export default class FinalDiagnosisBarGraph extends Component {
                     categories: this.props.xaxis_dates,
                 },
                 yaxis: {
-                    // title: {
-                    //     text: '$ (thousands)'
-                    // }
+                    title: {
+                        text: 'Count (Readings)'
+                    }
                 },
                 // fill: {
                 //     opacity: 1
@@ -80,13 +83,13 @@ export default class FinalDiagnosisBarGraph extends Component {
                             return val
                         }
                     }
-                }
+                },
             },
         }
     }
     componentDidMount() {
-        eos= false;
-        console.log(this.props)
+        eos = false;
+        // console.log(this.props)
         let param = "final_diagnosis_sepsis";
         if (this.props.parameter !== undefined) {
             param = this.props.parameter;
@@ -95,7 +98,7 @@ export default class FinalDiagnosisBarGraph extends Component {
             parameter_name = "Sepsis"
         } else if (param.includes("eos")) {
             parameter_name = "eos los"
-            eos =true
+            eos = true
         } else if (param.includes("gastroenteritis")) {
             parameter_name = "Gastroenteritis"
         } else if (param.includes("final_diagnosis_rds")) {
@@ -144,7 +147,7 @@ export default class FinalDiagnosisBarGraph extends Component {
             }
             ]
         })
-        if(eos==true) {
+        if (eos == true) {
             this.setState({
                 series: [{
                     name: 'Final Diagnosis EOS',
@@ -167,18 +170,17 @@ export default class FinalDiagnosisBarGraph extends Component {
 
     render() {
         return (
-            <div>
-                <center>
+            // <div>
+                // <center sty>
                     <ReactApexChart
                         options={this.state.options}
                         series={this.state.series}
                         type="bar"
-                        width={900}
-                        height={300}
+                        height="300"
                         style={centered}
                     />
-                </center>
-            </div>
+                // </center>
+            // </div>
         );
     }
 }

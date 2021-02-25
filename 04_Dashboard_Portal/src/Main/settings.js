@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { Layout, Row, Col } from 'antd';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { Input } from "antd";
 import { Table } from 'react-bootstrap';
 import Users from './users';
 const { Search } = Input;
+const { Content } = Layout;
+
 
 
 export default class Settings extends Component {
@@ -49,34 +52,43 @@ export default class Settings extends Component {
         var i = 0;
 
         return (
-            <Container style={{ margin_top: '10' }}>
+            <Content className="site-layout-background"
+                style={{
+                    margin: '27px 17px',
+                    padding: 5,
+                    minHeight: '80vh',
+                }}>
+                <Container style={{ margin_top: '10' }}>
 
-                <Search
-                    placeholder="search for users"
-                    onChange={(value) => this.editSearchTerm(value)}
-                    style={{ width: '80%',marginBottom: '20px' }}
-                    enterButton
-                />
-           
+                    <Search
+                        placeholder="search for users"
+                        onChange={(value) => this.editSearchTerm(value)}
+                        style={{ width: '80%', marginBottom: '20px' }}
+                        enterButton
+                    />
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>userid</th>
-                            <th>user name</th>
-                            <th>hospital access</th>
-                            <th>branch access</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}
+                                        >userid</th>
+                                        <th xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>user name</th>
+                                        <th xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>hospital access</th>
+                                        <th xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>branch access</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                        <Users users={this.dynamicSearch()} />
+                                    <Users users={this.dynamicSearch()} />
 
-                    </tbody>
-                </Table>
-
-
-            </Container>
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                </Container>
+            </Content>
         );
     }
 }

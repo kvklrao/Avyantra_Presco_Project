@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
-export default class EosLosLineGraph extends Component {
+const centered = {
+    margin:'15%',
+    marginTop: '2%'
+}
+
+class ReadingVsSepsisScoreLineGraph extends Component {
     constructor(props) {
 
         super(props);
         this.state = {
 
             series: [{
-                name: "EOS",
-                data: this.props.eos_count
+                name: "Yes",
+                data: this.props.sepsis_score
             },
-            {
-                name: "LOS",
-                data: this.props.los_count
-            }
             ],
             options: {
                 chart: {
@@ -29,12 +30,12 @@ export default class EosLosLineGraph extends Component {
                 dataLabels: {
                     enabled: false
                 },
-                colors: ['#00ffff', '#58D68D'],
+                colors: ['#483D8B'],
                 legend: {
                     position: 'top',
                   },
                 fill: {
-                    colors: ['#00ffff', '#58D68D']
+                    colors: ['#483D8B']
                 },
                 stroke: {
                     curve: 'straight'
@@ -50,11 +51,14 @@ export default class EosLosLineGraph extends Component {
                     },
                 },
                 xaxis: {
-                    categories: this.props.xaxis_dates,
+                    categories: this.props.readings,
+                    title: {
+                        text: 'Readings'
+                    }
                 },
                 yaxis: {
                     title: {
-                        text: 'Count of EOS & LOS'
+                        text: 'Sepsis Score'
                     }
                 }
 
@@ -68,10 +72,12 @@ export default class EosLosLineGraph extends Component {
             <ReactApexChart
                 options={this.state.options}
                 series={this.state.series}
-                style={{marginTop:30}}
-                type="line" />
-
+                type="line"
+                height={300}
+                style={centered} />
         );
     }
 }
+
+export default ReadingVsSepsisScoreLineGraph;
 

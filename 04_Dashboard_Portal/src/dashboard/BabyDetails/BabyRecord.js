@@ -11,7 +11,7 @@ function BabyRecord() {
 
     const getData = async () => {
         await axios.get(
-            'http://localhost:8080/api/allBabyDetails',
+            process.env.REACT_APP_URL+'/allBabyDetails',
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {

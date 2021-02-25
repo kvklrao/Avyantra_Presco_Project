@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Modal, Form, Tabs, Row, Col, DatePicker, Button, Card, Select, Radio, Collapse, Spin } from "antd";
+import { Table, Modal, Form, Tabs, Row, Col, DatePicker, Button, Card, Select, Radio, Collapse, Spin, Layout } from "antd";
 import BabyDetailsAsha from '../BabyDetails/BabyDetailsAsha';
 import CsvDownload from 'react-json-to-csv';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -9,7 +9,8 @@ import {
 } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
 
-function AllBabyDetails() {
+
+function AllBabyDetails(props) {
     const [state, setstate] = useState([]);
     const [csvData, setCsvData] = useState([])
     const [loading, setloading] = useState(true);
@@ -21,13 +22,19 @@ function AllBabyDetails() {
     const [radioValue, setRadioValue] = useState(2);
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
+    const [apply_clicked, setApplyClicked] = useState(false);
+
     useEffect(() => {
-        getData();
-    }, []);
+        if (!apply_clicked) {
+            getData();
+        }
+    }, [props.apply_clicked]);
 
     const { TabPane } = Tabs;
     const style = { padding: '2px 0' }
     const { Panel } = Collapse;
+    const { Content } = Layout;
+
 
     const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
     const { Option } = Select;
@@ -37,15 +44,14 @@ function AllBabyDetails() {
         downloadAllData();
     }
     const getData = async () => {
-        console.log(startDate, endDate)
-        console.log("here in get data")
         await axios.get(
-            'http://localhost:8080/api/allBabyDetails',
+            process.env.REACT_APP_URL + '/allBabyDetails?' +
+            'hospital_id=' + props.hospital_id + '&branch_id=' + props.branch_id +
+            '&all_hospitals=' + localStorage.getItem('all_hospitals') + '&all_branches=' + localStorage.getItem('all_branches'),
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {
                 setloading(false);
-                console.log(res);
                 setstate(
                     res.data.results.map(row => ({
                         baby_medical_record_number: row.baby_medical_record_number,
@@ -61,18 +67,18 @@ function AllBabyDetails() {
     };
 
     const downloadAllData = async () => {
-        console.log("downloadAllData")
         setFetching(true);
-        console.log(radioValue, startDate, endDate)
         await axios.get(
-            'http://localhost:8080/api/babyDetailsToCsv?asha=' + radioValue + '&from_date=' + startDate + '&to_date=' + endDate,
+            process.env.REACT_APP_URL + '/babyDetailsToCsv?asha=' + radioValue + '&from_date=' + startDate + '&to_date=' + endDate +
+            '&hospital_id=' + props.hospital_id + '&branch_id=' + props.branch_id +
+            '&all_hospitals=' + localStorage.getItem('all_hospitals') + '&all_branches=' + localStorage.getItem('all_branches'),
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {
-                console.log(res.data.results)
+                // console.log(res.data.results)
                 setCsvData(res.data.results);
                 setFetching(false);
-                console.log(csvData);
+                // console.log(csvData);
             }
         );
 
@@ -86,7 +92,7 @@ function AllBabyDetails() {
 
         var wscols = [];
         for (var i = 0; i < header.length; i++) {  // columns length added
-            wscols.push({ wch: header[i].length})
+            wscols.push({ wch: header[i].length })
         }
         ws['!cols'] = wscols;
         wb.Props = {
@@ -103,11 +109,10 @@ function AllBabyDetails() {
 
 
     const getBabyData = async (baby_record, reading) => {
-        console.log(baby_record, reading)
         setBabyRecordId(baby_record);
         setReading(reading);
         await axios.get(
-            'http://localhost:8080/api/babyRecord?baby_record=' + baby_record + '&reading=' + reading,
+            process.env.REACT_APP_URL + '/babyRecord?baby_record=' + baby_record + '&reading=' + reading,
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {
@@ -121,15 +126,15 @@ function AllBabyDetails() {
     };
 
     const getDataByFilter = async () => {
-        console.log(startDate, endDate)
-        console.log("here in get data by filter")
         await axios.get(
-            'http://localhost:8080/api/allBabyDetails?from_date=' + startDate + '&to_date=' + endDate,
+            process.env.REACT_APP_URL + '/allBabyDetails?from_date=' + startDate + '&to_date=' + endDate +
+            '&hospital_id=' + props.hospital_id + '&branch_id=' + props.branch_id +
+            '&all_hospitals=' + localStorage.getItem('all_hospitals') + '&all_branches=' + localStorage.getItem('all_branches'),
             { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
         ).then(
             res => {
                 setloading(false);
-                console.log(res);
+                // console.log(res);
                 setstate(
                     res.data.results2.map(row => ({
                         baby_medical_record_number: row.baby_medical_record_number,
@@ -145,17 +150,14 @@ function AllBabyDetails() {
     };
 
     const handleOk = e => {
-        console.log(e);
         setVisible(false);
     };
 
     const handleCancel = e => {
-        console.log(e);
         setVisible(false);
     };
 
     const onChange = e => {
-        console.log('radio checked', e.target.value);
         setRadioValue(e.target.value);
     };
 
@@ -192,12 +194,6 @@ function AllBabyDetails() {
             title: "Branch",
             dataIndex: "hospital_branch_name",
             width: 150,
-            filters: [
-                {
-                    text: 'Lakadikapool',
-                    value: 'lakadikapool',
-                },
-            ]
         },
         {
             title: "Date of Admission",
@@ -207,39 +203,50 @@ function AllBabyDetails() {
     ];
 
     return (
-        <div>
+        <Content
+            className="site-layout-background"
+            style={{
+                margin: '35px 25px',
+                padding: 24,
+                minHeight: '80vh',
+            }}>
             <Card>
                 <Form>
-                    <Row gutter={16}>
-                        <Col span={8} >
-                            <div style={{}}>
+                    <Row justify="space-between">
+                        <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4} >
+                            <div >
                                 <h6>Show Asha Details</h6>
-                                <Radio.Group onChange={onChange} value={radioValue} style={{ padding: 8 }}>
+                                <Radio.Group onChange={onChange} value={radioValue} style={{ width: '100%' }}>
                                     <Radio value={1}>Yes</Radio>
                                     <Radio value={2}>No</Radio>
                                 </Radio.Group>
                             </div>
                         </Col>
 
-                        <Col span={4} style={{ marginLeft: '-15%' }}>
-                            <div style={{}}>
+                        <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4} >
+                            <div >
                                 <h6>From Date</h6>
                                 <DatePicker onChange={handleChangeStartDate} allowClear disabledDate={d => !d || d.isAfter(new Date())} />
                             </div>
                         </Col>
-                        <Col span={4}>
-                            <div style={{}}>
+                        <Col xl={4} xs={24} sm={12} md={12} lg={8} xxl={4} >
+                            <div >
                                 <h6>To Date</h6>
                                 <DatePicker onChange={handleChangeEndDate} disabledDate={d => !d || d.isBefore(startDate) || d.isAfter(new Date())} /></div>
                         </Col>
                         {startDate != null & endDate != null ?
-                            <Col span={4}>
-                                <Button style={{ width: '100%', marginTop: '16%' }} type="primary" onClick={onClickCallTwoFunctions}>Apply</Button> </Col> :
-                            <Col span={4}><Button style={{ width: '100%', marginTop: '16%' }} type="primary" disabled onClick={getDataByFilter}>Apply</Button> </Col>}
+                            <Col xl={2} xs={24} sm={12} md={12} lg={8} xxl={2} >
+                                <Button style={{ width: '100%', marginTop: 30 }} type="primary" onClick={onClickCallTwoFunctions}>Apply</Button> </Col> :
+                            <Col xl={2} xs={24} sm={12} md={12} lg={8} xxl={2} ><Button style={{ width: '100%', marginTop: 30 }} type="primary" disabled onClick={getDataByFilter}>Apply</Button> </Col>}
                         {/* <Col span={2}> */}
-
-                        {fetching ? <Spin size="small"></Spin> : <Col span={4} style={{ marginLeft: '3%', marginTop: '1.5%' }}>
-                            <Button type="primary" shape="circle" icon={<DownloadOutlined />} onClick={exportToExcel} size="large" /></Col>}
+                        {fetching 
+                        ? <Spin size="small"></Spin> :
+                            <Col span={4} style={{ marginLeft: '3%', marginTop: '1.5%' }}>
+                                {localStorage.getItem('loginname') != "demonilofer" ?
+                                <>{localStorage.getItem('loginname') != "demokkcth"?
+                                <>{(csvData.length != 0 )? 
+                                    <Button type="primary" shape="circle" icon={<DownloadOutlined />}
+                                        onClick={exportToExcel} size="large" /> : null}</>:null}</>:null}</Col>}
 
                     </Row>
                 </Form>
@@ -250,8 +257,7 @@ function AllBabyDetails() {
                     <Table
                         columns={columns}
                         dataSource={state}
-                        // pagination={{ pageSize: 50 }}
-                        scroll={{ y: 310 }}
+                        scroll={{ y: 'calc(80vh - 4em)' }}
                     />
                 )}
             <Modal
@@ -635,7 +641,7 @@ function AllBabyDetails() {
                         </Panel>}
                 </Collapse>
             </Modal>
-        </div>
+        </Content>
     );
 }
 

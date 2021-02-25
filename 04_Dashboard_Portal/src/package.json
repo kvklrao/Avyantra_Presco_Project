@@ -24,6 +24,7 @@
     "react-csv": "^2.0.3",
     "react-csv-downloader": "^2.1.0",
     "react-custom-scrollbars": "^4.2.1",
+    "react-device-detect": "^1.14.0",
     "react-dom": "^16.13.1",
     "react-json-to-csv": "^1.0.4",
     "react-redux": "^7.2.1",

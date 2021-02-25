@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import ReactApexChart from 'react-apexcharts';
 
-const centered = {
-    margin: '18%',
-    marginLeft: '4%',
-    marginTop: '5%'
-}
-
 class TypeOfDeliveryLineGraph extends Component {
     constructor(props) {
 
@@ -24,8 +18,10 @@ class TypeOfDeliveryLineGraph extends Component {
             ],
             options: {
                 chart: {
-                    height: 350,
                     type: 'line',
+                    toolbar: {
+                        show: false,
+                    },
                     zoom: {
                         enabled: false
                     }
@@ -34,6 +30,9 @@ class TypeOfDeliveryLineGraph extends Component {
                     enabled: false
                 },
                 colors: ['#879ceb', '#eba487'],
+                legend: {
+                    position: 'top',
+                  },
                 fill: {
                     colors: ['#879ceb', '#eba487']
                 },
@@ -52,26 +51,25 @@ class TypeOfDeliveryLineGraph extends Component {
                 },
                 xaxis: {
                     categories: this.props.xaxis_dates,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Count of Normal & Cesarean Delivery'
+                    }
                 }
 
-            }
+            },
         }
     }
 
     render() {
 
         return (
-            // <Spin tip="Loading..." >
-            <div>
-                <center>
-                    <ReactApexChart
-                        options={this.state.options}
-                        series={this.state.series}
-                        type="line" width={440}
-                        style={centered} />
-                </center>
-            </div>
-            //    </Spin>
+            <ReactApexChart
+                options={this.state.options}
+                series={this.state.series}
+                style={{marginTop:30}}
+                type="line" />
         );
     }
 }

@@ -20,6 +20,13 @@ class Users extends Component {
 
     }
 
+    componentDidUpdate(prevState) {
+        if (prevState !== this.state) {
+            return true;
+        }
+        return false;
+    }
+
     handlechange(index, e, i) {
 
         var stateCopy = Object.assign({}, this.state);
@@ -35,7 +42,7 @@ class Users extends Component {
 
         var config = {
             method: 'post',
-            url: 'http://localhost:8080/api/user',
+            url: process.env.REACT_APP_URL + '/user',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Content-Type': 'application/json'
