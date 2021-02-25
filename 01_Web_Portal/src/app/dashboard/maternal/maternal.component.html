@@ -4,8 +4,8 @@
           <div class="row">
               <div class="col-md-4">
               </div>
-              <div class="col-md-4" *ngIf="!ashaUser">
-                <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+              <div class="col-md-4">
+                <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
               </div>
               <div class="col-md-4">
                 <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -23,7 +23,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a'}}
-                  <button class="btn edit-btn float-right" *ngIf="!ashaUser && !phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content,responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -31,7 +31,7 @@
                   <div class="col-12 col-lg-6">
                     <div class="table-responsive p-3">
                       <table class="table  table-borderless mb-0">
-                        <tbody *ngIf="!ashaUser">
+                        <tbody>
                           <tr class="border-bottom">
                             <td class="tb-label">Age</td>
                             <td class="tb-value text-right">{{responseArray[0]['mother_age']}}</td>
@@ -75,67 +75,33 @@
                               {{responseArray[0]['maternal_fever_unit']}}</td>
                           </tr>
                           <tr class="border-bottom">
-                            <td class="tb-label">Fever Duration</td>
-                            <td class="tb-value text-right">{{responseArray[0]['maternal_fever_duration']}}
-                             </td>
-                          </tr>
-                          <tr class="border-bottom" *ngIf="!ashaUser">
                             <td class="tb-label">Thyroid Function</td>
                             <td class="tb-value text-right">{{responseArray[0]['maternal_thyroid_function']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
-                            <td class="tb-label">Thyroid Function (If Abnormal)</td>
+                          <tr class="">
+                            <td class="tb-label">Thyroid Function (Diagnosis)</td>
                             <td class="tb-value text-right">{{responseArray[0]['maternal_thyroid_function_basic']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Thyroid Function (Unit)</td>
                             <td class="tb-value text-right">{{responseArray[0]['maternal_thyroid_function_unit_basic']}}
                             </td>
                           </tr>
 
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">More than 3 Vaginal Examinations During Labor</td>
                             <td class="tb-value text-right">
                               {{responseArray[0]['more_than_3_vaginal_examinations_during_labor']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Leaking PV</td>
                             <td class="tb-value text-right">{{responseArray[0]['leaking_pv']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Rupture Of Membranes (ROM)</td>
                             <td class="tb-value text-right">{{responseArray[0]['rupture_of_membranes_rom']}}</td>
                           </tr>
                         </tbody>
-
-                        <tbody *ngIf="ashaUser">
-                          <tr class="border-bottom">
-                           <td class="tb-label">Age</td>
-                           <td class="tb-value text-right">{{responseArray[0]['mother_age']}}</td>
-                         </tr>
-                        
-                         <tr class="border-bottom">
-                           <td class="tb-label">Height</td>
-                           <td class="tb-value text-right">{{responseArray[0]['mother_height']}}</td>
-                         </tr>
-                      <tr class="border-bottom">
-                           <td class="tb-label">Blood Pressure(Systolic)</td>
-                           <td class="tb-value text-right">{{responseArray[0]['maternal_blood_pressure']}}</td>
-                         </tr>
-                         <tr class="border-bottom">
-                           <td class="tb-label">Diabetes (Present)</td>
-                           <td class="tb-value text-right">{{responseArray[0]['maternal_diabetes']}}</td>
-                         </tr>
-                         <tr class="border-bottom">
-                          <td class="tb-label">Rupture Of Membranes (Type)</td>
-                          <td class="tb-value text-right">{{responseArray[0]['rupture_of_membranes_rom_one']}}</td>
-                        </tr>
-                         <tr class="border-bottom">
-                           <td class="tb-label">Type Of Delivery</td>
-                           <td class="tb-value text-right">{{responseArray[0]['type_of_delivery']}}</td>
-                         </tr>
-                         
-                       </tbody>
                       </table>
                     </div>
                   </div>
@@ -143,9 +109,9 @@
                   <div class="col-12 col-lg-6">
                     <div class="table-responsive p-3">
                       <table class="table  table-borderless mb-0">
-                        <tbody *ngIf="!ashaUser">
+                        <tbody>
                           <tr class="border-bottom">
-                            <td class="tb-label">Rupture Of Membranes (Type)</td>
+                            <td class="tb-label">Rupture Of Membranes (PROM/SROM)</td>
                             <td class="tb-value text-right">{{responseArray[0]['rupture_of_membranes_rom_one']}}</td>
                           </tr>
                           <tr class="border-bottom">
@@ -156,20 +122,20 @@
                             <td class="tb-label">Smelly Amniotic Fluid</td>
                             <td class="tb-value text-right">{{responseArray[0]['smelly_amniotic_fluid']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Chorioamnionitis</td>
                             <td class="tb-value text-right">{{responseArray[0]['chorioamnionitis']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">GBS Infection</td>
                             <td class="tb-value text-right">{{responseArray[0]['gbs_infection']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Urinary Tract Infection</td>
                             <td class="tb-value text-right">
                               {{responseArray[0]['colonisation_or_urinary_tract_infection']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Torch Infection</td>
                             <td class="tb-value text-right">{{responseArray[0]['torch_infections']}}</td>
                           </tr>
@@ -181,24 +147,24 @@
                             <td class="tb-label">Delayed Cord Clamping</td>
                             <td class="tb-value text-right">{{responseArray[0]['delayed_cord_clamping']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Vaginal Swab Culture (Done)</td>
                             <td class="tb-value text-right">{{responseArray[0]['vaginal_swab_culture']}}</td>
                           </tr>
 
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Vaginal Swab Culture (Result)</td>
                             <td class="tb-value text-right">{{responseArray[0]['vaginal_swab_culture_two']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Vaginal Swab Culture</td>
                             <td class="tb-value text-right">{{responseArray[0]['vaginal_swab_culture_three']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Amniotic Fluid Culture (Done)</td>
                             <td class="tb-value text-right">{{responseArray[0]['amniotic_fluid_culture']}}</td>
                           </tr>
-                          <tr class="border-bottom" >
+                          <tr class="border-bottom">
                             <td class="tb-label">Amniotic Fluid Culture (Result)</td>
                             <td class="tb-value text-right">{{responseArray[0]['amniotic_fluid_culture_two']}}</td>
                           </tr>
@@ -206,39 +172,7 @@
                             <td class="tb-label">AF Culture (If Positive)</td>
                             <td class="tb-value text-right">{{responseArray[0]['amniotic_fluid_culture_three']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                            <td class="tb-label">Pregnancy-induced hypertension (PIH)</td>
-                            <td class="tb-value text-right">{{responseArray[0]['pih']}}</td>
-                          </tr>
                         </tbody>
-                        <tbody *ngIf="ashaUser">
-                          <tr class="border-bottom">
-                                     <td class="tb-label">Weight</td>
-                                     <td class="tb-value text-right">{{responseArray[0]['mother_weight']}}</td>
-                                   </tr>
-                           <tr class="border-bottom">
-                                     <td class="tb-label">BMI</td>
-                                     <td class="tb-value text-right">{{responseArray[0]['mother_bmi']}}</td>
-                                   </tr>
-                          <tr class="border-bottom">
-                                     <td class="tb-label">Blood Pressure (Diastolic)</td>
-                                     <td class="tb-value text-right">{{responseArray[0]['maternal_blood_pressure_diastolic']}}
-                                     </td>
-                                   </tr>
-                           <tr class="border-bottom" >
-                                     <td class="tb-label">Rupture Of Membranes (ROM)</td>
-                                     <td class="tb-value text-right">{{responseArray[0]['rupture_of_membranes_rom']}}</td>
-                                   </tr>
-                                   <tr class="border-bottom">
-                                    <td class="tb-label">Rupture Of Membranes(IF PROM)</td>
-                                    <td class="tb-value text-right">{{responseArray[0]['rupture_of_membranes_rom_two']}}</td>
-                                  </tr>
-                      
-                           <tr class="border-bottom">
-                                     <td class="tb-label">Delayed Cord Clamping</td>
-                                     <td class="tb-value text-right">{{responseArray[0]['delayed_cord_clamping']}}</td>
-                                   </tr>
-                                 </tbody>
                       </table>
                     </div>
                   </div>
@@ -254,7 +188,7 @@
     <div class="mt-3 ml-0 div-shadow" *ngIf="isMotherEdit || responseArray?.length<1">
       <form [formGroup]="maternalForm" class="form-css card" (ngSubmit)="maternalFormSubmit()" Novalidate>
         <div class="modal-header custom-modal-header add-btn">
-          <button type="submit" *ngIf="!updateFlag && !ashaUser" class="btn btn-primary">Save</button>
+          <button type="submit" *ngIf="!updateFlag" class="btn btn-primary">Save</button>
           <button type="button" *ngIf="updateFlag" class="btn btn-primary" (click)="update_maternal_form()">Update</button>
           <div class="custom-modal-title">MOTHER PROFILE</div>
         </div>
@@ -317,7 +251,7 @@
                         (change)="changeDropdown($event.target.value,'mother_weight')">
                         <option value="Kgs">Kgs</option>
                         <!-- <option value="Lbs">Lbs</option> -->
-                        <!--<option value="NA">NA</option>-->
+                        <option value="NA">NA</option>
                       </select>
                     </div>
                     <div *ngIf="maternalForm.controls['mother_weight_unit'].invalid &&
@@ -330,7 +264,7 @@
                   </div>
                   <div class="col-md-7 col-7 pl-0">
                     <div class="input-group">
-                      <input type="text" id="mother_weight" (ngModelChange)="calculateBMI()" [dropSpecialCharacters]="false" mask="0*.00"
+                      <input type="text" id="mother_weight" (ngModelChange)="calculateBMI()" [dropSpecialCharacters]="false" mask="999.09"
                         *ngIf="this.chkMotherWeight" class="form-control" formControlName="mother_weight"
                         autocomplete="off">
                       <input type="text" readonly value="NA" *ngIf="!this.chkMotherWeight" class="form-control">
@@ -358,7 +292,7 @@
                     <select name="" id="" formControlName="mother_height_unit" class="form-control"
                       (change)="changeDropdown($event.target.value,'mother_height')">
                       <option value="ft">ft</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="maternalForm.controls['mother_height_unit'].invalid &&
                       (maternalForm.controls['mother_height_unit'].dirty ||
@@ -371,7 +305,7 @@
                   <div class="col-md-7 col-7 pl-0">
                     <div class="input-group">
                       <input type="text" (ngModelChange)="calculateBMI()" class="form-control" id="mother_height" formControlName="mother_height"
-                        [dropSpecialCharacters]="false" mask="0*.00" min="0" *ngIf="this.chkMotherHeight"
+                        [dropSpecialCharacters]="false" mask="999.09" min="0" *ngIf="this.chkMotherHeight"
                         autocomplete="off">
 
                       <input type="text" readonly value="NA" *ngIf="!this.chkMotherHeight" class="form-control">
@@ -411,7 +345,7 @@
                 </div>
                 <input type="text" readonly value="NA" *ngIf="!this.hasBmi" class="form-control">
                 <input *ngIf="this.hasBmi" [readonly]="isEditable" formControlName="mother_bmi" [dropSpecialCharacters]="false"
-                  mask="0*.00" type="text" class="form-control" id="mother_bmi" autocomplete="off">
+                  mask="999.09" type="text" class="form-control" id="mother_bmi" autocomplete="off">
                 <div *ngIf="maternalForm.controls['mother_bmi'].invalid &&
                 (maternalForm.controls['mother_bmi'].dirty ||
                 maternalForm.controls['mother_bmi'].touched || submitted)" class="error-msg">
@@ -421,7 +355,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6" *ngIf="!ashaUser">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleInputEmail1">Haemoglobin</label>
                 <div class="float-right">
@@ -439,7 +373,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" class="form-control" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" class="form-control" [dropSpecialCharacters]="false" mask="999.09"
                     *ngIf="this.chkMotherHaemoglobin" id="mother_haemoglobin" formControlName="mother_haemoglobin"
                     min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.chkMotherHaemoglobin">
@@ -455,26 +389,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6" *ngIf="ashaUser">
-              <div class="form-group">
-                <label for="maternal_diabetes">Diabetes (Present)</label>
-                <div class="input-group">
-                  <select name="" id="" formControlName="maternal_diabetes" class="form-control">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
-                  </select>
-                </div>
-                <div *ngIf="maternalForm.controls['maternal_diabetes'].invalid &&
-                (maternalForm.controls['maternal_diabetes'].dirty ||
-                maternalForm.controls['maternal_diabetes'].touched || submitted)" class="error-msg">
-                  <div class="error-msg" *ngIf="maternalForm.controls['maternal_diabetes'].errors.required">
-                    This field is required.
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
           <div class="row">
@@ -550,7 +464,7 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="maternal_diabetes">Diabetes (Present)</label>
@@ -558,7 +472,7 @@
                   <select name="" id="" formControlName="maternal_diabetes" class="form-control">
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
+                    <option value="NA">NA</option>
                   </select>
                 </div>
                 <div *ngIf="maternalForm.controls['maternal_diabetes'].invalid &&
@@ -578,7 +492,7 @@
                   <select name="" id="" formControlName="maternal_fever_basic" class="form-control">
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
+                    <option value="NA">NA</option>
                   </select>
                 </div>
                 <div *ngIf="maternalForm.controls['maternal_fever_basic'].invalid &&
@@ -592,7 +506,7 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleInputEmail1">Fever (Units)</label>
@@ -602,7 +516,7 @@
                       (change)="changeDropdown($event.target.value,'maternal_feverId')">
                       <option value="Centigrade">Centigrade</option>
                       <option value="Fahrenheit">Fahrenheit</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="maternalForm.controls['maternal_fever_unit'].invalid &&
                       (maternalForm.controls['maternal_fever_unit'].dirty ||
@@ -613,7 +527,7 @@
                     </div>
                   </div>
                   <div class="col-md-7 col-7  pl-0">
-                    <input type="text" *ngIf="this.chkFeverUnit" [dropSpecialCharacters]="false" mask="0*.00"
+                    <input type="text" *ngIf="this.chkFeverUnit" [dropSpecialCharacters]="false" mask="999.09"
                       class="form-control" id="maternal_feverId" formControlName="maternal_fever" min="0"
                       autocomplete="off">
 
@@ -631,81 +545,43 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="babymothername">Fever Duration</label>
-                <div class="float-right">
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="feverDuration"
-                          (click)="onInputChange($event)" value="1" name="motherFeverDuration">Time
-                      </label>
-                    </div>
-                    <div class="form-check-inline mr-0">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="!feverDuration"
-                          (click)="onInputChange($event)" value="2" name="motherFeverDuration">NA
-                      </label>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                      <input type="text" class="form-control" [dropSpecialCharacters]="false" mask="999"
-                        *ngIf="feverDuration" id="maternal_fever_duration"
-                        formControlName="maternal_fever_duration" min="0" autocomplete="off">
-                      <div class="input-group-append" *ngIf="feverDuration">
-                        <span class="input-group-text">Hrs</span>
-                      </div>
-                      <input type="text" readonly value="NA" *ngIf="!feverDuration" class="form-control">
-                    </div>
+                <label for="babymothername">Thyroid Function </label>
+                <select class="form-control" name="maternal_thyroid_function" id="maternal_thyroid_function"
+                  formControlName="maternal_thyroid_function">
+                  <option value="Normal">Normal</option>
+                  <option value="Abnormal">Abnormal</option>
+                  <option value="NA">NA</option>
+                </select>
               </div>
-              <div *ngIf="maternalForm.controls['maternal_fever_duration'].invalid &&
-                    (maternalForm.controls['maternal_fever_duration'].dirty ||
-                    maternalForm.controls['maternal_fever_duration'].touched || submitted)" class="error-msg">
-                <div class="error-msg" *ngIf="maternalForm.controls['maternal_fever_duration'].errors.required">
+              <div *ngIf="maternalForm.controls['maternal_thyroid_function'].invalid &&
+                    (maternalForm.controls['maternal_thyroid_function'].dirty ||
+                    maternalForm.controls['maternal_thyroid_function'].touched || submitted)" class="error-msg">
+                <div class="error-msg" *ngIf="maternalForm.controls['maternal_thyroid_function'].errors.required">
                   This field is required.
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row" *ngIf="!ashaUser">
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="babymothername">Thyroid Function</label>
-                    <select class="form-control" name="maternal_thyroid_function" id="maternal_thyroid_function"
-                      formControlName="maternal_thyroid_function">
-                      <option value="Normal">Normal</option>
-                      <option value="Abnormal">Abnormal</option>
-                      <!--<option value="NA">NA</option>-->
-                    </select>
-                  </div>
-                  <div *ngIf="maternalForm.controls['maternal_thyroid_function'].invalid &&
-                        (maternalForm.controls['maternal_thyroid_function'].dirty ||
-                        maternalForm.controls['maternal_thyroid_function'].touched || submitted)" class="error-msg">
-                    <div class="error-msg" *ngIf="maternalForm.controls['maternal_thyroid_function'].errors.required">
-                      This field is required.
-                    </div>
-                  </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="babymothername">Thyroid Function (Diagnosis)</label>
+                <select class="form-control" name="maternal_thyroid_function_basic" id="maternal_thyroid_function_basic"
+                  formControlName="maternal_thyroid_function_basic">
+                  <option value="Hypo">Hypo</option>
+                  <option value="Hyper">Hyper</option>
+                  <option value="NA">NA</option>
+                </select>
+              </div>
+              <div *ngIf="maternalForm.controls['maternal_thyroid_function_basic'].invalid &&
+                    (maternalForm.controls['maternal_thyroid_function_basic'].dirty ||
+                    maternalForm.controls['maternal_thyroid_function_basic'].touched || submitted)" class="error-msg">
+                <div class="error-msg" *ngIf="maternalForm.controls['maternal_thyroid_function_basic'].errors.required">
+                  This field is required.
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="babymothername">Thyroid Function (If Abnormal)</label>
-                      <select class="form-control" name="maternal_thyroid_function_basic" id="maternal_thyroid_function_basic"
-                        formControlName="maternal_thyroid_function_basic">
-                        <option value="Hypo">Hypo</option>
-                        <option value="Hyper">Hyper</option>
-                        <option value="NA">NA</option>
-                      </select>
-                    </div>
-                    <div *ngIf="maternalForm.controls['maternal_thyroid_function_basic'].invalid &&
-                          (maternalForm.controls['maternal_thyroid_function_basic'].dirty ||
-                          maternalForm.controls['maternal_thyroid_function_basic'].touched || submitted)" class="error-msg">
-                      <div class="error-msg" *ngIf="maternalForm.controls['maternal_thyroid_function_basic'].errors.required">
-                        This field is required.
-                      </div>
-                    </div>
-                  </div>
+              </div>
             </div>
-
-          <div class="row" *ngIf="!ashaUser">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleInputEmail1">Thyroid Function (Unit)</label>
@@ -715,7 +591,7 @@
                       class="form-control width-40 ml-1"
                       (change)="changeDropdown($event.target.value,'maternal_thyroid_function_unit_basic_id')">
                       <option value="mU/L">mU/L</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="maternalForm.controls['maternal_thyroid_function_unit_basic_unit'].invalid &&
                       (maternalForm.controls['maternal_thyroid_function_unit_basic_unit'].dirty ||
@@ -730,7 +606,7 @@
                   <div class="col-md-7 col-7  pl-0">
                     <input type="text" class="form-control" id="maternal_thyroid_function_unit_basic_id"
                       formControlName="maternal_thyroid_function_unit_basic" min="0" *ngIf="this.chkThyroidUnit"
-                      [dropSpecialCharacters]="false" mask="0*.00" autocomplete="off">
+                      [dropSpecialCharacters]="false" mask="999.09" autocomplete="off">
 
                     <input type="text" readonly value="NA" *ngIf="!this.chkThyroidUnit" class="form-control">
                     <div *ngIf="maternalForm.controls['maternal_thyroid_function_unit_basic'].invalid &&
@@ -746,39 +622,38 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label for="babymothername">More than 3 Vaginal Examinations During Labor </label>
-                  <select class="form-control" name="more_than_3_vaginal_examinations_during_labor"
-                    id="more_than_3_vaginal_examinations_during_labor"
-                    formControlName="more_than_3_vaginal_examinations_during_labor">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
-                  </select>
-                </div>
-                <div *ngIf="maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].invalid &&
-                      (maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].dirty ||
-                      maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].touched || submitted)"
-                  class="error-msg">
-                  <div class="error-msg"
-                    *ngIf="maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].errors.required">
-                    This field is required.
-                  </div>
-                </div>
-              </div>
           </div>
 
 
-          <div class="row" *ngIf="!ashaUser">
-          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="babymothername">More than 3 Vaginal Examinations During Labor </label>
+                <select class="form-control" name="more_than_3_vaginal_examinations_during_labor"
+                  id="more_than_3_vaginal_examinations_during_labor"
+                  formControlName="more_than_3_vaginal_examinations_during_labor">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="NA">NA</option>
+                </select>
+              </div>
+              <div *ngIf="maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].invalid &&
+                    (maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].dirty ||
+                    maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].touched || submitted)"
+                class="error-msg">
+                <div class="error-msg"
+                  *ngIf="maternalForm.controls['more_than_3_vaginal_examinations_during_labor'].errors.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Leaking PV </label>
                 <select class="form-control" name="leaking_pv" id="leaking_pv" formControlName="leaking_pv">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['leaking_pv'].invalid &&
@@ -789,28 +664,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label for="babymothername">Rupture Of Membranes (ROM)</label>
-                  <select class="form-control" name="rupture_of_membranes_rom" id="rupture_of_membranes_rom"
-                    formControlName="rupture_of_membranes_rom">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
-                  </select>
-                </div>
-                <div *ngIf="maternalForm.controls['rupture_of_membranes_rom'].invalid &&
-                      (maternalForm.controls['rupture_of_membranes_rom'].dirty ||
-                      maternalForm.controls['rupture_of_membranes_rom'].touched || submitted)" class="error-msg">
-                  <div class="error-msg" *ngIf="maternalForm.controls['rupture_of_membranes_rom'].errors.required">
-                    This field is required.
-                  </div>
-                </div>
-              </div>
           </div>
 
-
-          <div class="row" *ngIf="ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Rupture Of Membranes (ROM)</label>
@@ -818,7 +674,7 @@
                   formControlName="rupture_of_membranes_rom">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['rupture_of_membranes_rom'].invalid &&
@@ -831,55 +687,13 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="babymothername">Rupture Of Membranes (Type)</label>
+                <label for="babymothername">Rupture Of Membranes (PROM/SROM/ARM)</label>
                 <select class="form-control" name="rupture_of_membranes_rom_one" id="rupture_of_membranes_rom_one"
                   formControlName="rupture_of_membranes_rom_one">
                   <option value="PROM">PROM</option>
                   <option value="SROM">SROM</option>
                   <option value="ARM">ARM</option>
-                  <!--<option value="NA">NA</option>-->
-                </select>
-              </div>
-              <div *ngIf="maternalForm.controls['rupture_of_membranes_rom_one'].invalid &&
-                    (maternalForm.controls['rupture_of_membranes_rom_one'].dirty ||
-                    maternalForm.controls['rupture_of_membranes_rom_one'].touched || submitted)" class="error-msg">
-                <div class="error-msg" *ngIf="maternalForm.controls['rupture_of_membranes_rom_one'].errors.required">
-                  This field is required.
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-          <div class="row" *ngIf="!ashaUser">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="babymothername">Pregnancy-induced hypertension (PIH)</label>
-                <select class="form-control" name="pih" id="pih"
-                  formControlName="pih">
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
-                </select>
-              </div>
-              <div *ngIf="maternalForm.controls['pih'].invalid &&
-                    (maternalForm.controls['pih'].dirty ||
-                    maternalForm.controls['pih'].touched || submitted)" class="error-msg">
-                <div class="error-msg" *ngIf="maternalForm.controls['pih'].errors.required">
-                  This field is required.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="babymothername">Rupture Of Membranes (Type)</label>
-                <select class="form-control" name="rupture_of_membranes_rom_one" id="rupture_of_membranes_rom_one"
-                  formControlName="rupture_of_membranes_rom_one">
-                  <option value="PROM">PROM</option>
-                  <option value="SROM">SROM</option>
-                  <option value="ARM">ARM</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['rupture_of_membranes_rom_one'].invalid &&
@@ -896,7 +710,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Rupture Of Membranes(IF PROM)</label>
-                <!-- <span></span><div class="float-right">
+                <span></span><div class="float-right">
                   <div class="form-check-inline">
                     <label class="form-check-label">
                       <input type="radio" class="form-check-input" [checked]="this.chkRuptureIfProm"
@@ -909,22 +723,25 @@
                         (click)="onInputChange($event)" value="2" name="ruptureIfProm">NA
                     </label>
                   </div>
-                </div> -->
+                </div>
                 <div class="input-group">
-                    <select class="form-control" name="rupture_of_membranes_rom_two" id="rupture_of_membranes_rom_two"
-                    formControlName="rupture_of_membranes_rom_two">
-                    <option value="<18 hours">&lt; 18 hours</option>
-                    <option value=">18 hours">&gt; 18 hours</option>
-                    <option value="NA">NA</option>
-                  </select>
-                  <!-- <input type="text" [dropSpecialCharacters]="false" mask="999" class="form-control"
+                 <!---- <input type="text" [dropSpecialCharacters]="false" mask="999" class="form-control"
                     id="rupture_of_membranes_rom_two" *ngIf="this.chkRuptureIfProm"
                     formControlName="rupture_of_membranes_rom_two" min="0" autocomplete="off">
+                 -->
+                 <select class="form-control" name="rupture_of_membranes_rom_two" id="rupture_of_membranes_rom_two"
+                  formControlName="rupture_of_membranes_rom_two" *ngIf="this.chkRuptureIfProm">
+                  <option value=">12">> 12</option>
+                  <option value="<12">< 12</option>
+                  <option value="NA">NA</option>
+                </select>
+
                   <div class="input-group-append" *ngIf="this.chkRuptureIfProm">
                     <span class="input-group-text">Hrs</span>
                   </div>
                   <input type="text" readonly value="NA" *ngIf="!this.chkRuptureIfProm" class="form-control">
-                </div> -->
+                 
+                </div>
                 <div *ngIf="maternalForm.controls['rupture_of_membranes_rom_two'].invalid &&
                     (maternalForm.controls['rupture_of_membranes_rom_two'].dirty ||
                     maternalForm.controls['rupture_of_membranes_rom_two'].touched || submitted)" class="error-msg">
@@ -934,15 +751,14 @@
                 </div>
               </div>
             </div>
-            </div>
-            <div class="col-md-6" *ngIf="!ashaUser">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Smelly Amniotic Fluid </label>
                 <select class="form-control" name="smelly_amniotic_fluid" id="rupture_of_membranes_rom"
                   formControlName="smelly_amniotic_fluid">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['smelly_amniotic_fluid'].invalid &&
@@ -953,27 +769,8 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-md-6" *ngIf="ashaUser">
-              <div class="form-group">
-                <label for="babymothername">Type Of Delivery </label>
-                <select class="form-control" name="type_of_delivery" id="type_of_delivery"
-                  formControlName="type_of_delivery">
-                  <option value="Cesarean">Cesarean</option>
-                  <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
-                </select>
-              </div>
-              <div *ngIf="maternalForm.controls['type_of_delivery'].invalid &&
-                    (maternalForm.controls['type_of_delivery'].dirty ||
-                    maternalForm.controls['type_of_delivery'].touched || submitted)" class="error-msg">
-                <div class="error-msg" *ngIf="maternalForm.controls['type_of_delivery'].errors.required">
-                  This field is required.
-                </div>
-              </div>
-            </div>
           </div>
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="baby_weight_at_birth">Chorioamnionitis </label>
@@ -981,7 +778,7 @@
                   formControlName="chorioamnionitis">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['chorioamnionitis'].invalid &&
@@ -998,7 +795,7 @@
                 <select class="form-control" name="gbs_infection" id="gbs_infection" formControlName="gbs_infection">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['gbs_infection'].invalid &&
@@ -1011,7 +808,7 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Urinary Tract Infection </label>
@@ -1020,7 +817,7 @@
                   formControlName="colonisation_or_urinary_tract_infection">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['colonisation_or_urinary_tract_infection'].invalid &&
@@ -1040,7 +837,7 @@
                   formControlName="torch_infections">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['torch_infections'].invalid &&
@@ -1054,14 +851,14 @@
           </div>
 
           <div class="row">
-            <div class="col-md-6" *ngIf="!ashaUser">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Type Of Delivery </label>
                 <select class="form-control" name="type_of_delivery" id="type_of_delivery"
                   formControlName="type_of_delivery">
                   <option value="Cesarean">Cesarean</option>
                   <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['type_of_delivery'].invalid &&
@@ -1079,7 +876,7 @@
                   formControlName="delayed_cord_clamping">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['delayed_cord_clamping'].invalid &&
@@ -1092,7 +889,7 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Vaginal Swab Culture (Done)</label>
@@ -1100,7 +897,7 @@
                   formControlName="vaginal_swab_culture">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['vaginal_swab_culture'].invalid &&
@@ -1118,7 +915,7 @@
                   formControlName="vaginal_swab_culture_two">
                   <option value="Positive">Positive</option>
                   <option value="Negative">Negative</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="maternalForm.controls['vaginal_swab_culture_two'].invalid &&
@@ -1130,7 +927,7 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Vaginal Swab Culture </label>
@@ -1167,7 +964,7 @@
                   formControlName="amniotic_fluid_culture">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="maternalForm.controls['amniotic_fluid_culture'].invalid &&
                     (maternalForm.controls['amniotic_fluid_culture'].dirty ||
@@ -1179,7 +976,7 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="!ashaUser">
+          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="babymothername">Amniotic Fluid Culture (Result)</label>
@@ -1187,7 +984,7 @@
                   formControlName="amniotic_fluid_culture_two">
                   <option value="Positive">Positive</option>
                   <option value="Negative">Negative</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="maternalForm.controls['amniotic_fluid_culture'].invalid &&
                     (maternalForm.controls['amniotic_fluid_culture'].dirty ||
@@ -1227,11 +1024,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <button type="submit" *ngIf="ashaUser" class="btn btn-primary float-right">
-              <span>Next</span>
-            </button>
           </div>
 
         </div>

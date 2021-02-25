@@ -1,14 +1,6 @@
 <div class="avy-hero">
     <div class="container">
-        <div class="row" style="margin-top: -7%;" *ngIf="ashaWorker || phcUser">
-            <div class="col-12 col-md-9 my-3 mt-5">
-            <h3 class="text-white mt-5">Neonatal Sepsis Prediction Platform</h3>
-            </div>
-             <div class="col-12 col-md-3 my-3 text-right">.
-               <button type="button" class="btn btn-lg btn-score w-100 text-white mt-5" (click)="generateAshaScore()" [disabled]="!readingDataService.ashaPhcScore"><i class="far fa-file-alt"></i> Generate Score</button>
-             </div>
-            </div>
-      <div class="row" *ngIf="!ashaWorker && !phcUser">
+      <div class="row">
             <div class="col-12 col-md-9 my-3">
             <div class="search">
                 <div class="form-inline">
@@ -46,7 +38,7 @@
               </table>
         </div>
         <div class="col-12 col-md-3 my-3">
-            <button type="button" class="btn btn-lg btn-score w-100 text-white" (click)="generateScore()"><i class="far fa-file-alt"></i> Generate Score</button>
+            <button type="button" class="btn btn-lg btn-score w-100 text-white"><i class="far fa-file-alt"></i> Generate Score</button>
         </div>
       </div>
     </div>

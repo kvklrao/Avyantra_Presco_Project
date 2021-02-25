@@ -23,7 +23,6 @@ export class ReferralProfileComponent implements OnInit {
   login_hospital: any = {};
   referralProfile = [];
   doNotAutoComplete:any={};
-  stateList=[];
   public namePatters = { 'S': { pattern: new RegExp('\[a-zA-Z \]') } };
   public onlyNumber = { '0': { pattern: new RegExp('\[0-9\]') } };
   public customPatterns = { 'A': { pattern: new RegExp('\[a-zA-Z0-9_*!@#$%&\]') } };
@@ -38,7 +37,6 @@ export class ReferralProfileComponent implements OnInit {
     this.getLoggedInUserInfo();
     this.getReferralProfile();
     this.createForm();
-    this.getStates();
   }
 
   createForm() {
@@ -50,16 +48,14 @@ export class ReferralProfileComponent implements OnInit {
       emailAddress: ["", [Validators.required, Validators.email, Validators.pattern('[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}')]],
       address: ["",[Validators.required]],
       city: ["",[Validators.required, Validators.maxLength(32)]],
-      state: [null,[Validators.required, Validators.maxLength(32)]],
+      state: ["",[Validators.required, Validators.maxLength(32)]],
       pincode: ["", [Validators.minLength(6)]],
-      password: ["", [Validators.required,Validators.minLength(6),Validators.maxLength(15)]],
-      speciality:["",[Validators.required]],
-      hospitalName: ["", [Validators.required, Validators.maxLength(20)]],
+      password: ["", [Validators.required, Validators.maxLength(15)]],
+      speciality:["",[Validators.required]]
     });
   }
 
   updateForm(obj){
-    debugger
     this.isEdit = true;
     if(obj['pincode']==0){
       this.referralProfileForm.patchValue({
@@ -84,8 +80,7 @@ export class ReferralProfileComponent implements OnInit {
         state: obj['state'],
         // pincode: obj['pincode'],
         password: obj['password'],
-        speciality:obj['speciality'],
-        hospitalName:obj['hospitalName']
+        speciality:obj['speciality']
     });
   }
 
@@ -124,8 +119,6 @@ export class ReferralProfileComponent implements OnInit {
 
   cancel() {
     this.isEdit = false;
-    this.is_toggle=true;
-    this.show_password();
   }
 
   success(response,apitype){
@@ -149,11 +142,12 @@ export class ReferralProfileComponent implements OnInit {
     }
   }
 
-  getStates(){
-    this.commomService.getStates().subscribe(result=>{
-      if(this.helper.success(result)){
-          this.stateList=result['response'];
-      }
-  })
+  ///swap type between text and password.
+  swapper(){
+    if(this.is_toggle){
+      return 'text';
+    }
+    return 'password';
   }
+
 }

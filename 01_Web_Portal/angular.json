@@ -37,8 +37,7 @@
               "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/vendor/jquery-easing/jquery.easing.min.js",
               "src/assets/js/sb-admin-2.min.js",
-              "src/assets/vendor/chart.js/Chart.min.js",
-              "src/assets/js/demo/chart-bar-demo.js"
+              "src/assets/vendor/chart.js/Chart.min.js"
             ]
           },
           "configurations": {
@@ -112,6 +111,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
+            "codeCoverage": true ,
             "styles": [
               "src/styles.css"
             ],

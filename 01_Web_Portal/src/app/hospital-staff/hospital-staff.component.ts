@@ -7,7 +7,6 @@ import { AppHelper } from '../shared/helper/app.helper';
 import * as _ from "underscore";
 import { ToastrService } from 'ngx-toastr';
 import { AppConstant } from '../shared/constant/app-constant';
-import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 @Component({
   selector: 'app-hospital-staff',
   templateUrl: './hospital-staff.component.html',
@@ -40,7 +39,7 @@ export class HospitalStaffComponent implements OnInit {
   doNotAutoComplete: any = {};search_text:string;
   reportToStaffList=[];
   reportToCount=0;
-  initcalled=false;userType:string;
+  initcalled=false;
   ngOnInit() {
     this.search_text=null;
     this.pageLength = this.constant.pageLimit;
@@ -84,12 +83,12 @@ export class HospitalStaffComponent implements OnInit {
       }else{
         this.setSettings(false);
         this.createForm();
-        this.formRef = this.modalService.open(content,this.helper.ngbModalOptions);
+        this.formRef = this.modalService.open(content, { size: "lg" });
       }
     } else {
       this.updateForm(obj);
       this.isEdit = true;
-      this.formRef = this.modalService.open(content, this.helper.ngbModalOptions);
+      this.formRef = this.modalService.open(content, { size: "lg" });
     }
   }
   close() {
@@ -103,19 +102,17 @@ export class HospitalStaffComponent implements OnInit {
     this.staffDetailObj = obj;
     this.setSettings(true);
     this.getSelectedBranch(obj['hospital_branch_id'])
-    this.formRefDetail = this.modalService.open(openDetail, this.helper.ngbModalOptions);
+    this.formRefDetail = this.modalService.open(openDetail, { size: "lg" });
   }
   addStaff() {
     if (!this.addStaffForm.valid) {
       return;
     }
     this.addStaffForm['value']['branch'] = _.pluck(this.selectedBranches, 'hospital_branch_id');
-    this.commomService.adsStaff(this.hospitalId, this.hospitalBranchId, this.addStaffForm['value'],this.userType).subscribe(result => {
+    this.commomService.adsStaff(this.hospitalId, this.hospitalBranchId, this.addStaffForm['value']).subscribe(result => {
       if (this.helper.success(result)) {
-        console.log(result);
         this.success(result, 'addStaff')
-        this.setBranchData();
-       // this.selectedBranches = [];
+        this.selectedBranches = [];
         this.close();
         this.getBranchStaffCount(null);
       } else {
@@ -127,7 +124,6 @@ export class HospitalStaffComponent implements OnInit {
     this.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     this.hospitalId = this.login_hospital['id'];
     this.hospitalBranchId = this.login_hospital['hospital_branch_id'];
-    this.userType=this.login_hospital['user_type'];
   }
   getBranches() {
     this.commomService.getHospitalBranches(this.hospitalId,null).subscribe(response => {
@@ -155,7 +151,6 @@ export class HospitalStaffComponent implements OnInit {
   }
   success(response, apitype) {
     if (apitype == 'addStaff') {
-      console.log(response);
       this.toasty.success(response['message'], '')
     }
     if (apitype == 'getStaff') {
@@ -198,7 +193,6 @@ export class HospitalStaffComponent implements OnInit {
     this.commomService.getStaffCounts(this.hospitalId, this.hospitalBranchId,searchText,1).subscribe(response => {
       if (this.helper.success(response)) {
         this.success(response, 'getStaffCount')
-       // this.setBranch();
         this.getBranchStaff(searchText);
       } else {
         this.helper.errorHandler(response);
@@ -242,35 +236,6 @@ export class HospitalStaffComponent implements OnInit {
         this.helper.errorHandler(result);
       }
     });}
-
-    addStaff2() {
-     
-      console.log("hi");
-      if (!this.addStaffForm.valid) {
-        return;
-      }
-      this.addStaffForm['value']['branch'] = _.pluck(this.selectedBranches, 'hospital_branch_id');
-      this.commomService.adsStaff(this.hospitalId, this.hospitalBranchId, this.addStaffForm['value'],this.userType).subscribe(result => {
-        console.log("in response");
-        console.log(result);
-        console.log(this)
-
-        if (this.helper.success(result)) {
-          //let result = "success";
-          console.log(result);
-          this.success(result, 'updateStaff')
-         // this.success('Hello world!', 'Toastr fun!');
-          this.setBranchData();
-         // this.selectedBranches = [];
-          this.close();
-          this.getBranchStaffCount(null);
-        } else {
-          this.helper.errorHandler(result);
-        }
-      })
-
-  
-     }
    getSelectedBranch(branch_id) {
     this.selectedBranches = [];
     var vim = this;
@@ -303,7 +268,6 @@ export class HospitalStaffComponent implements OnInit {
     let getBranch=_.find(vim.branchList, function(obj){ return obj['hospital_branch_id']==vim.login_hospital['hospital_branch_id']; });
     if(getBranch!=undefined || getBranch!=null){
     vim.branchList=[];
-    vim.selectedBranches=[];
     vim.branchList.push(getBranch);
     vim.selectedBranches.push(getBranch)
     }
@@ -329,13 +293,5 @@ export class HospitalStaffComponent implements OnInit {
         this.helper.errorHandler(response);
       }
     })
-  }
-
-  setBranchData(){
-      if(this.userType==this.constant.branch_type_login){
-            this.setBranch();
-      }else{
-        this.selectedBranches=[];
-      }
   }
 }

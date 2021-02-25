@@ -9,14 +9,12 @@ import { Common } from "../../shared/service/common/common";
 import { Subscription } from 'rxjs';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: "app-baby-cv",
   templateUrl: "./baby-cv.component.html",
   styleUrls: ["./baby-cv.component.css"],
-  providers: [NgbModalConfig, NgbModal,DatePipe]
+  providers: [NgbModalConfig, NgbModal]
 })
 export class BabyCvComponent implements OnInit {
 
@@ -41,8 +39,6 @@ export class BabyCvComponent implements OnInit {
 
   getMedicalRecordNumber: string;
 
-  isCentralLineInsert=true;
-  isCentralLineRemove=true;
   @Input() id;
   @Input() hospital_id;
   subscription: Subscription;
@@ -52,7 +48,7 @@ export class BabyCvComponent implements OnInit {
   content:any;
   public dataServiceObj;
   public readingDataObj;
-phcUser=false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -61,8 +57,7 @@ phcUser=false;
     private modalService: NgbModal,
     private commonAsyn: Common,
     private dataService: DataService,
-    public readingDataService:ReadingDataService,private constant:AppConstant,
-    private datePipe: DatePipe,
+    public readingDataService:ReadingDataService
   ) {
     this.dataServiceObj = dataService.getOption();
   }
@@ -73,7 +68,6 @@ phcUser=false;
     vim.readingDataObj=vim.readingDataService.getReadingFormData('baby_cv') ;
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    this.checkUser();
     vim.temp_study_id = vim.id;
 
     vim.createForm(vim.dataServiceObj.study_id);
@@ -92,13 +86,6 @@ phcUser=false;
   vim.onChanges();
   }
 
-
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
-  }
-
   createForm(id) {
     const vim = this;
 
@@ -107,8 +94,6 @@ phcUser=false;
     vim.isUpperLimb = true;
     vim.isLowerLimb = true;
     vim.isEchoResult = true;
-    vim.isCentralLineInsert=true;
-    vim.isCentralLineRemove=true;
 
     this.babyCvForm = this.formBuilder.group({
       study_id: id,
@@ -124,10 +109,7 @@ phcUser=false;
       two_d_echo_done_if_yes: ["", Validators.required],
       baby_on_ionotropes: ["", Validators.required],
       central_line: ["", Validators.required],
-      infusion_of_blood_products: ["", Validators.required],
-      central_line_value:["",Validators.required],
-      central_line_insert_date:["",Validators.required],
-      central_line_removed_date:["",Validators.required]
+      infusion_of_blood_products: ["", Validators.required]
     });
   }
 
@@ -166,22 +148,6 @@ phcUser=false;
       vim.isLowerLimb = true;
     }
 
-    if (obj["central_line_insert_date"] == 'NA') {
-      vim.isCentralLineInsert = false;
-      vim.babyCvForm.controls["central_line_insert_date"].clearValidators();
-      vim.babyCvForm.controls["central_line_insert_date"].updateValueAndValidity();
-    } else {
-      vim.isCentralLineInsert = true;
-    }
-
-    if (obj["central_line_removed_date"] == 'NA') {
-      vim.isCentralLineRemove = false;
-      vim.babyCvForm.controls["central_line_removed_date"].clearValidators();
-      vim.babyCvForm.controls["central_line_removed_date"].updateValueAndValidity();
-    } else {
-      vim.isCentralLineRemove = true;
-    }
-
     if (obj["two_d_echo_done_if_yes"] == 'NA') {
       vim.isEchoResult = false;
     } else {
@@ -204,20 +170,8 @@ phcUser=false;
       two_d_echo_done_if_yes: obj["two_d_echo_done_if_yes"],
       baby_on_ionotropes: obj["baby_on_ionotropes"],
       central_line: obj["central_line"],
-      infusion_of_blood_products: obj["infusion_of_blood_products"],
-      central_line_value:obj["central_line_value"],
-      central_line_insert_date:obj["central_line_insert_date"],
-      central_line_removed_date:obj["central_line_removed_date"]
+      infusion_of_blood_products: obj["infusion_of_blood_products"]
     });
-  }
-
-  transformDate(date) {
-    if (Object.prototype.toString.call(date['central_line_insert_date']) === "[object Date]") {
-      date['central_line_insert_date'] = this.datePipe.transform(date['central_line_insert_date'], 'dd/MM/yyyy');
-    }
-    if (Object.prototype.toString.call(date['central_line_removed_date']) === "[object Date]") {
-      date['central_line_removed_date'] = this.datePipe.transform(date['central_line_removed_date'], 'dd/MM/yyyy');
-    }
   }
 
   onInputChange(event) {
@@ -322,49 +276,7 @@ phcUser=false;
         })
       }
     }
-
-    if (target.name == 'central_line_insert') {
-      if (target.value == '2') {
-        vim.isCentralLineInsert = false;
-        vim.babyCvForm.patchValue({
-          central_line_insert_date: 'NA'
-        })
-        vim.babyCvForm.value["central_line_insert_date"] = 'NA';
-
-        vim.babyCvForm.controls["central_line_insert_date"].clearValidators();
-        vim.babyCvForm.controls["central_line_insert_date"].updateValueAndValidity();
-      } else {
-        vim.isCentralLineInsert = true;
-        vim.babyCvForm.controls["central_line_insert_date"].setValidators([Validators.required]);
-        vim.babyCvForm.controls["central_line_insert_date"].updateValueAndValidity();
-        vim.babyCvForm.patchValue({
-          central_line_insert_date: ''
-        })
-      }
-    }
-
-    if (target.name == 'central_line_remove') {
-      if (target.value == '2') {
-        vim.isCentralLineRemove = false;
-        vim.babyCvForm.patchValue({
-          central_line_removed_date: 'NA'
-        })
-        vim.babyCvForm.value["central_line_removed_date"] = 'NA';
-
-        vim.babyCvForm.controls["central_line_removed_date"].clearValidators();
-        vim.babyCvForm.controls["central_line_removed_date"].updateValueAndValidity();
-      } else {
-        vim.isCentralLineRemove = true;
-        vim.babyCvForm.controls["central_line_removed_date"].setValidators([Validators.required]);
-        vim.babyCvForm.controls["central_line_removed_date"].updateValueAndValidity();
-        vim.babyCvForm.patchValue({
-          central_line_removed_date: ''
-        })
-      }
-    }
   }
-
- 
 
   // When scroll down the screen  
   onScroll() {
@@ -398,11 +310,11 @@ phcUser=false;
   babyCVFormSubmit() {
     const vim = this;
     vim.submitted = true;
-    vim.transformDate(vim.babyCvForm['value']);
     if (vim.babyCvForm.invalid) {
       return;
     }
     // vim.commonAsyn.showLoader();
+
     if (this.babyCvForm.value["heart_rate"] == '') {
       this.babyCvForm.value["heart_rate"] = 'NA';
     }
@@ -417,15 +329,6 @@ phcUser=false;
     }
     if (this.babyCvForm.value["two_d_echo_done_if_yes"] == '') {
       this.babyCvForm.value["two_d_echo_done_if_yes"] = 'NA';
-    }
-    if (this.babyCvForm.value["two_d_echo_done_if_yes"] == '') {
-      this.babyCvForm.value["two_d_echo_done_if_yes"] = 'NA';
-    }
-    if (this.babyCvForm.value["central_line_insert_date"] == '') {
-      this.babyCvForm.value["central_line_insert_date"] = 'NA';
-    }
-    if (this.babyCvForm.value["central_line_removed_date"] == '') {
-      this.babyCvForm.value["central_line_removed_date"] = 'NA';
     }
 
     // const newUser = vim.common_api.baby_cv_add(vim.babyCvForm.value);
@@ -623,7 +526,6 @@ phcUser=false;
   update_cv_form() {
     var vim = this;
     vim.submitted = true;
-    vim.transformDate(vim.babyCvForm['value']);
     if(vim.babyCvForm.invalid) {
       return;
     } else {
@@ -642,12 +544,6 @@ phcUser=false;
       }
       if (this.babyCvForm.value["two_d_echo_done_if_yes"] == '') {
         this.babyCvForm.value["two_d_echo_done_if_yes"] = 'NA';
-      }
-      if (this.babyCvForm.value["central_line_insert_date"] == '') {
-        this.babyCvForm.value["central_line_insert_date"] = 'NA';
-      }
-      if (this.babyCvForm.value["central_line_removed_date"] == '') {
-        this.babyCvForm.value["central_line_removed_date"] = 'NA';
       }
 
     vim.common_api.updateFormData('patient/update/baby_cv/', vim.id, vim.readingDataService.reading, vim.babyCvForm.value,vim.loggedInUserId)

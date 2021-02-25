@@ -4,12 +4,11 @@
   <!-- Page Heading -->
   <div class="mt-160">
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <div class="col-md-4">
+      <div class="col-md-8">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-tachometer-alt text-primary mr-2"></i> Dashboard</h4>
     </div>
-    <div class="col-md-4">
-        <app-heading></app-heading>
-      </div>
+  </div>
     <div class="col-md-4" >
       <div class="form-group has-error has-danger text-right">
               <label for="" class="text-bold text-gray-900 pr-3 mt-2">Branch:</label>
@@ -22,7 +21,7 @@
   </div>
 
   <!-- Content Row -->
-  <div class="row w-100">
+  <div class="row">
 
     <!-- Hospital Details -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -30,8 +29,8 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-sm font-weight-bold text-primary mb-1">{{dashboardData['hospital_name']}}</div>
-              <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">ID: A12547845</div> -->
+              <div class="text-sm font-weight-bold text-primary text-uppercase mb-1">{{dashboardData['hospital_name']}}</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">ID: A12547845</div>
             </div>
             <div class="col-auto">
               <i class="fas fa-hospital fa-2x text-primary"></i>
@@ -108,7 +107,7 @@
       <h4>{{bmrNo}} - {{motherName}}</h4> 
       <div class="row">
       <div class="col-sm-12">
-      <div class="table-responsive scrollableCss">
+      <div class="table-responsive">
       <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                 <thead>
                   <tr role="row">
@@ -125,7 +124,7 @@
                 <tbody *ngIf="opinionList?.length>0">
                 <tr *ngFor="let list of opinionList" role="row" class="odd">
                     <td class="sorting_1">{{list['reading']}}</td>
-                    <td>{{list['createdAt']  | date:'dd-MM-yyyy, hh:mm a'}} </td>
+                    <td>{{list['createdAt']  | date:'dd-MM-yyyy, hh:mm'}} </td>
                    <td>{{list['score']}}</td>
                    <td>{{list['referral_name']}}</td>
                     <td>{{list['opinion']}} </td>
@@ -187,7 +186,7 @@
                   <thead>
                     <tr role="row">
                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                        aria-sort="ascending" aria-label="Name: activate to sort column descending">S.No</th>
+                        aria-sort="ascending" aria-label="Name: activate to sort column descending">ID</th>
                       <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                         aria-sort="ascending" aria-label="">Baby Medical Record #</th>
                       <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="">
@@ -198,7 +197,7 @@
                         City</th>
                       <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="">
                         Modified By</th>
-                      <th class="sorting text-center" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="">
+                      <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="">
                         Action</th>
                     </tr>
                   </thead>
@@ -214,12 +213,12 @@
                       <td>{{list.updated_by | emptyDataPipe}}</td>
                       <td class="text-right">
                         <button *ngIf="hasPermission('dataEntry') || dataEntry" class="d-sm-inline-block btn btn-md btn-primary shadow-sm mr-3" (click)="readingDashboard(list)">Data Entry</button>
-                        <button  *ngIf="(hasPermission('generateScore') || generateScore) && (list['reading'] !=null)" (click)="redirectToGenerateScore(list['baby_medical_record_number'],list['study_id'],list['reading'])"  class="d-sm-inline-block btn btn-md btn-warning shadow-sm mr-3" >Generate Score</button>
+                        <button  *ngIf="(hasPermission('generateScore') || generateScore) && (list['reading'] !=null)" routerLink="/admin/score-analysis/{{list['baby_medical_record_number']}}/{{list['study_id']}}/{{list['reading']}}" class="d-sm-inline-block btn btn-md btn-warning shadow-sm mr-3" >Generate Score</button>
                         <!-- <a 
                           class="d-sm-inline-block btn btn-md btn-warning shadow-sm mr-3">Generate Score</a> -->
                         <a  class="btn btn-circle btn-md btn-secondary shadow-sm mr-3" style="color: white;">{{list.reading}}</a>
                         <a  class="d-sm-inline-block btn btn-md btn-success shadow-sm mr-3 pull-right"
-                          data-toggle="modal" style="color: white;" (click)="open(viewOpinion,list)" >Score Trend & Opinion</a>
+                          data-toggle="modal" style="color: white;" (click)="open(viewOpinion,list)" >View Opinion</a>
                       </td>
                     </tr>
                   </tbody>

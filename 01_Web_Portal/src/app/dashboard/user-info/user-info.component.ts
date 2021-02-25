@@ -9,27 +9,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-   userInfo:any = {};
-   formRef:any;
-  constructor(private formBuilder: FormBuilder,public config: NgbModalConfig,
-    private modalService: NgbModal,private util: Util) { }
+  //  userInfo:any = {};
+  //  formRef:any;
+  constructor(
+    // private formBuilder: FormBuilder,public config: NgbModalConfig,
+    // private modalService: NgbModal,private util: Util
+    ) { }
  
-  ngOnInit() {
-    const vim = this;
-    vim.util.getUserInfo().subscribe(value => { 
-       vim.userInfo = value;
-    });
-  }
+    ngOnInit() {}    
+  // ngOnInit() {
+  //   const vim = this;
+  //   vim.util.getUserInfo().subscribe(value => { 
+  //      vim.userInfo = value;
+  //   });
+  // }
 
 
-  open(content) {
-    //this.id.emit(0);
+  // open(content) {
+  //   //this.id.emit(0);
   
-   this.formRef = this.modalService.open(content, { size: 'lg' });
-  }
+  //  this.formRef = this.modalService.open(content, { size: 'lg' });
+  // }
 
-  close() {
-     const vim = this;
-     vim.formRef.close();
-  }
+  // close() {
+  //    const vim = this;
+  //    vim.formRef.close();
+  // }
 }

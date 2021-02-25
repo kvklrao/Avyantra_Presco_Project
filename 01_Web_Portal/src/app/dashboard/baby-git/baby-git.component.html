@@ -10,7 +10,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-4">
-            <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+            <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
           </div>
           <div class="col-md-4">
             <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -28,7 +28,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a' || 'Loading...'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content, responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -104,7 +104,7 @@
                   formControlName="abdominal_dystension">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyGitForm.controls['abdominal_dystension'].invalid &&
                 (babyGitForm.controls['abdominal_dystension'].dirty || babyGitForm.controls['abdominal_dystension'].touched
@@ -156,7 +156,7 @@
                 <select class="form-control" name="diarrhea" id="diarrhea" formControlName="diarrhea">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyGitForm.controls['diarrhea'].invalid && (babyGitForm.controls['diarrhea'].dirty ||
                   babyGitForm.controls['diarrhea'].touched || submitted)" class="error-msg">
@@ -175,7 +175,7 @@
                 <select class="form-control" name="vomiting" id="vomiting" formControlName="vomiting">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyGitForm.controls['vomiting'].invalid && (babyGitForm.controls['vomiting'].dirty ||
                   babyGitForm.controls['vomiting'].touched || submitted)" class="error-msg">
@@ -192,7 +192,7 @@
                   formControlName="feeding_intolerance">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyGitForm.controls['feeding_intolerance'].invalid &&
                   (babyGitForm.controls['feeding_intolerance'].dirty || babyGitForm.controls['feeding_intolerance'].touched

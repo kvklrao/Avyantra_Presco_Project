@@ -10,7 +10,6 @@ import { DatePipe } from '@angular/common';
 import * as _ from "underscore";
 import { DataService } from '../../shared/service/data.service';
 import {ReadingDataService} from '../../shared/service/reading-data.service';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 @Component({
   selector: "app-baby-appear",
@@ -45,7 +44,6 @@ loggedInUserId:number;
   temp_study_id = 0;
   login_hospital: any = {};
   responseArray = [];
-  phcUser=false;
   public dataServiceObj;
   public readinDataObj; 
   constructor(
@@ -57,7 +55,7 @@ loggedInUserId:number;
     private commonAsyn: Common,
     private dataService: DataService,
     private datePipe: DatePipe,
-    public readinDataService:ReadingDataService,private constant:AppConstant
+    public readinDataService:ReadingDataService
   ) {
     this.dataServiceObj = dataService.getOption();
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -79,13 +77,11 @@ loggedInUserId:number;
   }
 
   ngOnInit() {
-    debugger;
     const vim = this;
     vim.dataServiceObj = vim.dataService.getOption();
     vim.readinDataObj=vim.readinDataService.getReadingFormData('baby_appears');
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    this.checkUser();
     vim.createForm(vim.dataServiceObj.study_id);
     vim.id = vim.dataServiceObj.study_id;
     // this.subscription = this.common_api.getMedicalRecordNumber().subscribe(message => {
@@ -112,7 +108,6 @@ loggedInUserId:number;
     vim.readinDataObj=vim.readinDataService.getReadingFormData('baby_appears');
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    this.checkUser();
     vim.createForm(vim.dataServiceObj.study_id);
     vim.id = vim.dataServiceObj.study_id;
     if(vim.readinDataObj!=undefined){
@@ -129,12 +124,6 @@ loggedInUserId:number;
     vim.temp_study_id = vim.id;
     vim. onChanges();
     this.isEditClicked=false;
-  }
-
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
   }
 
   createForm(id) {
@@ -170,8 +159,6 @@ loggedInUserId:number;
       kangaroo_mother_care: ["", Validators.required],
       umbilical_discharge: ["", Validators.required],
       skin_pustules: ["", Validators.required],
-      umbilical_redness:["",Validators.required],
-      umbilical_enduration:["",Validators.required]
     });
   }
 
@@ -267,8 +254,6 @@ loggedInUserId:number;
       umbilical_discharge: obj["umbilical_discharge"],
       hypothermia_status_value: obj["hypothermia_status_value"],
       skin_pustules: obj["skin_pustules"],
-      umbilical_redness: obj["umbilical_redness"],
-      umbilical_enduration: obj["umbilical_enduration"]
     });
   }
 
@@ -376,37 +361,7 @@ loggedInUserId:number;
     if (vim.babyApears.invalid) {
       return;
     }
-
-    if (this.babyApears.value["baby_cry_sound_status"] == '') {
-      this.babyApears.value["baby_cry_sound_status"] = 'NA';
-    }
-
-    if (this.babyApears.value["hypothermia_status_value"] == '') {
-      this.babyApears.value["hypothermia_status_value"] = 'NA';
-    }
-
-    if (this.babyApears.value["time_of_reading_hours"] == '') {
-      this.babyApears.value["time_of_reading_hours"] = 'NA';
-    }
-
-    if (this.babyApears.value["time_of_reading_minute"] == '') {
-      this.babyApears.value["time_of_reading_minute"] = 'NA';
-    }
-
-    if (this.babyApears.value["baby_weight_at_birth"] == '') {
-      this.babyApears.value["baby_weight_at_birth"] = 'NA';
-    }
-    // const newUser = vim.common_api.baby_appear_add(vim.babyApears.value);
-    // newUser.subscribe(
-    //   response => {
-    //     vim.reset();
-    //     vim.success(response, "babyApearsFormSubmit");
-    //     vim.isBabyAppearEdit = false;
-    //   },
-    //   error => {
-    //     console.error("errro", error);
-    //   }
-    // );
+   this.setData();
     this.babyApears.value["reading"] = localStorage.getItem('reading');
     vim.goToNextReadingForm();
   }
@@ -642,27 +597,7 @@ loggedInUserId:number;
     if(vim.babyApears.invalid) {
       return;
     } else {
-
-      if (this.babyApears.value["baby_cry_sound_status"] == '') {
-        this.babyApears.value["baby_cry_sound_status"] = 'NA';
-      }
-
-      if (this.babyApears.value["time_of_reading_hours"] == '') {
-        this.babyApears.value["time_of_reading_hours"] = 'NA';
-      }
-  
-      if (this.babyApears.value["time_of_reading_minute"] == '') {
-        this.babyApears.value["time_of_reading_minute"] = 'NA';
-      }
-  
-      if (this.babyApears.value["hypothermia_status_value"] == '') {
-        this.babyApears.value["hypothermia_status_value"] = 'NA';
-      }
-
-      if (this.babyApears.value["baby_weight_at_birth"] == '') {
-        this.babyApears.value["baby_weight_at_birth"] = 'NA';
-      }
-      
+  this.setData();
     vim.common_api.updateFormData('patient/update/baby_appears/', vim.id, vim.readinDataService.reading, vim.babyApears.value,vim.loggedInUserId)
     .subscribe(result => {
       if(result['status'] != 200) {
@@ -676,6 +611,27 @@ loggedInUserId:number;
         vim.get_baby_apears(vim.dataServiceObj.study_id, vim.login_hospital['id'], this.page, vim.readinDataService.reading);
       }
     })
+    }
+  }
+  setData(){
+    if (this.babyApears.value["baby_cry_sound_status"] == '') {
+      this.babyApears.value["baby_cry_sound_status"] = 'NA';
+    }
+
+    if (this.babyApears.value["time_of_reading_hours"] == '') {
+      this.babyApears.value["time_of_reading_hours"] = 'NA';
+    }
+
+    if (this.babyApears.value["time_of_reading_minute"] == '') {
+      this.babyApears.value["time_of_reading_minute"] = 'NA';
+    }
+
+    if (this.babyApears.value["hypothermia_status_value"] == '') {
+      this.babyApears.value["hypothermia_status_value"] = 'NA';
+    }
+
+    if (this.babyApears.value["baby_weight_at_birth"] == '') {
+      this.babyApears.value["baby_weight_at_birth"] = 'NA';
     }
   }
 }

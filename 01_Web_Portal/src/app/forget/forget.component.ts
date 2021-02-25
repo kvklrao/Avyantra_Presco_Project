@@ -56,28 +56,28 @@ export class ForgetComponent implements OnInit {
   }
 
 
-  forget_password() {
-    const vim = this;
-    if (this.forgetWithPasswordForm.invalid) {
-      return;
-    }
+  // forget_password() {
+  //   const vim = this;
+  //   if (this.forgetWithPasswordForm.invalid) {
+  //     return;
+  //   }
 
-      vim.forgetWithPasswordForm.value["type"] = "2";
-      vim.forgetWithPasswordForm.value["email"] = this.forgetForm.value["email"];
-      const newUser = vim.api.forgot_password(
-        vim.forgetWithPasswordForm.value
-      );
-      newUser.subscribe(
-        response => {
-            this.isEmailExist = true;
-            vim.toastr.success('Password successfully changed!')
-            vim.router.navigate(["/login"]);
-        },
-        error => {
-          console.error("errro", error);
-        }
-      ); 
-  }
+  //     vim.forgetWithPasswordForm.value["type"] = "2";
+  //     vim.forgetWithPasswordForm.value["email"] = this.forgetForm.value["email"];
+  //     const newUser = vim.api.forgot_password(
+  //       vim.forgetWithPasswordForm.value
+  //     );
+  //     newUser.subscribe(
+  //       response => {
+  //           this.isEmailExist = true;
+  //           vim.toastr.success('Password successfully changed!')
+  //           vim.router.navigate(["/login"]);
+  //       },
+  //       error => {
+  //         console.error("errro", error);
+  //       }
+  //     ); 
+  // }
 
   is_match() {
     

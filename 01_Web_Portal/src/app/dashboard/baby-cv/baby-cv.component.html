@@ -10,7 +10,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-4">
-            <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+            <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
           </div>
           <div class="col-md-4">
             <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -28,7 +28,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a' || 'Loading...'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content ,responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -48,25 +48,21 @@
                           </tr>
                           <tr class="border-bottom">
                             <td class="tb-label">BP (Systolic)</td>
+                            <td class="tb-value text-right">{{responseArray[0]['baby_blood_pressure_mean_arterial_bp']}}
+                            </td>
+                          </tr>
+                          <tr class="">
+                            <td class="tb-label">BP (Diastoilic)</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_blood_pressure_upper_limb']}}</td>
                           </tr>
                           <tr class="border-bottom">
-                            <td class="tb-label">BP (Diastolic)</td>
+                            <td class="tb-label">BP (Mean)</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_blood_pressure_lower_limb']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                              <td class="tb-label">BP (Mean Arterial)</td>
-                              <td class="tb-value text-right">{{responseArray[0]['baby_blood_pressure_mean_arterial_bp']}}
-                              </td>
-                            </tr>
                           <tr class="border-bottom">
                             <td class="tb-label">Capillary Refill</td>
                             <td class="tb-value text-right">{{responseArray[0]['capillary_refill_unit']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                              <td class="tb-label">Central Lines(Insert Date)</td>
-                              <td class="tb-value text-right">{{responseArray[0]['central_line_insert_date']}}</td>
-                            </tr>
                           <tr class="border-bottom">
                             <td class="tb-label">Low Peripheral Pulse Volume</td>
                             <td class="tb-value text-right">{{responseArray[0]['low_peripheral_pulse_volume']}}</td>
@@ -97,17 +93,13 @@
                             <td class="tb-value text-right">{{responseArray[0]['baby_on_ionotropes']}}</td>
                           </tr>
                           <tr class="border-bottom">
-                            <td class="tb-label">Central Lines(Yes/No/NA)</td>
+                            <td class="tb-label">Central Lines</td>
                             <td class="tb-value text-right">{{responseArray[0]['central_line']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                            <td class="tb-label">Central Lines</td>
-                            <td class="tb-value text-right">{{responseArray[0]['central_line_value']}}</td>
-                          </tr>
-                          <tr class="border-bottom">
-                              <td class="tb-label">Central Lines(Remove Date)</td>
-                              <td class="tb-value text-right">{{responseArray[0]['central_line_removed_date']}}</td>
-                            </tr>
+                          <!-- <tr class="border-bottom">
+                            <td class="tb-label">Skin Pustules (> 5)</td>
+                            <td class="tb-value text-right">{{responseArray[0]['skin_pustules']}}</td>
+                          </tr> -->
                           <tr class="border-bottom">
                             <td class="tb-label">Infusion of Blood Products</td>
                             <td class="tb-value text-right">{{responseArray[0]['infusion_of_blood_products']}}</td>
@@ -184,7 +176,7 @@
                   <option value="Low">Low</option>
                   <option value="High">High</option>
                   <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['urine_output'].invalid && (babyCvForm.controls['urine_output'].dirty ||
                   babyCvForm.controls['urine_output'].touched || submitted)" class="error-msg">
@@ -195,50 +187,80 @@
               </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                  <label for="baby_blood_pressure_upper_limb">BP (Systolic)</label>
-                  <div class="float-right">
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="this.isUpperLimb"
-                          (click)="onInputChange($event)" value="1" name="upper_limb">Units
-                      </label>
-                    </div>
-                    <div class="form-check-inline mr-0">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="!this.isUpperLimb"
-                          (click)="onInputChange($event)" value="2" name="upper_limb">NA
-                      </label>
-                    </div>
+              <div class="form-group">
+                <label for="baby_blood_pressure_mean_arterial_bp">BP (Systolic)</label>
+                <div class="float-right">
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [checked]="this.isBpArterial"
+                        (click)="onInputChange($event)" value="1" name="Arterial_BP">Value
+                    </label>
                   </div>
-                  <div class="input-group">
-                    <input type="text" *ngIf="this.isUpperLimb" [dropSpecialCharacters]="false" mask="999"
-                      class="form-control" id="baby_blood_pressure_upper_limb"
-                      formControlName="baby_blood_pressure_upper_limb" min="0" autocomplete="off">
-                    <input type="text" value="NA" readonly *ngIf="!this.isUpperLimb" class="form-control">
+                  <div class="form-check-inline mr-0">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [checked]="!this.isBpArterial"
+                        (click)="onInputChange($event)" value="2" name="Arterial_BP">NA
+                    </label>
                   </div>
-                  <div *ngIf="babyCvForm.controls['baby_blood_pressure_upper_limb'].invalid &&
-                    (babyCvForm.controls['baby_blood_pressure_upper_limb'].dirty ||
-                    babyCvForm.controls['baby_blood_pressure_upper_limb'].touched || submitted)" class="error-msg">
-                    <div *ngIf="babyCvForm.controls['baby_blood_pressure_upper_limb'].errors.required">
-                      This field is required.
-                    </div>
+                </div>
+                <div class="input-group">
+                  <input type="text" *ngIf="this.isBpArterial" class="form-control"
+                    id="baby_blood_pressure_mean_arterial_bp" [dropSpecialCharacters]="false" mask="99"
+                    formControlName="baby_blood_pressure_mean_arterial_bp" autocomplete="off">
+                  <input type="text" value="NA" readonly *ngIf="!this.isBpArterial" class="form-control">
+                </div>
+                <div *ngIf="babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].invalid &&
+                  (babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].dirty ||
+                  babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].touched || submitted)" class="error-msg">
+                  <div *ngIf="babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].errors.required">
+                    This field is required.
                   </div>
                 </div>
               </div>
-         
+            </div>
           </div>
 
           <div class="row">
-            
             <div class="col-md-6">
               <div class="form-group">
-                <label for="baby_blood_pressure_lower_limb">BP (Diastolic)</label>
+                <label for="baby_blood_pressure_upper_limb"> BP (Diastoilic)</label>
+                <div class="float-right">
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [checked]="this.isUpperLimb"
+                        (click)="onInputChange($event)" value="1" name="upper_limb">Value
+                    </label>
+                  </div>
+                  <div class="form-check-inline mr-0">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [checked]="!this.isUpperLimb"
+                        (click)="onInputChange($event)" value="2" name="upper_limb">NA
+                    </label>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <input type="text" *ngIf="this.isUpperLimb" [dropSpecialCharacters]="false" mask="99"
+                    class="form-control" id="baby_blood_pressure_upper_limb"
+                    formControlName="baby_blood_pressure_upper_limb" min="0" autocomplete="off">
+                  <input type="text" value="NA" readonly *ngIf="!this.isUpperLimb" class="form-control">
+                </div>
+                <div *ngIf="babyCvForm.controls['baby_blood_pressure_upper_limb'].invalid &&
+                  (babyCvForm.controls['baby_blood_pressure_upper_limb'].dirty ||
+                  babyCvForm.controls['baby_blood_pressure_upper_limb'].touched || submitted)" class="error-msg">
+                  <div *ngIf="babyCvForm.controls['baby_blood_pressure_upper_limb'].errors.required">
+                    This field is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="baby_blood_pressure_lower_limb">BP (Mean)</label>
                 <div class="float-right">
                   <div class="form-check-inline">
                     <label class="form-check-label">
                       <input type="radio" class="form-check-input" [checked]="this.isLowerLimb"
-                        (click)="onInputChange($event)" value="1" name="lower_limb">Units
+                        (click)="onInputChange($event)" value="1" name="lower_limb">Value
                     </label>
                   </div>
                   <div class="form-check-inline mr-0">
@@ -249,7 +271,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isLowerLimb" [dropSpecialCharacters]="false" mask="999"
+                  <input type="text" *ngIf="this.isLowerLimb" [dropSpecialCharacters]="false" mask="99"
                     class="form-control" id="baby_blood_pressure_lower_limb"
                     formControlName="baby_blood_pressure_lower_limb" autocomplete="off">
                   <input type="text" value="NA" readonly *ngIf="!this.isLowerLimb" class="form-control">
@@ -263,38 +285,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label for="baby_blood_pressure_mean_arterial_bp">BP (Mean Arterial)</label>
-                  <div class="float-right">
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="this.isBpArterial"
-                          (click)="onInputChange($event)" value="1" name="Arterial_BP">Units
-                      </label>
-                    </div>
-                    <div class="form-check-inline mr-0">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="!this.isBpArterial"
-                          (click)="onInputChange($event)" value="2" name="Arterial_BP">NA
-                      </label>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                    <input type="text" *ngIf="this.isBpArterial" class="form-control"
-                      id="baby_blood_pressure_mean_arterial_bp" [dropSpecialCharacters]="false" mask="999"
-                      formControlName="baby_blood_pressure_mean_arterial_bp" autocomplete="off">
-                    <input type="text" value="NA" readonly *ngIf="!this.isBpArterial" class="form-control">
-                  </div>
-                  <div *ngIf="babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].invalid &&
-                    (babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].dirty ||
-                    babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].touched || submitted)" class="error-msg">
-                    <div *ngIf="babyCvForm.controls['baby_blood_pressure_mean_arterial_bp'].errors.required">
-                      This field is required.
-                    </div>
-                  </div>
-                </div>
-              </div>
           </div>
 
           <div class="row">
@@ -304,11 +294,10 @@
                 <select class="form-control" name="capillary_refill_unit" id="capillary_refill_unit"
                   formControlName="capillary_refill_unit">
                   <option value="> 3 Sec">> 3 Sec</option>
-                  <option value="< 3 Sec">
-                    < 3 Sec</option>
-                    <option value="= 3 Sec">= 3 sec</option>
-                    <option value="=0 Sec">= 0 sec</option>
-                     <!--<option value="NA">NA</option>-->
+                  <option value="< 3 Sec"> < 3 Sec</option>
+                  <option value="0">0</option>
+                  <option value="=3">=3</option> 
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['capillary_refill_unit'].invalid &&
                   (babyCvForm.controls['capillary_refill_unit'].dirty ||
@@ -326,7 +315,7 @@
                   formControlName="low_peripheral_pulse_volume">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['low_peripheral_pulse_volume'].invalid &&
                   (babyCvForm.controls['low_peripheral_pulse_volume'].dirty ||
@@ -347,7 +336,7 @@
                   formControlName="cool_peripheries">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['cool_peripheries'].invalid && (babyCvForm.controls['cool_peripheries'].dirty
                   || babyCvForm.controls['cool_peripheries'].touched || submitted)" class="error-msg">
@@ -364,7 +353,7 @@
                   formControlName="two_d_echo_done">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['two_d_echo_done'].invalid && (babyCvForm.controls['two_d_echo_done'].dirty
                   || babyCvForm.controls['two_d_echo_done'].touched || submitted)" class="error-msg">
@@ -419,7 +408,7 @@
                   formControlName="baby_on_ionotropes">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['baby_on_ionotropes'].invalid &&
                   (babyCvForm.controls['baby_on_ionotropes'].dirty || babyCvForm.controls['baby_on_ionotropes'].touched ||
@@ -435,11 +424,11 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="central_line">Central Lines(Yes/No/NA)</label>
+                <label for="central_line">Central Lines</label>
                 <select class="form-control" name="central_line" id="central_line" formControlName="central_line">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['central_line'].invalid &&
                     (babyCvForm.controls['central_line'].dirty ||
@@ -452,109 +441,12 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="skin_pustules">Central Lines</label>
-                <select class="form-control" name="central_line_value" id="central_line_value" formControlName="central_line_value">
-                  <option value="UMBLICAL LINE">UMBLICAL LINE</option>
-                  <option value="PERIPHERAL LINE">PERIPHERAL LINE</option>
-                  <option value="NA">NA</option>
-                </select>
-                <div *ngIf="babyCvForm.controls['central_line_value'].invalid &&
-                    (babyCvForm.controls['central_line_value'].dirty || babyCvForm.controls['central_line_value'].touched ||
-                    submitted)" class="error-msg">
-                  <div *ngIf="babyCvForm.controls['central_line_value'].errors.required">
-                    This field is required.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="central_line_insert">Central Lines(Insert Date)</label>
-                  <div class="float-right">
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="this.isCentralLineInsert"
-                          (click)="onInputChange($event)" value="1" name="central_line_insert">Date
-                      </label>
-                    </div>
-                    <div class="form-check-inline mr-0">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="!this.isCentralLineInsert"
-                          (click)="onInputChange($event)" value="2" name="central_line_insert">NA
-                      </label>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                      <input type="text" class="form-control bg-white"
-                        formControlName="central_line_insert_date" bsDatepicker
-                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers:false }" placeholder="dd/mm/yyyy"
-                        autocomplete="off" *ngIf="isCentralLineInsert">
-
-                        <input type="text" readonly value="NA" *ngIf="!isCentralLineInsert" class="form-control">
-                      <div class="input-group-append">
-                        <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                  <div *ngIf="babyCvForm.controls['central_line_insert_date'].invalid &&
-                      (babyCvForm.controls['central_line_insert_date'].dirty ||
-                      babyCvForm.controls['central_line_insert_date'].touched || submitted)" class="error-msg">
-                    <div *ngIf="babyCvForm.controls['central_line_insert_date'].errors.required">
-                      This field is required.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="skin_pustules">Central Lines(Removed Date)</label>
-                  <div class="float-right">
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="this.isCentralLineRemove"
-                          (click)="onInputChange($event)" value="1" name="central_line_remove">Date
-                      </label>
-                    </div>
-                    <div class="form-check-inline mr-0">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" [checked]="!this.isCentralLineRemove"
-                          (click)="onInputChange($event)" value="2" name="central_line_remove">NA
-                      </label>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                      <input type="text"  class="form-control bg-white"
-                        formControlName="central_line_removed_date" bsDatepicker
-                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers:false }" placeholder="dd/mm/yyyy"
-                        autocomplete="off" *ngIf="isCentralLineRemove">
-                        <input type="text" readonly value="NA" *ngIf="!isCentralLineRemove" class="form-control">
-                      <div class="input-group-append">
-                        <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                  <div *ngIf="babyCvForm.controls['central_line_removed_date'].invalid &&
-                      (babyCvForm.controls['central_line_removed_date'].dirty || babyCvForm.controls['central_line_removed_date'].touched ||
-                      submitted)" class="error-msg">
-                    <div *ngIf="babyCvForm.controls['central_line_removed_date'].errors.required">
-                      This field is required.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
                 <label for="infusion_of_blood_products">Infusion of Blood Products</label>
                 <select class="form-control" name="infusion_of_blood_products" id="infusion_of_blood_products"
                   formControlName="infusion_of_blood_products">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCvForm.controls['infusion_of_blood_products'].invalid &&
                     (babyCvForm.controls['infusion_of_blood_products'].dirty || babyCvForm.controls['infusion_of_blood_products'].touched ||
@@ -566,6 +458,12 @@
               </div>
             </div>
           </div>
+
+          <!-- <div class="row">
+            <div class="col-md-6">
+              
+            </div>
+          </div> -->
           <button type="submit" *ngIf="!isEditClicked" class="btn btn-primary float-right">
             <span>Next</span>
           </button>

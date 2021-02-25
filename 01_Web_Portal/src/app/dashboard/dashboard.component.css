@@ -320,7 +320,3 @@ border-bottom: none;
   position: static;
 }
 
-.disableClass{
-  opacity:0.3;pointer-events:none; padding: 13px 20px;
-}
-

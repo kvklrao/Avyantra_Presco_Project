@@ -10,7 +10,6 @@ import { AppConstant } from "src/app/shared/constant/app-constant";
 import { Common } from "../../shared/service/common/common";
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppHelper } from 'src/app/shared/helper/app.helper';
 @Component({
   selector: "app-maternal",
   templateUrl: "./maternal.component.html",
@@ -43,12 +42,11 @@ export class MaternalComponent implements OnInit, OnChanges {
   isBoolMotherHeight: boolean = true;
   updateFlag: boolean = false;
   hasBmi=true;
-  feverDuration=true;
+
   isMotherEdit: boolean = false;
   localObj:any;
   isEditable=true;
   loggedInUserId:number;
-  phcUser=false;
   @Input() id;
   @Input() hospital_id;
 
@@ -59,7 +57,6 @@ export class MaternalComponent implements OnInit, OnChanges {
   responseArray = [];
   public dataServiceObj;
   public babyReadingData;
-  ashaUser=false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -68,8 +65,7 @@ export class MaternalComponent implements OnInit, OnChanges {
     private modalService: NgbModal,
     private commonAsyn: Common,
     private dataService:DataService,
-    public readingDataService:ReadingDataService,
-    private constant:AppConstant,private helper:AppHelper
+    public readingDataService:ReadingDataService
   ) { 
     this.dataServiceObj = dataService.getOption();
   }
@@ -87,14 +83,6 @@ export class MaternalComponent implements OnInit, OnChanges {
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
     vim.createForm(vim.dataServiceObj.study_id);
-    if(vim.login_hospital['user_type'] == vim.constant.asha_worker){
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-      this.ashaUser=true;
-    }
-    if(vim.login_hospital['user_type'] == vim.constant.phc_worker){
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-      this.phcUser=true;
-    }
     vim.id = vim.dataServiceObj.study_id;
     if (vim.dataServiceObj != undefined || vim.dataServiceObj.study_id != undefined) {
       vim.getMedicalRecordNumber=vim.dataServiceObj.baby_medical_record_number;
@@ -151,9 +139,7 @@ export class MaternalComponent implements OnInit, OnChanges {
       vaginal_swab_culture_three: ["", Validators.required],
       amniotic_fluid_culture: ["", Validators.required],
       amniotic_fluid_culture_three: ["", Validators.required],
-      amniotic_fluid_culture_two: ["", Validators.required],
-      pih: ["", Validators.required],
-      maternal_fever_duration:["",Validators.required]
+      amniotic_fluid_culture_two: ["", Validators.required]
     });
   }
 
@@ -226,152 +212,106 @@ export class MaternalComponent implements OnInit, OnChanges {
 
     if (obj["mother_age"] == 'NA') {
       vim.chkMotherAge = false;
-      vim.maternalForm.controls["mother_age"].clearValidators();
-      vim.maternalForm.controls["mother_age"].updateValueAndValidity();
+     vim.clearValidators("mother_age")
     } else {
       vim.chkMotherAge = true;
-      vim.maternalForm.controls["mother_age"].setValidators([Validators.required]);
-      vim.maternalForm.controls["mother_age"].updateValueAndValidity();
+      vim.setValidators("mother_age")
     }
 
     if (obj["mother_haemoglobin"] == 'NA') {
       vim.chkMotherHaemoglobin = false;
-      vim.maternalForm.controls["mother_haemoglobin"].clearValidators();
-      vim.maternalForm.controls["mother_haemoglobin"].updateValueAndValidity();
+      vim.clearValidators("mother_haemoglobin")
     } else {
       vim.chkMotherHaemoglobin = true;
-      vim.maternalForm.controls["mother_haemoglobin"].setValidators([Validators.required]);
-      vim.maternalForm.controls["mother_haemoglobin"].updateValueAndValidity();
+     vim.setValidators("mother_haemoglobin")
     }
 
     if (obj["maternal_blood_pressure"] == 'NA') {
       vim.chkMaternalBPSys = false;
-      vim.maternalForm.controls["maternal_blood_pressure"].clearValidators();
-      vim.maternalForm.controls["maternal_blood_pressure"].updateValueAndValidity();
+    vim.clearValidators("maternal_blood_pressure")
     } else {
       vim.chkMaternalBPSys = true;
-      vim.maternalForm.controls["maternal_blood_pressure"].setValidators([Validators.required]);
-      vim.maternalForm.controls["maternal_blood_pressure"].updateValueAndValidity();
+     vim.setValidators("maternal_blood_pressure")
     }
 
     if (obj["maternal_blood_pressure_diastolic"] == 'NA') {
       vim.chkMaternalBPDias = false;
-      vim.maternalForm.controls["maternal_blood_pressure_diastolic"].clearValidators();
-      vim.maternalForm.controls["maternal_blood_pressure_diastolic"].updateValueAndValidity();
+      vim.clearValidators("maternal_blood_pressure_diastolic")
     } else {
       vim.chkMaternalBPDias = true;
-      vim.maternalForm.controls["maternal_blood_pressure_diastolic"].setValidators([Validators.required]);
-      vim.maternalForm.controls["maternal_blood_pressure_diastolic"].updateValueAndValidity();
+     vim.setValidators("maternal_blood_pressure_diastolic")
     }
 
     if (obj["rupture_of_membranes_rom_two"] == 'NA') {
       vim.chkRuptureIfProm = false;
-      vim.maternalForm.controls["rupture_of_membranes_rom_two"].clearValidators();
-      vim.maternalForm.controls["rupture_of_membranes_rom_two"].updateValueAndValidity();
+      vim.clearValidators("rupture_of_membranes_rom_two")
     } else {
       vim.chkRuptureIfProm = true;
-      vim.maternalForm.controls["rupture_of_membranes_rom_two"].setValidators([Validators.required]);
-      vim.maternalForm.controls["rupture_of_membranes_rom_two"].updateValueAndValidity();
+    vim.setValidators("rupture_of_membranes_rom_two")
     }
 
     if (obj["amniotic_fluid_culture_three"] == 'NA') {
       vim.chkAminoticFluidCultureIfPos = false;
-      vim.maternalForm.controls["amniotic_fluid_culture_three"].clearValidators();
-      vim.maternalForm.controls["amniotic_fluid_culture_three"].updateValueAndValidity();
+     vim.clearValidators("amniotic_fluid_culture_three")
     } else {
       vim.chkAminoticFluidCultureIfPos = true;
-      vim.maternalForm.controls["amniotic_fluid_culture_three"].setValidators([Validators.required]);
-      vim.maternalForm.controls["amniotic_fluid_culture_three"].updateValueAndValidity();
+     vim.setValidators("amniotic_fluid_culture_three")
     }
 
     if (obj["vaginal_swab_culture_three"] == 'NA') {
       vim.chkVagSwabCulture = false;
-      vim.maternalForm.controls["vaginal_swab_culture_three"].clearValidators();
-      vim.maternalForm.controls["vaginal_swab_culture_three"].updateValueAndValidity();
+     vim.clearValidators("vaginal_swab_culture_three");
     } else {
       vim.chkVagSwabCulture = true;
-      vim.maternalForm.controls["vaginal_swab_culture_three"].setValidators([Validators.required]);
-      vim.maternalForm.controls["vaginal_swab_culture_three"].updateValueAndValidity();
+      vim.setValidators("vaginal_swab_culture_three")
     }
     if (obj["mother_height"] == 'NA') {
       vim.maternalForm.value["mother_height"] = 'NA';
       vim.chkMotherHeight = false;
-      vim.maternalForm.controls["mother_height"].clearValidators();
-        vim.maternalForm.controls["mother_height"].updateValueAndValidity();
-      vim.maternalForm.patchValue({
-        mother_height: 'NA'
-      });
+     vim.clearValidators("mother_height")
+      vim.maternalForm.patchValue({  mother_height: 'NA'});
     } else {
-      vim.maternalForm.controls["mother_height"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_height"].updateValueAndValidity();
-        vim.maternalForm.patchValue({
-          mother_height: ''})
-
+     vim.setValidators("mother_height")
+        vim.maternalForm.patchValue({ mother_height: ''})
       vim.chkMotherHeight = true;
-
-      vim.maternalForm.patchValue({
-        mother_height: obj["mother_height"]
-      })
+      vim.maternalForm.patchValue({ mother_height: obj["mother_height"]  })
     }
 
     if (obj["mother_weight"] == 'NA') {
       vim.maternalForm.value["mother_weight"] = 'NA';
       vim.chkMotherWeight = false;
-      vim.maternalForm.controls["mother_weight"].clearValidators();
-        vim.maternalForm.controls["mother_weight"].updateValueAndValidity();
-      vim.maternalForm.patchValue({
-        mother_weight: 'NA'
-      });
+     vim.clearValidators("mother_weight")
+      vim.maternalForm.patchValue({  mother_weight: 'NA'   });
 
     } else {
-      vim.maternalForm.controls["mother_weight"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_weight"].updateValueAndValidity();
-        vim.maternalForm.patchValue({
-          mother_weight: ''})
+    vim.setValidators("mother_weight")
+        vim.maternalForm.patchValue({ mother_weight: ''})
           vim.chkMotherWeight = true;
-      vim.maternalForm.patchValue({
-        mother_weight: obj["mother_weight"]
-      })
+      vim.maternalForm.patchValue({  mother_weight: obj["mother_weight"]})
     }
 
     if (obj["maternal_thyroid_function_unit_basic"] == 'NA') {
       vim.maternalForm.value["maternal_thyroid_function_unit_basic"] = 'NA';
       vim.chkThyroidUnit = false;
-      vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].clearValidators();
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].updateValueAndValidity();
-      vim.maternalForm.patchValue({
-        maternal_thyroid_function_unit_basic: 'NA'
-      });
+     vim.clearValidators("maternal_thyroid_function_unit_basic")
+      vim.maternalForm.patchValue({  maternal_thyroid_function_unit_basic: 'NA' });
     } else {
-      vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].updateValueAndValidity();
-        vim.maternalForm.patchValue({
-          maternal_thyroid_function_unit_basic: ''})
+     vim.setValidators("maternal_thyroid_function_unit_basic");
+        vim.maternalForm.patchValue({maternal_thyroid_function_unit_basic: ''})
           vim.chkThyroidUnit = true;
-
-      vim.maternalForm.patchValue({
-        maternal_thyroid_function_unit_basic: obj["maternal_thyroid_function_unit_basic"]
-      })
+      vim.maternalForm.patchValue({  maternal_thyroid_function_unit_basic: obj["maternal_thyroid_function_unit_basic"]})
     }
 
     if (obj["maternal_fever"] == 'NA') {
       vim.maternalForm.value["maternal_fever"] = 'NA';
       vim.chkFeverUnit = false;
-      vim.maternalForm.controls["maternal_fever"].clearValidators();
-        vim.maternalForm.controls["maternal_fever"].updateValueAndValidity();
-      vim.maternalForm.patchValue({
-        maternal_fever: 'NA'
-      });
+     vim.clearValidators("maternal_fever")
+      vim.maternalForm.patchValue({  maternal_fever: 'NA'  });
     } else {
-      vim.maternalForm.controls["maternal_fever"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_fever"].updateValueAndValidity();
-        vim.maternalForm.patchValue({
-          maternal_fever: ''})
-          vim.chkFeverUnit = true;
-
-      vim.maternalForm.patchValue({
-        maternal_fever: obj["maternal_fever"]
-      })
+       vim.setValidators("maternal_fever")
+        vim.maternalForm.patchValue({   maternal_fever: ''})
+        vim.chkFeverUnit = true;
+      vim.maternalForm.patchValue({ maternal_fever: obj["maternal_fever"] })
     }
 
     if (obj["mother_bmi"] == 'NA') {
@@ -393,28 +333,6 @@ export class MaternalComponent implements OnInit, OnChanges {
         maternal_fever: obj["mother_bmi"]
       })
     }
-
-    if (obj["maternal_fever_duration"] == 'NA') {
-      vim.maternalForm.value["maternal_fever_duration"] = 'NA';
-      vim.feverDuration = false;
-      vim.maternalForm.controls["maternal_fever_duration"].clearValidators();
-        vim.maternalForm.controls["maternal_fever_duration"].updateValueAndValidity();
-      vim.maternalForm.patchValue({
-        maternal_fever_duration: 'NA'
-      });
-    } else {
-      vim.maternalForm.controls["maternal_fever_duration"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_fever_duration"].updateValueAndValidity();
-        vim.maternalForm.patchValue({
-          maternal_fever_duration: ''})
-          vim.feverDuration = true;
-
-      vim.maternalForm.patchValue({
-        maternal_fever_duration: obj["maternal_fever_duration"]
-      })
-    }
-
-
 
     if(obj["mother_height_unit"] == 'NA' &&  obj["mother_weight_unit"] == 'NA'){
       this.isEditable=false;
@@ -461,9 +379,7 @@ export class MaternalComponent implements OnInit, OnChanges {
       vaginal_swab_culture_three: obj["vaginal_swab_culture_three"],
       amniotic_fluid_culture: obj["amniotic_fluid_culture"],
       amniotic_fluid_culture_three: obj["amniotic_fluid_culture_three"],
-      amniotic_fluid_culture_two: obj["amniotic_fluid_culture_two"],
-      pih: obj["pih"],
-      maternal_fever_duration: obj["maternal_fever_duration"]
+      amniotic_fluid_culture_two: obj["amniotic_fluid_culture_two"]
     });
   }
 
@@ -474,20 +390,13 @@ export class MaternalComponent implements OnInit, OnChanges {
     if (target.name == 'mother_age') {
       if (target.value == '2') {
         vim.chkMotherAge = false;
-        vim.maternalForm.patchValue({
-          mother_age: 'NA'
-        })
+        vim.maternalForm.patchValue({  mother_age: 'NA' })
         vim.maternalForm.value["heart_rate"] = 'NA';
-
-        vim.maternalForm.controls["mother_age"].clearValidators();
-        vim.maternalForm.controls["mother_age"].updateValueAndValidity();
+       vim.clearValidators("mother_age")
       } else {
         vim.chkMotherAge = true;
-        vim.maternalForm.patchValue({
-          mother_age: ''
-        })
-        vim.maternalForm.controls["mother_age"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_age"].updateValueAndValidity();
+        vim.maternalForm.patchValue({   mother_age: '' })
+        vim.setValidators("mother_age");
       }
     }
 
@@ -495,20 +404,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkMotherHaemoglobin = false;
-        vim.maternalForm.patchValue({
-          mother_haemoglobin: 'NA'
-        });
+        vim.maternalForm.patchValue({ mother_haemoglobin: 'NA'  });
         vim.maternalForm.value["mother_haemoglobin"] = 'NA';
-
-        vim.maternalForm.controls["mother_haemoglobin"].clearValidators();
-        vim.maternalForm.controls["mother_haemoglobin"].updateValueAndValidity();
+        vim.clearValidators("mother_haemoglobin")
       } else {
         vim.chkMotherHaemoglobin = true;
-        vim.maternalForm.patchValue({
-          mother_haemoglobin: ''
-        });
-        vim.maternalForm.controls["mother_haemoglobin"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_haemoglobin"].updateValueAndValidity();
+        vim.maternalForm.patchValue({  mother_haemoglobin: '' });
+       vim.setValidators("mother_haemoglobin")
       }
     }
 
@@ -516,20 +418,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkMaternalBPSys = false;
-        vim.maternalForm.patchValue({
-          maternal_blood_pressure: 'NA'
-        });
+        vim.maternalForm.patchValue({  maternal_blood_pressure: 'NA'  });
         vim.maternalForm.value["maternal_blood_pressure"] = 'NA';
-
-        vim.maternalForm.controls["maternal_blood_pressure"].clearValidators();
-        vim.maternalForm.controls["maternal_blood_pressure"].updateValueAndValidity();
+        vim.clearValidators("maternal_blood_pressure")
       } else {
         vim.chkMaternalBPSys = true;
-        vim.maternalForm.patchValue({
-          maternal_blood_pressure: ''
-        });
-        vim.maternalForm.controls["maternal_blood_pressure"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_blood_pressure"].updateValueAndValidity();
+        vim.maternalForm.patchValue({ maternal_blood_pressure: '' });
+        vim.setValidators("maternal_blood_pressure")
       }
     }
 
@@ -537,20 +432,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkMaternalBPDias = false;
-        vim.maternalForm.patchValue({
-          maternal_blood_pressure_diastolic: 'NA'
-        });
+        vim.maternalForm.patchValue({maternal_blood_pressure_diastolic: 'NA' });
         vim.maternalForm.value["maternal_blood_pressure_diastolic"] = 'NA';
-
-        vim.maternalForm.controls["maternal_blood_pressure_diastolic"].clearValidators();
-        vim.maternalForm.controls["maternal_blood_pressure_diastolic"].updateValueAndValidity();
+       vim.clearValidators("maternal_blood_pressure_diastolic");
       } else {
         vim.chkMaternalBPDias = true;
-        vim.maternalForm.patchValue({
-          maternal_blood_pressure_diastolic: ''
-        });
-        vim.maternalForm.controls["maternal_blood_pressure_diastolic"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_blood_pressure_diastolic"].updateValueAndValidity();
+        vim.maternalForm.patchValue({   maternal_blood_pressure_diastolic: ''   });
+       vim.setValidators("maternal_blood_pressure_diastolic");
       }
     }
 
@@ -558,20 +446,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkRuptureIfProm = false;
-        vim.maternalForm.patchValue({
-          rupture_of_membranes_rom_two: 'NA'
-        });
+        vim.maternalForm.patchValue({rupture_of_membranes_rom_two: 'NA'  });
         vim.maternalForm.value["rupture_of_membranes_rom_two"] = 'NA';
-
-        vim.maternalForm.controls["rupture_of_membranes_rom_two"].clearValidators();
-        vim.maternalForm.controls["rupture_of_membranes_rom_two"].updateValueAndValidity();
+        vim.clearValidators("rupture_of_membranes_rom_two");
       } else {
         vim.chkRuptureIfProm = true;
-        vim.maternalForm.patchValue({
-          rupture_of_membranes_rom_two: ''
-        });
-        vim.maternalForm.controls["rupture_of_membranes_rom_two"].setValidators([Validators.required]);
-        vim.maternalForm.controls["rupture_of_membranes_rom_two"].updateValueAndValidity();
+        vim.maternalForm.patchValue({  rupture_of_membranes_rom_two: ''   });
+       vim.setValidators("rupture_of_membranes_rom_two")
       }
     }
 
@@ -579,20 +460,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkAminoticFluidCultureIfPos = false;
-        vim.maternalForm.patchValue({
-          amniotic_fluid_culture_three: 'NA'
-        });
+        vim.maternalForm.patchValue({ amniotic_fluid_culture_three: 'NA'  });
         vim.maternalForm.value["amniotic_fluid_culture_three"] = 'NA';
-
-        vim.maternalForm.controls["amniotic_fluid_culture_three"].clearValidators();
-        vim.maternalForm.controls["amniotic_fluid_culture_three"].updateValueAndValidity();
+        vim.clearValidators("amniotic_fluid_culture_three")
       } else {
         vim.chkAminoticFluidCultureIfPos = true;
-        vim.maternalForm.patchValue({
-          amniotic_fluid_culture_three: ''
-        });
-        vim.maternalForm.controls["amniotic_fluid_culture_three"].setValidators([Validators.required]);
-        vim.maternalForm.controls["amniotic_fluid_culture_three"].updateValueAndValidity();
+        vim.maternalForm.patchValue({ amniotic_fluid_culture_three: ''  });
+        vim.setValidators("amniotic_fluid_culture_three")
       }
     }
 
@@ -600,20 +474,13 @@ export class MaternalComponent implements OnInit, OnChanges {
 
       if (target.value == '2') {
         vim.chkVagSwabCulture = false;
-        vim.maternalForm.patchValue({
-          vaginal_swab_culture_three: 'NA'
-        });
+        vim.maternalForm.patchValue({ vaginal_swab_culture_three: 'NA' });
         vim.maternalForm.value["vaginal_swab_culture_three"] = 'NA';
-
-        vim.maternalForm.controls["vaginal_swab_culture_three"].clearValidators();
-        vim.maternalForm.controls["vaginal_swab_culture_three"].updateValueAndValidity();
+        vim.clearValidators("vaginal_swab_culture_three");
       } else {
         vim.chkVagSwabCulture = true;
-        vim.maternalForm.patchValue({
-          vaginal_swab_culture_three: ''
-        });
-        vim.maternalForm.controls["vaginal_swab_culture_three"].setValidators([Validators.required]);
-        vim.maternalForm.controls["vaginal_swab_culture_three"].updateValueAndValidity();
+        vim.maternalForm.patchValue({ vaginal_swab_culture_three: ''  });
+       vim.setValidators("vaginal_swab_culture_three")
       }
     }
     if (target.name == 'motherBMI') {
@@ -636,26 +503,6 @@ export class MaternalComponent implements OnInit, OnChanges {
         vim.maternalForm.controls["mother_bmi"].updateValueAndValidity();
       }
     }
-    if (target.name == 'motherFeverDuration') {
-
-      if (target.value == '2') {
-        vim.feverDuration = false;
-        vim.maternalForm.patchValue({
-          maternal_fever_duration: 'NA'
-        });
-        vim.maternalForm.value["maternal_fever_duration"] = 'NA';
-
-        vim.maternalForm.controls["maternal_fever_duration"].clearValidators();
-        vim.maternalForm.controls["maternal_fever_duration"].updateValueAndValidity();
-      } else {
-        vim.feverDuration = true;
-        vim.maternalForm.patchValue({
-          maternal_fever_duration: ''
-        });
-        vim.maternalForm.controls["maternal_fever_duration"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_fever_duration"].updateValueAndValidity();
-      }
-    }
 
   }
 
@@ -663,131 +510,18 @@ export class MaternalComponent implements OnInit, OnChanges {
 
     const vim = this;
     vim.submitted = true;
-    if(this.ashaUser){
-      this.setDefaultValuesForAshaWorker();
-    }
-    console.log(this.maternalForm)
     if (vim.maternalForm.invalid) {
-      return;
-    }
-
-    if (this.maternalForm.value["mother_age"] == '') {
-      this.maternalForm.value["mother_age"] = 'NA';
-    }
-
-    if (this.maternalForm.value["mother_haemoglobin"] == '') {
-      this.maternalForm.value["mother_haemoglobin"] = 'NA';
-    }
-
-    if (this.maternalForm.value["maternal_blood_pressure"] == '') {
-      this.maternalForm.value["maternal_blood_pressure"] = 'NA';
-    }
-
-    if (this.maternalForm.value["maternal_blood_pressure_diastolic"] == '') {
-      this.maternalForm.value["maternal_blood_pressure_diastolic"] = 'NA';
-    }
-
-    if (this.maternalForm.value["rupture_of_membranes_rom_two"] == '') {
-      this.maternalForm.value["rupture_of_membranes_rom_two"] = 'NA';
-    }
-
-    if (this.maternalForm.value["vaginal_swab_culture_three"] == '') {
-      this.maternalForm.value["vaginal_swab_culture_three"] = 'NA';
-    }
-
-    if (this.maternalForm.value["amniotic_fluid_culture_three"] == '') {
-      this.maternalForm.value["amniotic_fluid_culture_three"] = 'NA';
-    }
-
-    if (this.maternalForm.value["mother_height"] == '') {
-      this.maternalForm.value["mother_height"] = 'NA';
-    }
-
-    if (this.maternalForm.value["mother_weight"] == '') {
-      this.maternalForm.value["mother_weight"] = 'NA';
-    }
-
-    if (this.maternalForm.value["maternal_thyroid_function_unit_basic"] == '') {
-      this.maternalForm.value["maternal_thyroid_function_unit_basic"] = 'NA';
-    }
-
-    if (this.maternalForm.value["maternal_fever"] == '') {
-      this.maternalForm.value["maternal_fever"] = 'NA';
-    }
-    if (this.maternalForm.value["mother_bmi"] == '') {
-      this.maternalForm.value["mother_bmi"] = 'NA';
-    }
-    if (this.maternalForm.value["maternal_fever_duration"] == '') {
-      this.maternalForm.value["maternal_fever_duration"] = 'NA';
-    }
-    
-
-    if(this.dataServiceObj.study_id) {
-      this.maternalForm.value['study_id'] = this.dataServiceObj.study_id;
-    }
-
+      return;   }
+     this.setFormData()
     vim.commonAsyn.showLoader();
     vim.maternalForm.value["tab_name"] = "maternal";
     // vim.maternalForm.value["study_id"] = vim.id;
     const newUser = vim.common_api.maternal_add(vim.maternalForm.value,vim.loggedInUserId);
     newUser.subscribe(
       response => {
-        if(this.helper.success(response)){
         vim.reset();
         vim.success(response, "MaternalFormSubmit");
-        if(vim.login_hospital['user_type']==vim.constant.asha_worker){
-          vim.readingDataService.setComponentFlag('health-parameters')
-          vim.readingDataService.setActiveTab("health-parameters")
-          vim.readingDataService.setAshaWorkerActiveStatus('motherProfile')
-          this.router.navigate(['/dashboard/health-parameters']);
-        }
-        if(vim.login_hospital['user_type']==vim.constant.phc_worker){
-          vim.readingDataService.setComponentFlag('baby-appear')
-          vim.readingDataService.setActiveTab("baby-appearence")
-          //vim.readingDataService.setAshaWorkerActiveStatus('motherProfile')
-          this.router.navigate(['/dashboard/baby-appearence']);
-        }
-      }else{
-        this.commonAsyn.isHide();
-        this.showErrorMessage(response);
-      }
-      },
-      error => {
-        console.error("errro", error);
-      }
-    );
-  }
-
-  setDefaultValuesForAshaWorker(){
-    this.maternalForm.get('maternal_fever').setValue('NA');
-    this.maternalForm.get('maternal_fever_unit').setValue('NA');
-    this.maternalForm.get('maternal_fever_basic').setValue('NA');
-    this.maternalForm.get('maternal_thyroid_function').setValue('NA');
-    this.maternalForm.get('maternal_thyroid_function_basic').setValue('NA');
-
-    this.maternalForm.get('maternal_thyroid_function_unit_basic').setValue('NA');
-    this.maternalForm.get('maternal_thyroid_function_unit_basic_unit').setValue('NA');
-    this.maternalForm.get('more_than_3_vaginal_examinations_during_labor').setValue('NA');
-    this.maternalForm.get('leaking_pv').setValue('NA');
-    this.maternalForm.get('smelly_amniotic_fluid').setValue('NA');
-    this.maternalForm.get('chorioamnionitis').setValue('NA');
-
-    this.maternalForm.get('gbs_infection').setValue('NA');
-    this.maternalForm.get('colonisation_or_urinary_tract_infection').setValue('NA');
-    this.maternalForm.get('torch_infections').setValue('NA');
-    this.maternalForm.get('vaginal_swab_culture').setValue('NA');
-    this.maternalForm.get('vaginal_swab_culture_two').setValue('NA');
-
-    this.maternalForm.get('vaginal_swab_culture_three').setValue('NA');
-    this.maternalForm.get('amniotic_fluid_culture').setValue('NA');
-    this.maternalForm.get('amniotic_fluid_culture_three').setValue('NA');
-    this.maternalForm.get('amniotic_fluid_culture_two').setValue('NA');
-    this.maternalForm.get('mother_haemoglobin').setValue('NA');
-    this.maternalForm.get('pih').setValue('NA');
-    this.maternalForm.get('maternal_fever_duration').setValue('NA');
-
-    
-
+      },error => {  console.error("errro", error); });
   }
 
   public findInvalidControls() {
@@ -960,84 +694,56 @@ export class MaternalComponent implements OnInit, OnChanges {
 
   changeDropdown(dropdownVal, dropdownId) {
     var vim = this;
-    // debugger;
+    debugger;
     if (dropdownId == 'mother_height') {
       if (dropdownVal == 'NA') {
         vim.chkMotherHeight = false;
-        vim.maternalForm.patchValue({
-          mother_height: 'NA'
-        });
+        vim.maternalForm.patchValue({ mother_height: 'NA'});
         vim.maternalForm.value["mother_height"] = 'NA';
-          
-        vim.maternalForm.controls["mother_height"].clearValidators();
-        vim.maternalForm.controls["mother_height"].updateValueAndValidity();
-
+        vim.clearValidators("mother_height")
         if( vim.maternalForm.value["mother_height_unit"] == 'NA' &&  vim.maternalForm.value["mother_weight_unit"] == 'NA'){
           this.isEditable=false;
-          vim.maternalForm.patchValue({
-            mother_bmi: ''
-          })
+          vim.maternalForm.patchValue({ mother_bmi: ''  })
         }
 
       } else {
         this.hasBmi=true;
         this.isEditable=true;
-        vim.maternalForm.controls["mother_height"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_height"].updateValueAndValidity();
+        vim.setValidators("mother_height")
         vim.chkMotherHeight = true;
-        vim.maternalForm.patchValue({
-          mother_height: ''
-        })
-        
+        vim.maternalForm.patchValue({  mother_height: ''})
       }
     }
 
     if (dropdownId == 'mother_weight') {
       if (dropdownVal == 'NA') {
         vim.chkMotherWeight = false;
-        vim.maternalForm.patchValue({
-          mother_weight: 'NA'
-        });
-        vim.maternalForm.value["mother_weight"] = 'NA';
-          
-        vim.maternalForm.controls["mother_weight"].clearValidators();
-        vim.maternalForm.controls["mother_weight"].updateValueAndValidity();
+        vim.maternalForm.patchValue({ mother_weight: 'NA'   });
+        vim.maternalForm.value["mother_weight"] = 'NA';   
+       vim.clearValidators("mother_weight");
         if( vim.maternalForm.value["mother_height_unit"] == 'NA' &&  vim.maternalForm.value["mother_weight_unit"] == 'NA'){
-          this.isEditable=false;
-          vim.maternalForm.patchValue({
-            mother_bmi: ''
-          })
+         this.isEditable=false; vim.maternalForm.patchValue({   mother_bmi: '' })
         }
       } else {
         this.isEditable=true;
         this.hasBmi=true;
         vim.chkMotherWeight = true;
-        vim.maternalForm.patchValue({
-          mother_weight: ''
-        })
-        vim.maternalForm.controls["mother_weight"].setValidators([Validators.required]);
-        vim.maternalForm.controls["mother_weight"].updateValueAndValidity();
+        vim.maternalForm.patchValue({  mother_weight: '' })
+        vim.setValidators("mother_weight")
       }
     }
 
     if (dropdownId == 'maternal_thyroid_function_unit_basic_id') {
       if (dropdownVal == 'NA') {
         vim.chkThyroidUnit = false;
-        vim.maternalForm.patchValue({
-          maternal_thyroid_function_unit_basic: 'NA'
-        });
+        vim.maternalForm.patchValue({ maternal_thyroid_function_unit_basic: 'NA' });
         vim.maternalForm.value["maternal_thyroid_function_unit_basic"] = 'NA';
-          
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].clearValidators();
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].updateValueAndValidity();
+        vim.clearValidators("maternal_thyroid_function_unit_basic")
 
       } else {
         vim.chkThyroidUnit = true;
-        vim.maternalForm.patchValue({
-          maternal_thyroid_function_unit_basic: ''
-        })
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_thyroid_function_unit_basic"].updateValueAndValidity();
+        vim.maternalForm.patchValue({ maternal_thyroid_function_unit_basic: ''   })
+        vim.setValidators("maternal_thyroid_function_unit_basic")
       }
     }
 
@@ -1045,21 +751,14 @@ export class MaternalComponent implements OnInit, OnChanges {
     if (dropdownId == 'maternal_feverId') {
       if (dropdownVal == 'NA') {
         vim.chkFeverUnit = false;
-        vim.maternalForm.patchValue({
-          maternal_fever: 'NA'
-        });
+        vim.maternalForm.patchValue({  maternal_fever: 'NA'});
         vim.maternalForm.value["maternal_fever"] = 'NA';
-          
-        vim.maternalForm.controls["maternal_fever"].clearValidators();
-        vim.maternalForm.controls["maternal_fever"].updateValueAndValidity();
+        vim.clearValidators("maternal_fever")
 
       } else {
         vim.chkFeverUnit = true;
-        vim.maternalForm.patchValue({
-          maternal_fever: ''
-        })
-        vim.maternalForm.controls["maternal_fever"].setValidators([Validators.required]);
-        vim.maternalForm.controls["maternal_fever"].updateValueAndValidity();
+        vim.maternalForm.patchValue({  maternal_fever: '' })
+        vim.setValidators("maternal_fever")
       }
     }
   }
@@ -1068,76 +767,14 @@ export class MaternalComponent implements OnInit, OnChanges {
   update_maternal_form() {
     var vim = this;
     vim.submitted = true;
-    if(vim.maternalForm.invalid) {
-      return;
+    if(vim.maternalForm.invalid) {  return;
     } else {
-
-      if (this.maternalForm.value["mother_age"] == '') {
-        this.maternalForm.value["mother_age"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["mother_haemoglobin"] == '') {
-        this.maternalForm.value["mother_haemoglobin"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["maternal_blood_pressure"] == '') {
-        this.maternalForm.value["maternal_blood_pressure"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["maternal_blood_pressure_diastolic"] == '') {
-        this.maternalForm.value["maternal_blood_pressure_diastolic"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["rupture_of_membranes_rom_two"] == '') {
-        this.maternalForm.value["rupture_of_membranes_rom_two"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["vaginal_swab_culture_three"] == '') {
-        this.maternalForm.value["vaginal_swab_culture_three"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["amniotic_fluid_culture_three"] == '') {
-        this.maternalForm.value["amniotic_fluid_culture_three"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["mother_height"] == '') {
-        this.maternalForm.value["mother_height"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["mother_weight"] == '') {
-        this.maternalForm.value["mother_weight"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["maternal_thyroid_function_unit_basic"] == '') {
-        this.maternalForm.value["maternal_thyroid_function_unit_basic"] = 'NA';
-      }
-  
-      if (this.maternalForm.value["maternal_fever"] == '') {
-        this.maternalForm.value["maternal_fever"] = 'NA';
-      }
-      if (this.maternalForm.value["mother_bmi"] == '') {
-        this.maternalForm.value["mother_bmi"] = 'NA';
-      }
-
-      if (this.maternalForm.value["maternal_fever_duration"] == '') {
-        this.maternalForm.value["maternal_fever_duration"] = 'NA';
-      }
-      
-      
-  
-      if(this.dataServiceObj.study_id) {
-        this.maternalForm.value['study_id'] = this.dataServiceObj.study_id;
-      }
-
-    vim.common_api.updateMaternalProfile(vim.id, vim.maternalForm.value,vim.loggedInUserId)
-    .subscribe(result => {
+      this.setFormData()
+    vim.common_api.updateMaternalProfile(vim.id, vim.maternalForm.value,vim.loggedInUserId).subscribe(result => {
       if(result['status'] != 200) {
         vim.toastr.error(result['message']);
       } else {
-        vim.toastr.success(
-          "",
-          "Data Updated Succesfully"
-        );
+        vim.toastr.success( "", "Data Updated Succesfully"  );
         vim.updateFlag = false;
         vim.get_maternal(vim.dataServiceObj.study_id, vim.login_hospital['id'], vim.page);
       }
@@ -1145,11 +782,50 @@ export class MaternalComponent implements OnInit, OnChanges {
     }
   }
 
-  showErrorMessage(response){
-    if(response['message']=='required have data'){
-      this.toastr.error('Please fill Basic Profile form first.');
-    }else{
-      this.toastr.error(response['message'],'');
+  setValidators(fieldName){
+    this.maternalForm.controls[fieldName].setValidators([Validators.required]);
+    this.maternalForm.controls[fieldName].updateValueAndValidity();
+  }
+  clearValidators(fieldName){
+    this.maternalForm.controls[fieldName].clearValidators();
+    this.maternalForm.controls[fieldName].updateValueAndValidity();
+  }
+  setFormData(){
+    if (this.maternalForm.value["mother_age"] == '') {
+      this.maternalForm.value["mother_age"] = 'NA';
+    }
+    if (this.maternalForm.value["mother_haemoglobin"] == '') {
+      this.maternalForm.value["mother_haemoglobin"] = 'NA';
+    }
+    if (this.maternalForm.value["maternal_blood_pressure"] == '') {
+      this.maternalForm.value["maternal_blood_pressure"] = 'NA';
+    }
+    if (this.maternalForm.value["maternal_blood_pressure_diastolic"] == '') {
+      this.maternalForm.value["maternal_blood_pressure_diastolic"] = 'NA';
+    }
+    if (this.maternalForm.value["rupture_of_membranes_rom_two"] == '') {
+      this.maternalForm.value["rupture_of_membranes_rom_two"] = 'NA';
+    }
+    if (this.maternalForm.value["vaginal_swab_culture_three"] == '') {
+      this.maternalForm.value["vaginal_swab_culture_three"] = 'NA';
+    }
+    if (this.maternalForm.value["amniotic_fluid_culture_three"] == '') {
+      this.maternalForm.value["amniotic_fluid_culture_three"] = 'NA';
+    }
+    if (this.maternalForm.value["mother_height"] == '') {
+      this.maternalForm.value["mother_height"] = 'NA';
+    }
+    if (this.maternalForm.value["mother_weight"] == '') {
+      this.maternalForm.value["mother_weight"] = 'NA';
+    }
+    if (this.maternalForm.value["maternal_thyroid_function_unit_basic"] == '') {
+      this.maternalForm.value["maternal_thyroid_function_unit_basic"] = 'NA';
+    }
+    if (this.maternalForm.value["maternal_fever"] == '') {
+      this.maternalForm.value["maternal_fever"] = 'NA';
+    }
+    if(this.dataServiceObj.study_id) {
+      this.maternalForm.value['study_id'] = this.dataServiceObj.study_id;
     }
   }
 }

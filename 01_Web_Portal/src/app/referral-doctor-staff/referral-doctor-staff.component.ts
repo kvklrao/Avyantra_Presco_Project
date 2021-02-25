@@ -65,12 +65,12 @@ export class ReferralDoctorStaffComponent implements OnInit {
 
   open(content, obj) {
       this.createForm();
-      this.formRef = this.modalService.open(content,this.helper.ngbModalOptions);
+      this.formRef = this.modalService.open(content, { size: "lg" });
   }
 
   openDetail(contentDetail, list) {
     this.referralDoctorRecordsObj=list;
-    this.formRefDetail = this.modalService.open(contentDetail, this.helper.ngbModalOptions);
+    this.formRefDetail = this.modalService.open(contentDetail, { size: "lg" });
   }
 
   close() {

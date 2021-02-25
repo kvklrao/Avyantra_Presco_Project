@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, ViewChild,ElementRef, Injector} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../shared/service/login.service";
 import { Router } from "@angular/router";
@@ -8,16 +8,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { ReadingDataService } from '../shared/service/reading-data.service';
 import { AppConstant } from '../shared/constant/app-constant';
 
-import * as ReactDOM from 'react-dom';
-import ReactApplication from './MyComponent';
-
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
   providers: [LoginService]
 })
-export class LoginComponent implements OnInit, AfterContentInit {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   password = "password";
@@ -26,7 +23,6 @@ export class LoginComponent implements OnInit, AfterContentInit {
   cookieValue = 'UNKNOWN';
   checked: boolean;
   constructor(
-    public injector: Injector,
     private formBuilder: FormBuilder,
     private loginApi: LoginService,
     private router: Router,
@@ -48,10 +44,6 @@ export class LoginComponent implements OnInit, AfterContentInit {
     });
     this.checkCookies();
 
-  }
-
-  ngAfterContentInit(){
-    ReactApplication.initialize('my-react-component', this.injector);
   }
 
   async login() {
@@ -129,7 +121,6 @@ export class LoginComponent implements OnInit, AfterContentInit {
   }
 
   navIgateUser(response){
-    debugger;
     if(response['user_type']==this.constant.hospital_type_login || response['user_type']==this.constant.branch_type_login){
       this.router.navigateByUrl("/admin");
     }
@@ -138,11 +129,6 @@ export class LoginComponent implements OnInit, AfterContentInit {
     }
     if(response['user_type']==this.constant.referral_doctor_login){
       this.router.navigateByUrl("/admin/referral-doctors");
-    }
-    if(response['user_type']==this.constant.asha_worker || response['user_type']==this.constant.phc_worker){
-      localStorage.setItem('reading',"R1");
-      this.readingDataService.reading="R1";
-      this.router.navigateByUrl("/dashboard");
     }
   }
 
@@ -158,11 +144,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
     }
   }
 
-  rememberMe(event){
+  // rememberMe(event){
 
-  }
-  ashaPhcSignup(){
-    const vim = this;
-    vim.router.navigate(["/asha-phc-signup"]);
-  }
+  // }
 }

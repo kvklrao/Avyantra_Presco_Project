@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { LoginService } from "../shared/service/login.service";
 import { Common } from "../shared/service/common/common";
-import { AppHelper } from '../shared/helper/app.helper';
 @Component({
   selector: "app-signup",
   templateUrl: "./signup.component.html",
@@ -26,7 +25,7 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private api: LoginService,
-    private commonAsyn: Common,private helper:AppHelper
+    private commonAsyn: Common
   ) { }
 
   ngOnInit() {
@@ -41,27 +40,21 @@ export class SignupComponent implements OnInit {
   }
 
   /**
-   * @method : login
-   * @purpose :- user login here using this method
+   * @method : signup
+   * @purpose :- user signup here using this method
    */
   async signup() {
     this.submitted = true;
     if (this.signForm.invalid) {
       return;
     }
-    this.commonAsyn.showLoader();
+
     const signupResponse = await this.api.signup(this.signForm.value);
     signupResponse.subscribe(
       response => {
-        if(this.helper.success(response)){
         this.success(response, "signup");
-        }else{
-          this.helper.errorHandler(response);
-          this.commonAsyn.isHide();
-        }
       },
       error => {
-        this.commonAsyn.isHide();
         console.error("errro", error);
       });
   }
@@ -77,7 +70,6 @@ export class SignupComponent implements OnInit {
     const vim = this;
     if (api_type == "signup") {
       if (vim.isSuccess(response)) {
-        vim.commonAsyn.isHide();
         vim.toastr.success("", "Sign Up Successful");
         vim.router.navigate(["/login"]);
       } else {

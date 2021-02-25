@@ -15,7 +15,6 @@ export class SettingsComponent implements OnInit {
   hospital_branch_speciality_id = '';pageLength: number;page = 1; totalCount: number;hospitalId: number;hospitalBranchId: number;login_hospital: any = {};
   isRole = true;isSpeciality = false;isUserAccess = false;editFlag = [];editCalled = []; specialityEditFlag = []; specialityEditCalled = [];
   updatedRole: string; updatedSpeciality: string; roleJson: any = {}; branchList = [];search_text:string;
-  deletedField:string;
   @ViewChild('roleForm') roleForm;
   @ViewChild('specialityForm') specialityForm;
   public namePatters = { 'S': { pattern: new RegExp('\[a-zA-Z \]') } };
@@ -119,6 +118,11 @@ export class SettingsComponent implements OnInit {
       this.userListDummy.push(this.userList[index]);
     }
   }
+
+  updateList(index,fieldName,value){
+    this.userList[index][fieldName] = value;
+    this.userListDummy.push(this.userList[index]);
+  }
   updatePermission() {
     this.commonService.updateUserPermission(this.hospitalId, this.hospitalBranchId, this.userListDummy).subscribe(response => {
       if(this.helper.success(response)) {
@@ -214,16 +218,14 @@ export class SettingsComponent implements OnInit {
       this.toasty.success(response['message'], '');
       this.userListDummy = [];}
   }
-  open(content, id, tab, index,field) {
+  open(content, id, tab, index) {
     if (tab == 'role') {
       this.hospital_branch_role_id = id;
-      this.deletedField=field;
     }
     if (tab == 'speciality') {
       this.hospital_branch_speciality_id = id;
-      this.deletedField=field;
     }
-    this.formRef = this.modalService.open(content, this.helper.ngbModalSmallOptions);
+    this.formRef = this.modalService.open(content, { size: "sm" });
     this.editFlag[index] = false;
     this.editCalled[index] = false;
   }

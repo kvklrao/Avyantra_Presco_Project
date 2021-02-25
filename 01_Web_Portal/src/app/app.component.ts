@@ -29,10 +29,4 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
-  onActivate(event) {
-    window.scroll(0,0);
 }
-}
-
-

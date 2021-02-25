@@ -12,8 +12,6 @@ export class AppConstant {
   public branch_type_login="Hospital Branch";
   public staff_type_login="Hospital Staff";
   public referral_doctor_login="Referral Doctor";
-  public asha_worker="Aasha";
-  public phc_worker="PHC";
 
   public requestInitiationStatus=1;
   public pendingInitiationStatus=2;
@@ -21,7 +19,6 @@ export class AppConstant {
   public activeStatus=4;
   public referralDoctorRequesterType=4;
   public hosAdminRequesterType=3;
-  public hospitalUsertType=2;
 
   public staffUser=["DashboardStaff","MessageCenter","MyProfile"];
   public ReferralUser=["DashboardRD","MyProfile","hospitalConnect"];

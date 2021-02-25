@@ -29,8 +29,6 @@ import { HospitalConnectComponent } from './hospital-connect/hospital-connect.co
 import { MessageCenterComponent } from './message-center/message-center.component';
 import { ScoreAnalysisComponent } from './score-analysis/score-analysis.component';
 import { RessetPasswordComponent } from './resset-password/resset-password.component';
-import { AshaPhcDashboardComponent } from './user-dashboards/asha-phc-dashboard/asha-phc-dashboard.component';
-import { HealthParametersComponent } from './dashboard/health-parameters/health-parameters.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -56,17 +54,16 @@ const routes: Routes = [
     path: 'dashboard', component: DashboardComponent,
     children: [
       {path: '', redirectTo: 'baby-profile', pathMatch: 'prefix'},
-      {path: 'baby-profile', component: GeneralComponent,canActivate: [AuthGuard]},
-      {path: 'mother-profile', component: MaternalComponent,canActivate: [AuthGuard]},
-      {path: 'baby-appearence', component: BabyAppearComponent,canActivate: [AuthGuard]},
-      {path: 'baby-respiratory', component: BabyRespComponent,canActivate: [AuthGuard]},
-      {path: 'baby-cardio-vascular', component: BabyCvComponent,canActivate: [AuthGuard]},
-      {path: 'baby-cns', component: BabyCnsComponent,canActivate: [AuthGuard]},
-      {path: 'baby-gi-tract', component: BabyGitComponent,canActivate: [AuthGuard]},
-      {path: 'baby-investigation', component: BabyInvestigationComponent,canActivate: [AuthGuard]},
-      {path: 'anitibiotic-administration', component: AntibioticAdministrationComponent,canActivate: [AuthGuard]},
-      {path: 'final-diagnosis', component: FinalComponent,canActivate: [AuthGuard]},
-      {path: 'health-parameters', component: HealthParametersComponent,canActivate: [AuthGuard]},
+      {path: 'baby-profile', component: GeneralComponent},
+      {path: 'mother-profile', component: MaternalComponent},
+      {path: 'baby-appearence', component: BabyAppearComponent},
+      {path: 'baby-respiratory', component: BabyRespComponent},
+      {path: 'baby-cardio-vascular', component: BabyCvComponent},
+      {path: 'baby-cns', component: BabyCnsComponent},
+      {path: 'baby-gi-tract', component: BabyGitComponent},
+      {path: 'baby-investigation', component: BabyInvestigationComponent},
+      {path: 'anitibiotic-administration', component: AntibioticAdministrationComponent},
+      {path: 'final-diagnosis', component: FinalComponent},
     ],
     runGuardsAndResolvers: 'always',
   },
@@ -77,19 +74,18 @@ const routes: Routes = [
       {path: 'dashboard', component: HospitalAdminInfoComponent,canActivate: [AuthGuard]},
       {path:'addbranch',component:HospitalBranchComponent,canActivate: [AuthGuard]},
       {path:'setting',component:SettingsComponent,canActivate: [AuthGuard]},
-      {path:'staff',component:HospitalStaffComponent,canActivate: [AuthGuard]},
-      {path:'medical-records', component:MedicalRecordsComponent,canActivate: [AuthGuard]},
-      {path:'my-profile', component:MyProfileComponent,canActivate: [AuthGuard]},
-      {path:'staff-profile', component:StaffProfileComponent,canActivate: [AuthGuard]},
-      {path:'referral-profile', component:ReferralProfileComponent,canActivate: [AuthGuard]},
-      {path:'branch-admin-profile', component:BranchAdminProfileComponent,canActivate: [AuthGuard]},
-      {path:'referral-doctor', component:ReferralDoctorStaffComponent,canActivate: [AuthGuard]},
-      {path:'hospital-staff', component:HospitalStaffDashboardComponent,canActivate: [AuthGuard]},
-      {path:'referral-doctors', component:ReferralDoctorComponent,canActivate: [AuthGuard]},
-      {path:'hospital-connect', component:HospitalConnectComponent,canActivate: [AuthGuard]},
-      {path:'message-center', component:MessageCenterComponent,canActivate: [AuthGuard]},
-      {path:'score-analysis/:babyMrNo/:studyId/:reading', component:ScoreAnalysisComponent,canActivate: [AuthGuard]},
-      {path:'asha-phc', component:AshaPhcDashboardComponent,canActivate: [AuthGuard]},
+      {path:'staff',component:HospitalStaffComponent},
+      {path:'medical-records', component:MedicalRecordsComponent},
+      {path:'my-profile', component:MyProfileComponent},
+      {path:'staff-profile', component:StaffProfileComponent},
+      {path:'referral-profile', component:ReferralProfileComponent},
+      {path:'branch-admin-profile', component:BranchAdminProfileComponent},
+      {path:'referral-doctor', component:ReferralDoctorStaffComponent},
+      {path:'hospital-staff', component:HospitalStaffDashboardComponent},
+      {path:'referral-doctors', component:ReferralDoctorComponent},
+      {path:'hospital-connect', component:HospitalConnectComponent},
+      {path:'message-center', component:MessageCenterComponent},
+      {path:'score-analysis/:babyMrNo/:studyId/:reading', component:ScoreAnalysisComponent}
     ],
   },
   {
@@ -110,10 +106,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './login/login.module#LoginModule'
-  },
-  {
-    path: 'asha-phc-signup',
-    loadChildren: './asha-phc-signup/asha-phc-signup.module#AshaPhcSignupModule'
   },
   {
     path: '',

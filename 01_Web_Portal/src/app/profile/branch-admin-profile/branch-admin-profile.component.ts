@@ -20,7 +20,6 @@ export class BranchAdminProfileComponent implements OnInit {
   is_toggle = false;
   password_class = "fa fa-eye-slash";
   doNotAutoComplete:any={};
-  stateList=[];
   public onlyCharWithSpace = { 'S': { pattern: new RegExp('\[a-zA-Z, \]') } };
   public customPatterns = { 'A': { pattern: new RegExp('\[a-zA-Z0-9_*!@#$%&\]') } };
   public addressPatterns = { 'A': { pattern: new RegExp('\[a-zA-Z0-9_*!@#$,%&/ \]') } };
@@ -31,7 +30,6 @@ export class BranchAdminProfileComponent implements OnInit {
     this.getLoggedInUserInfo();
     this.getBranchInformation();
     this.createForm();
-    this.getStates();
   }
 
   createForm(){
@@ -72,8 +70,6 @@ export class BranchAdminProfileComponent implements OnInit {
           this.success(result,'updateBranchProfile');
           this.isEdit=false;
           this.getBranchInformation();
-        }else{
-          this.helper.errorHandler(result);
         }
       })
     }
@@ -97,7 +93,7 @@ export class BranchAdminProfileComponent implements OnInit {
       emailAddress: obj['email_address'],
       city: obj['city'],
       state: obj['state'],
-      pincode:(obj['pincode']==0 ?"":obj['pincode']),
+      pincode: obj['pincode'],
       password: obj['password'],
       branchName: obj['branch_name'],
       hospitalBranchId:obj['hospital_branch_id']
@@ -106,8 +102,6 @@ export class BranchAdminProfileComponent implements OnInit {
 
   cancel() {
     this.isEdit = false;
-    this.is_toggle=true;
-    this.show_password();
   }
 
   show_password() {
@@ -120,13 +114,5 @@ export class BranchAdminProfileComponent implements OnInit {
       this.password = "text";
       this.password_class = "fa fa-eye";
     }
-  }
-
-  getStates(){
-    this.common.getStates().subscribe(result=>{
-      if(this.helper.success(result)){
-          this.stateList=result['response'];
-      }
-  })
   }
 }

@@ -2,25 +2,15 @@
 
   <!-- Page Heading -->
   <div class="mt-160">
-    	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <div class="col-md-4">
-            <div class="d-sm-flex1 align-items-center justify-content-between mb-4">
-              <h4 class="h4 mb-0 text-gray-800 d-none"> <i class="fas fa-fw fa-users text-primary mr-2"></i>Referral Doctor
-              </h4>
-              <button class="d-sm-inline-block btn btn-sm btn-light shadow-sm" (click)="switchTab('hospital-staff')"><i
-                class="fas fa-users fa-sm text-gray-600"></i> Hospital Staff</button>
-            <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-              (click)="switchTab('referral-doctor-staff')"><i class="fas fa-user-md fa-sm text-white-50"></i> Referral
-              Doctor</button>
-            </div>
-          </div>
-          <div class="col-md-4">
-              <app-heading></app-heading>
-              </div>
-              <div class="col-md-4">
-                  </div>
-        </div>
-
+    <div class="d-sm-flex1 align-items-center justify-content-between mb-4">
+      <h4 class="h4 mb-0 text-gray-800 d-none"> <i class="fas fa-fw fa-user-md text-primary mr-2"></i>Referral Doctor
+      </h4>
+      <button class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm" (click)="switchTab('hospital-staff')"><i
+          class="fas fa-users fa-sm text-gray-600"></i> Hospital Staff</button>
+      <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        (click)="switchTab('referral-doctor-staff')"><i class="fas fa-user-md fa-sm text-white-50"></i> Referral
+        Doctor</button>
+    </div>
   </div>
 
   <!-- Content Row -->
@@ -33,42 +23,38 @@
               <h6 class="m-0 font-weight-bold text-primary">Referral Doctor Details</h6>
             </div>
             <div class="col-sm-4 text-right">
-              <!-- <button *ngIf="user_type!=='Hospital'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" (click)="open(content, {})"
+              <button *ngIf="user_type!=='Hospital'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" (click)="open(content, {})"
                 data-toggle="modal" data-target="#add-doctor"><i class="fas fa-plus fa-sm text-white-50"></i>
-                Add</button> -->
+                Add</button>
             </div>
           </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive1">
-                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="row mb-3">
-                        <div class="col-sm-12 col-md-6">
-                          <div class="dataTables_length" id="dataTable_length">
-                            <label>
-                              Show entries
-                              <select name="dataTable_length" aria-controls="dataTable"
-                                class="custom-select custom-select-sm form-control form-control-sm"
-                                [(ngModel)]="pageLength"
-                                (change)="onDropDownChange(pageLength)">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                              </select>
-        
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                          <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
-                                class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchReferralDoctors()" [(ngModel)]="searchText"></label></div>
-                        </div>
-                      </div>
-                </div>
-              </div>
           <div class="table-responsive">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length" id="dataTable_length">
+                    <label>
+                      Show entries
+                      <select name="dataTable_length" aria-controls="dataTable"
+                        class="custom-select custom-select-sm form-control form-control-sm"
+                        [(ngModel)]="pageLength"
+                        (change)="onDropDownChange(pageLength)">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
+                        class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchReferralDoctors()" [(ngModel)]="searchText"></label></div>
+                </div>
+              </div>
               <div *ngIf="user_type!='Hospital'" class="row">
                 <div class="col-sm-12">
                   <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
@@ -76,16 +62,16 @@
                     <thead>
                       <tr role="row">
                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-sort="ascending" aria-label="">S.No</th>
+                          aria-sort="ascending" aria-label="">ID</th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Name</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Speciality</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-label="">Contact Number</th>
+                          aria-label="">Contact</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-label="">Email Id</th>
-                        <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                          aria-label="">Email</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Action</th>
                       </tr>
                     </thead>
@@ -98,10 +84,10 @@
                         <td>{{list.contact_number}}</td>
                         <td>{{list.email_address}}</td>
                         <td class="text-right">
-                            <button appButtonCursor *ngIf="list.hospital_action_status == 'Pending Initiation'" (click)="updateUnregisteredDoctorStatus(list)" class="btn-warning d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
-                            <button appButtonCursor *ngIf="list.hospital_action_status == 'Accept Initiation'" class="btn-info d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
-                            <button appButtonCursor *ngIf="list.hospital_action_status == 'Request Initiation'" class="btn-primary d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
-                            <button appButtonCursor *ngIf="list.hospital_action_status == 'Active'" class="btn-success d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
+                            <button *ngIf="list.hospital_action_status == 'Pending Initiation'" (click)="updateUnregisteredDoctorStatus(list)" class="btn-warning d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
+                            <button *ngIf="list.hospital_action_status == 'Accept Initiation'" class="btn-info d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
+                            <button *ngIf="list.hospital_action_status == 'Request Initiation'" class="btn-primary d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
+                            <button *ngIf="list.hospital_action_status == 'Active'" class="btn-success d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_action_status}}</button>
                           <button class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm" (click)="openDetail(contentDetail, list)">View</button>
                         </td>
                       </tr>
@@ -123,16 +109,16 @@
                     <thead>
                       <tr role="row">
                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-sort="ascending" aria-label="">S.No</th>
+                          aria-sort="ascending" aria-label="">ID</th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Name</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Speciality</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-label="">Contact Number</th>
+                          aria-label="">Contact</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-label="">Email Id</th>
-                        <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                          aria-label="">Email</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="">Action</th>
                       </tr>
                     </thead>
@@ -145,10 +131,10 @@
                         <td>{{list.contact_number}}</td>
                         <td>{{list.email_address}}</td>
                         <td class="text-right">
-                            <button  appButtonCursor *ngIf="list.hospital_initiation_status == 'Pending Initiation'"  class="btn-warning d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
+                            <button *ngIf="list.hospital_initiation_status == 'Pending Initiation'"  class="btn-warning d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
                             <button *ngIf="list.hospital_initiation_status == 'Accept Initiation'" (click)="updateStatus(list)" class="btn-info d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
-                            <button  *ngIf="list.hospital_initiation_status == 'Request Initiation'" (click)="updateStatus(list)" class="btn-primary d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
-                            <button appButtonCursor *ngIf="list.hospital_initiation_status == 'Active'" class="btn-success d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
+                            <button *ngIf="list.hospital_initiation_status == 'Request Initiation'" (click)="updateStatus(list)" class="btn-primary d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
+                            <button *ngIf="list.hospital_initiation_status == 'Active'" class="btn-success d-sm-inline-block btn btn-sm shadow-sm mr-2">{{list.hospital_initiation_status}}</button>
                           <button class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm" (click)="openDetail(contentDetail, list)">View</button>
                         </td>
                       </tr>
@@ -300,7 +286,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group has-error has-danger ">
-              <label for="" class="text-bold text-gray-900">Email Id&nbsp;<span class="text-danger">*</span></label>
+              <label for="" class="text-bold text-gray-900">Email ID&nbsp;<span class="text-danger">*</span></label>
             </div>
           </div>
           <div class="col-md-8">
@@ -491,7 +477,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group has-error has-danger ">
-                <label for="" class="text-bold text-gray-900">Email Id&nbsp;<span class="text-danger">*</span></label>
+                <label for="" class="text-bold text-gray-900">Email ID&nbsp;<span class="text-danger">*</span></label>
               </div>
             </div>
             <div class="col-md-8">

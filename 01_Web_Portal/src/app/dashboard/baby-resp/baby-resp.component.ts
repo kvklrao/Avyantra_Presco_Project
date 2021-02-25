@@ -9,7 +9,6 @@ import { Common } from "../../shared/service/common/common";
 import { Subscription } from 'rxjs'; 
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 @Component({
   selector: "app-baby-resp",
@@ -52,7 +51,6 @@ export class BabyRespComponent implements OnInit, OnChanges {
   public readingDataObj;
   isEditClicked=false;
   loggedInUserId:number;
-  phcUser=false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -61,19 +59,17 @@ export class BabyRespComponent implements OnInit, OnChanges {
     private modalService: NgbModal,
     private commonAsyn: Common,
     private dataService:DataService,
-    public readingDataService:ReadingDataService,private constant:AppConstant
+    public readingDataService:ReadingDataService
   ) {
     this.dataServiceObj = dataService.getOption(); 
   }
 
   ngOnInit() {
-    debugger
     const vim = this;
     vim.dataServiceObj = vim.dataService.getOption();
     vim.readingDataObj=vim.readingDataService.getReadingFormData('baby_resp') ;
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    vim.checkUser()
     vim.createForm(vim.dataServiceObj.study_id);
     vim.id = vim.dataServiceObj.study_id;
     if(vim.readingDataObj!=undefined){
@@ -94,10 +90,8 @@ export class BabyRespComponent implements OnInit, OnChanges {
       { "id": 3, "itemName": "HFNC" },
       { "id": 4, "itemName": "Nasal High Flow" },
       { "id": 5, "itemName": "Nasal Prongs" },
-      { "id": 6, "itemName": "IMV" },
-      { "id": 7, "itemName": "NIPPV" },
-      { "id": 8, "itemName": "Other" },
-      //{ "id": 9, "itemName": "NA" }
+      { "id": 6, "itemName": "Other" },
+      { "id": 7, "itemName": "NA" }
     ];
 
     this.settings = {
@@ -138,11 +132,6 @@ export class BabyRespComponent implements OnInit, OnChanges {
     vim.onChanges();
   }
 
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
-  }
   updateForm(obj) {
     const vim = this;
     if(obj["oxygen_saturation"] == 'NA'){
@@ -170,7 +159,6 @@ export class BabyRespComponent implements OnInit, OnChanges {
         x_ray_diagnosis_any_other: ''})
     }
 
-    debugger;
     if (/^[\],:{}\s]*$/.test(obj["baby_respiratory_support"].replace(/\\["\\\/bfnrtu]/g, '@').
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
@@ -509,16 +497,7 @@ export class BabyRespComponent implements OnInit, OnChanges {
       return ;
     }
     else{
-      this.babyRespForm.value["baby_respiratory_support"] = JSON.stringify(this.selectedRespItems);
-
-      if(this.babyRespForm.value["oxygen_saturation"] == '') {
-        this.babyRespForm.value["oxygen_saturation"] = 'NA';
-      }else{
-        this.babyRespForm.value["oxygen_saturation"] = this.babyRespForm.value["oxygen_saturation"].toString();
-      }
-      if(this.babyRespForm.value["breathing_rate"] == '') {
-        this.babyRespForm.value["breathing_rate"] = 'NA';
-      }
+    this.setData();
       this.common_api.updateFormData('patient/update/baby_resp/',this.id,this.readingDataService.reading,this.babyRespForm['value'],this.loggedInUserId).subscribe(result=>{
           if(result['status']!=200){
               this.toastr.error('Error','Some error occured.Please check');
@@ -529,11 +508,23 @@ export class BabyRespComponent implements OnInit, OnChanges {
       })
     }
   }
+  setData(){
+    this.babyRespForm.value["baby_respiratory_support"] = JSON.stringify(this.selectedRespItems);
 
-  updateSuccessResponse(result){
-    this.toastr.success('','Data Updated Successfully');
+    if (this.babyRespForm.value["oxygen_saturation"] == '') {
+      this.babyRespForm.value["oxygen_saturation"] = 'NA';
+    } else {
+      this.babyRespForm.value["oxygen_saturation"] = this.babyRespForm.value["oxygen_saturation"].toString();
+    }
+    if (this.babyRespForm.value["breathing_rate"] == '') {
+      this.babyRespForm.value["breathing_rate"] = 'NA';
+    }
+  }
+
+  updateSuccessResponse(result) {
+    this.toastr.success('', 'Data Updated Successfully');
     this.get_baby_resp(this.dataServiceObj.study_id, this.login_hospital['id'], this.page, this.readingDataService.reading);
-    this.isEditClicked=false;
-  //  this.saveReadingFormData(undefined);
+    this.isEditClicked = false;
+    //  this.saveReadingFormData(undefined);
   }
 }

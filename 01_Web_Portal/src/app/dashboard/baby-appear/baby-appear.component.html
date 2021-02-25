@@ -10,7 +10,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-          <h5 *ngIf="readinDataService.reading && !phcUser" class="text-center">Reading: {{readinDataService.reading}} </h5>
+          <h5 *ngIf="readinDataService.reading" class="text-center">Reading: {{readinDataService.reading}} </h5>
         </div>
         <div class="col-md-4">
           <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -29,7 +29,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content,responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -64,7 +64,7 @@
                             <td class="tb-label">Cry Sound</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_cry_sound']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Cry Sound(If not cried)</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_cry_sound_status']}}</td>
                           </tr>
@@ -78,10 +78,6 @@
                             <td class="tb-value text-right">
                               {{responseArray[0]['hypotonia_muscular_response_five_min_after_birth']}}</td>
                           </tr>
-                          <tr class="">
-                              <td class="tb-label">Skin Pustules (> 5)</td>
-                              <td class="tb-value text-right">{{responseArray[0]['skin_pustules']}}</td>
-                            </tr>
                         </tbody>
                       </table>
                     </div>
@@ -91,7 +87,7 @@
                     <div class="table-responsive p-3">
                       <table class="table  table-borderless mb-0">
                         <tbody>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Excessive Sleeping</td>
                             <td class="tb-value text-right">{{responseArray[0]['excessive_sleeping']}}</td>
                           </tr>
@@ -124,19 +120,14 @@
                             <td class="tb-label">Kangaroo Mother Care</td>
                             <td class="tb-value text-right">{{responseArray[0]['kangaroo_mother_care']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Umbilical Discharge</td>
                             <td class="tb-value text-right">{{responseArray[0]['umbilical_discharge']}}</td>
                           </tr>
                           <tr class="border-bottom">
-                              <td class="tb-label">Umbilical Redness</td>
-                              <td class="tb-value text-right">{{responseArray[0]['umbilical_redness']}}</td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="tb-label">Umbilical Enduration</td>
-                                <td class="tb-value text-right">{{responseArray[0]['umbilical_enduration']}}</td>
-                              </tr>
-                         
+                            <td class="tb-label">Skin Pustules (> 5)</td>
+                            <td class="tb-value text-right">{{responseArray[0]['skin_pustules']}}</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -271,7 +262,7 @@
                     (change)="changeDropdown($event.target.value,'babyWeightAtBirthId')">
                     <option value="Kgs">Kgs</option>
                     <option value="Lbs">Lbs</option>
-                    <!--<option value="NA">NA</option>-->
+                    <option value="NA">NA</option>
                   </select>
                   <div *ngIf="babyApears.controls['baby_weight_at_birth_unit'].invalid &&
                 (babyApears.controls['baby_weight_at_birth_unit'].dirty ||
@@ -282,7 +273,7 @@
                   </div>
                 </div>
                 <div class="col-md-8 col-8 pl-0">
-                  <input type="text" *ngIf="this.chkWeightAtBirth" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.chkWeightAtBirth" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="babyWeightAtBirthId" formControlName="baby_weight_at_birth" min="0"
                     autocomplete="off">
 
@@ -308,7 +299,7 @@
                   <option value="Dull">Dull</option>
                   <option value="Lethargic">Lethargic</option>
                   <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_appearance'].invalid && (babyApears.controls['baby_appearance'].dirty ||
                 babyApears.controls['baby_appearance'].touched || submitted )" class="error-msg">
@@ -328,7 +319,7 @@
                   <option value="Peripheral Duskiness">Peripheral Duskiness</option>
                   <option value="Acrocyanosis">Acrocyanosis</option>
                   <option value="Pale">Pale</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_skin_colour'].invalid && (babyApears.controls['baby_skin_colour'].dirty
                 || babyApears.controls['baby_skin_colour'].touched || submitted )" class="error-msg">
@@ -350,7 +341,7 @@
                   <option value="High Pitch">High Pitch</option>
                   <option value="Normal">Normal</option>
                   <option value="Not Cried">Not Cried</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_cry_sound'].invalid && (babyApears.controls['baby_cry_sound'].dirty ||
                 babyApears.controls['baby_cry_sound'].touched || submitted )" class="error-msg">
@@ -403,7 +394,7 @@
                   formControlName="hypotonia_muscular_response_one_min_after_birth">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['hypotonia_muscular_response_one_min_after_birth'].invalid &&
                 (babyApears.controls['hypotonia_muscular_response_one_min_after_birth'].dirty ||
@@ -423,7 +414,7 @@
                   formControlName="hypotonia_muscular_response_five_min_after_birth">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['hypotonia_muscular_response_five_min_after_birth'].invalid &&
                 (babyApears.controls['hypotonia_muscular_response_five_min_after_birth'].dirty ||
@@ -446,7 +437,7 @@
                   formControlName="excessive_sleeping">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['excessive_sleeping'].invalid &&
                 (babyApears.controls['excessive_sleeping'].dirty || babyApears.controls['excessive_sleeping'].touched ||
@@ -463,7 +454,7 @@
                 <select class="form-control" name="hypothermia" id="hypothermia" formControlName="hypothermia">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['hypothermia'].invalid && (babyApears.controls['hypothermia'].dirty ||
                 babyApears.controls['hypothermia'].touched || submitted )" class="error-msg">
@@ -487,7 +478,7 @@
                       (change)="changeDropdown($event.target.value,'hypothermia_status_value_id')">
                       <option value="Centigrade">Centigrade</option>
                       <option value="Fahrenheit">Fahrenheit</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div
                       *ngIf="babyApears.controls['hypothermia_status'].invalid && (babyApears.controls['hypothermia_status'].dirty || babyApears.controls['hypothermia_status'].touched || submitted)"
@@ -498,7 +489,7 @@
                     </div>
                   </div>
                   <div class="col-md-7 col-7 pl-0">
-                    <input type="text" *ngIf="this.isHypothermiaUnit" [dropSpecialCharacters]="false" mask="0*.00"
+                    <input type="text" *ngIf="this.isHypothermiaUnit" [dropSpecialCharacters]="false" mask="999.09"
                       class="form-control" id="hypothermia_status_value_id" formControlName="hypothermia_status_value"
                       autocomplete="off">
                     <input type="text" readonly *ngIf="!this.isHypothermiaUnit" value="NA" class="form-control"
@@ -522,7 +513,7 @@
                   <option value="Poor">Poor</option>
                   <option value="Normal">Normal</option>
                   <option value="No Feeding">No Feeding</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_feeding_status'].invalid &&
                 (babyApears.controls['baby_feeding_status'].dirty || babyApears.controls['baby_feeding_status'].touched ||
@@ -543,7 +534,7 @@
                   formControlName="baby_presence_of_convulsions">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_presence_of_convulsions'].invalid &&
                 (babyApears.controls['baby_presence_of_convulsions'].dirty ||
@@ -560,7 +551,7 @@
                 <select class="form-control" name="baby_jaundice" id="baby_jaundice" formControlName="baby_jaundice">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['baby_jaundice'].invalid && (babyApears.controls['baby_jaundice'].dirty ||
                 babyApears.controls['baby_jaundice'].touched || submitted)" class="error-msg">
@@ -580,7 +571,7 @@
                   formControlName="breast_feeding_initiation">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['breast_feeding_initiation'].invalid &&
                 (babyApears.controls['breast_feeding_initiation'].dirty ||
@@ -598,7 +589,7 @@
                   formControlName="kangaroo_mother_care">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyApears.controls['kangaroo_mother_care'].invalid &&
                 (babyApears.controls['kangaroo_mother_care'].dirty || babyApears.controls['kangaroo_mother_care'].touched
@@ -610,55 +601,6 @@
               </div>
             </div>
           </div>
-
-
-
-
-
-          <div class="row">
-            
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="umbilical_discharge">Umbilical Redness </label>
-                  <select class="form-control" name="umbilical_redness" id="umbilical_redness"
-                    formControlName="umbilical_redness">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
-                  </select>
-                </div>
-                <div *ngIf="babyApears.controls['umbilical_redness'].invalid &&
-                      (babyApears.controls['umbilical_redness'].dirty ||
-                      babyApears.controls['umbilical_redness'].touched || submitted)" class="error-msg">
-                  <div class="error-msg" *ngIf="babyApears.controls['umbilical_redness'].errors.required">
-                    This field is required.
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="skin_pustules">Umbilical Enduration</label>
-                  <select class="form-control" name="umbilical_enduration" id="umbilical_enduration" formControlName="umbilical_enduration">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <!--<option value="NA">NA</option>-->
-                  </select>
-                </div>
-                <div *ngIf="babyApears.controls['umbilical_enduration'].invalid &&
-                (babyApears.controls['umbilical_enduration'].dirty ||
-                babyApears.controls['umbilical_enduration'].touched || submitted)" class="error-msg">
-            <div class="error-msg" *ngIf="babyApears.controls['umbilical_enduration'].errors.required">
-              This field is required.
-            </div>
-              </div>
-            </div>
-
-          </div>
-
-
-
-
-          
           <div class="row">
             
             <div class="col-md-6">
@@ -668,7 +610,7 @@
                   formControlName="umbilical_discharge">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="babyApears.controls['umbilical_discharge'].invalid &&
@@ -685,7 +627,7 @@
                 <select class="form-control" name="skin_pustules" id="skin_pustules" formControlName="skin_pustules">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
               </div>
               <div *ngIf="babyApears.controls['skin_pustules'].invalid &&

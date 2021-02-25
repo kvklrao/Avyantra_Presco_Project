@@ -16,8 +16,6 @@ import { DatePipe } from '@angular/common';
 import { AppConstant } from 'src/app/shared/constant/app-constant';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppHelper } from 'src/app/shared/helper/app.helper';
-import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: "app-general",
@@ -68,9 +66,8 @@ export class GeneralComponent implements OnInit {
   motherMRNo=true;
   radiochecked: boolean = true;
   radiochecked1: boolean = false;
-  chkBabyName:boolean=true;
-  chkMotherName:boolean=true;
-  pretermArr = ['Yes', 'No'];
+
+  pretermArr = ['Yes', 'No', 'NA'];
   content:any;
   navigationSubscription;
   model: NgbDateStruct;
@@ -89,18 +86,13 @@ export class GeneralComponent implements OnInit {
 
   babyMedicalRecordNumber:string;
   motherMedicalRecordNumber:string;loggedInUserId:number;
-  bmrEdit=true;
-  createPatient={};
-  ashaUser=false;
-  phcUser=false;
-  todayDate: Date;
   @Output() tabsEvent: EventEmitter<any> = new EventEmitter();
   
   constructor(private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService,
     private common_api: CommonService, public config: NgbModalConfig, private modalService: NgbModal,
     private commonAsyn: Common, private spinner: NgxSpinnerService, private datePipe: DatePipe, private appConstant: AppConstant,
     private dataService: DataService,
-    public readingDataService: ReadingDataService, private route: ActivatedRoute,private helper:AppHelper) {
+    public readingDataService: ReadingDataService, private route: ActivatedRoute,) {
     this.dataServiceObj = dataService.getOption();
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -108,7 +100,6 @@ export class GeneralComponent implements OnInit {
         this.resetComponent();
       }
     });
-    this.todayDate = new Date();
   }
 
   ngOnDestroy() {
@@ -135,23 +126,6 @@ export class GeneralComponent implements OnInit {
     vim.loggedInUserId=vim.login_hospital['user_id'];
     vim.hospital_name = vim.login_hospital.hospital_name;
     vim.hospital_branch_name = vim.login_hospital.hospital_branch_name;
-
-    //for asha/PHC worker requirement
-    if(vim.login_hospital['user_type'] == vim.appConstant.asha_worker){
-      vim.bmrEdit=false;
-      vim.ashaUser=true;
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-    }
-    else if(vim.login_hospital['user_type'] == vim.appConstant.phc_worker){
-      vim.bmrEdit=false;
-      vim.phcUser=true;
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-    }
-    else{
-      vim.ashaUser=false;
-      vim.bmrEdit=true;
-    }
-
 
     if (vim.dataServiceObj != undefined || vim.dataServiceObj.study_id != undefined) {
       vim.showMrNumber=true;
@@ -195,21 +169,7 @@ export class GeneralComponent implements OnInit {
     vim.loggedInUserId=vim.login_hospital['user_id'];
     vim.hospital_name = vim.login_hospital.hospital_name;
     vim.hospital_branch_name = vim.login_hospital.hospital_branch_name;
-    //for asha/PHC worker requirement
-    if(vim.login_hospital['user_type'] == vim.appConstant.asha_worker){
-      vim.bmrEdit=false;
-      vim.ashaUser=true;
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-    }
-    else if(vim.login_hospital['user_type'] == vim.appConstant.phc_worker){
-      vim.bmrEdit=false;
-      vim.phcUser=true;
-      vim.login_hospital['id']=vim.login_hospital['hospital_id'];
-    }
-    else{
-      vim.ashaUser=false;
-      vim.bmrEdit=true;
-    }
+
     if (vim.dataServiceObj != undefined || vim.dataServiceObj.study_id != undefined) {
 
       vim.get_general(vim.dataServiceObj.study_id, vim.login_hospital['id'], vim.page);
@@ -281,8 +241,6 @@ export class GeneralComponent implements OnInit {
     vim.chkBabyDateAdmission = true;
     vim.chkBabyCondOnSuspectOtherIfAny = true;
     vim.motherMRNo=true;
-    vim.chkBabyName=true;
-    vim.chkMotherName=true;
 
     vim.generalForm = vim.formBuilder.group({
       hospital_id: vim.hospital_id,
@@ -318,7 +276,7 @@ export class GeneralComponent implements OnInit {
       baby_condition_anemia_suspect: ["", Validators.required],
       baby_condition_lbw_suspect: ["", Validators.required],
       place_of_delivery: ["", Validators.required],
-      birth_facility: [""],
+      // birth_facility: ["", Validators.required],
       baby_gestational_age: ["", Validators.required],
       baby_gestational_age_unit: ["week"],
       baby_weight_at_birth: ["", Validators.required],
@@ -334,9 +292,7 @@ export class GeneralComponent implements OnInit {
       prelim_diagnosis_gastroenteritis: ["", Validators.required],
       baby_weight_at_admission_unit: ["Kgs", Validators.required],
       baby_date_of_admission: ["", Validators.required],
-      baby_name: [""],
-      baby_mother_name: [""],
- 	    meningitis:["", Validators.required],
+      meningitis:["", Validators.required],
       asphyxia:["", Validators.required],
       septic_arthritis:["", Validators.required],
       endocarditis:["", Validators.required],
@@ -349,11 +305,6 @@ export class GeneralComponent implements OnInit {
       central_peripheral:["", Validators.required],
       hypoxia:["", Validators.required],
       metabolic_acidosis:["", Validators.required],
-      skin_pustules:["",[Validators.required]],
-      seizures:["",Validators.required],
-      pulmonary_hemorrhage:["",Validators.required],
-      thrombocytopenia:["",Validators.required],
-      pneumonia:["",Validators.required]
     });
 
   }
@@ -526,7 +477,7 @@ export class GeneralComponent implements OnInit {
       baby_gender: obj["baby_gender"],
       baby_preterm: obj["baby_preterm"],
       place_of_delivery: obj["place_of_delivery"],
-      birth_facility: obj["birth_facility"],
+      // birth_facility: obj["birth_facility"],
       baby_gestational_age: obj["baby_gestational_age"],
       baby_gestational_age_unit: obj["baby_gestational_age_unit"],
       baby_weight_at_birth: obj["baby_weight_at_birth"],
@@ -553,8 +504,6 @@ export class GeneralComponent implements OnInit {
       baby_weight_at_birth_unit: obj["baby_weight_at_birth_unit"],
       baby_weight_at_admission_unit: obj["baby_weight_at_admission_unit"],
       baby_date_of_admission: obj["baby_date_of_admission"],
-      baby_name: obj["baby_name"],
-      baby_mother_name: obj["baby_mother_name"],
       meningitis: obj["meningitis"],
       asphyxia:obj["asphyxia"],
       septic_arthritis:obj["septic_arthritis"],
@@ -568,11 +517,6 @@ export class GeneralComponent implements OnInit {
       central_peripheral:obj["central_peripheral"],
       hypoxia:obj["hypoxia"],
       metabolic_acidosis:obj["metabolic_acidosis"],
-      skin_pustules:obj['skin_pustules'],
-      seizures:obj['seizures'],
-      pulmonary_hemorrhage:obj['pulmonary_hemorrhage'],
-      thrombocytopenia:obj['thrombocytopenia'],
-      pneumonia:obj['pneumonia'],
     });
   }
 
@@ -836,44 +780,6 @@ export class GeneralComponent implements OnInit {
       }
     }
 
-    if (target.name == 'babyName') {
-      if (target.value == '2') {
-        vim.chkBabyName = false;
-        vim.generalForm.patchValue({
-          baby_name: 'NA'
-        })
-        vim.generalForm.value["baby_name"] = 'NA';
-        vim.generalForm.controls["baby_name"].clearValidators();
-        vim.generalForm.controls["baby_name"].updateValueAndValidity();
-      } else {
-        vim.chkBabyName = true;
-        vim.generalForm.patchValue({
-          baby_name: ''
-        })
-        vim.generalForm.controls["baby_name"].setValidators([Validators.required]);
-        vim.generalForm.controls["baby_name"].updateValueAndValidity();
-      }
-    }
-
-    if (target.name == 'motherName') {
-      if (target.value == '2') {
-        vim.chkMotherName = false;
-        vim.generalForm.patchValue({
-          baby_mother_name: 'NA'
-        })
-        vim.generalForm.value["baby_mother_name"] = 'NA';
-        vim.generalForm.controls["baby_mother_name"].clearValidators();
-        vim.generalForm.controls["baby_mother_name"].updateValueAndValidity();
-      } else {
-        vim.chkMotherName = true;
-        vim.generalForm.patchValue({
-          baby_mother_name: ''
-        })
-        vim.generalForm.controls["baby_mother_name"].setValidators([Validators.required]);
-        vim.generalForm.controls["baby_mother_name"].updateValueAndValidity();
-      }
-    }
-
   }
 
   open(content, obj) {
@@ -893,18 +799,6 @@ export class GeneralComponent implements OnInit {
       vim.createForm(vim.id);
       this.showMrNumber=false;
     }
-    this.setExtraValidators();
-  }
-
-  setExtraValidators(){
-    if(this.login_hospital['user_type']==this.appConstant.asha_worker || this.login_hospital['user_type']==this.appConstant.phc_worker){
-      this.generalForm.controls["baby_name"].setValidators([Validators.required]);
-        this.generalForm.controls["baby_name"].updateValueAndValidity();
-        this.generalForm.controls["baby_mother_name"].setValidators([Validators.required]);
-        this.generalForm.controls["baby_mother_name"].updateValueAndValidity();
-        this.generalForm.controls["birth_facility"].setValidators([Validators.required]);
-        this.generalForm.controls["birth_facility"].updateValueAndValidity();
-    }
   }
   close() {
 
@@ -923,14 +817,8 @@ export class GeneralComponent implements OnInit {
     const vim = this;
     vim.getMedicalRecordNumber=this.generalForm.value['babyMedicalRecord'];
     vim.transformDate(vim.generalForm.value);
-    console.log(vim.generalForm.value)
     vim.submitted = true;
     vim.findInvalidControls();
-    if(this.ashaUser){
-      this.setDefaultControlsForAshaWorker();
-    }
-    debugger;
-    console.log(vim.generalForm.controls)
     if (vim.generalForm.invalid) {
       return;
     }
@@ -989,127 +877,40 @@ export class GeneralComponent implements OnInit {
     if (this.generalForm.value["babyMotherMedicalRecord"] == '') {
       this.generalForm.value["babyMotherMedicalRecord"] = 'NA';
     }
-    if (this.generalForm.value["birth_facility"] == '') {
-      this.generalForm.value["birth_facility"] = 'NA';
-    }
-
-    if(this.ashaUser){
-      if (this.generalForm.value["baby_name"] == '') {
-        this.generalForm.value["baby_name"] = 'NA';
-      }
-      if (this.generalForm.value["baby_mother_name"] == '') {
-        this.generalForm.value["baby_mother_name"] = 'NA';
-      }
-    }
 
     this.generalForm.value["is_update"] = vim.is_update;
 
     vim.commonAsyn.showLoader();
     vim.generalForm.value["tab_name"] = "genral";
     vim.generalForm.value["isCreateForm"] = vim.isBabyCreateGeneral;
-    if(vim.checkAshaPHCUser()){
-          vim.addAshaPHCPatient();
-    }else{
-      vim.addHospitalPatient();
-    }
-  }
 
-
-  setDefaultControlsForAshaWorker(){
-    this.generalForm.patchValue({
-      baby_birth_date:this.generalForm['value']['baby_birth_date'],
-      baby_date_of_admission:this.generalForm['value']['baby_date_of_admission'],
-      prelim_diagnosis_gastroenteritis:'NA',
-    prelim_diagnosis_feeding_intolerence:'NA',
-    prelim_diagnosis_hypocalcemia:'NA',
-    prelim_diagnosis_perinatal:'NA',
-    baby_condition_other_if_suspect:'NA',
-    baby_day_of_event:'NA',
-    baby_condition_suspect:'NA',
-
-    baby_condition_lbw_suspect:'NA',
-    baby_condition_anemia_suspect:'NA',
-    baby_condition_dextrocordia_suspect:'NA',
-    baby_shock_aga_suspect:'NA',
-    // baby_condition_sga_suspect:'NA',
-    // baby_condition_aga_suspect:'NA',
-
-
-    // baby_condition_lga_suspect:'NA',
-    baby_condition_ttnb_suspect:'NA',
-    baby_condition_jaundice_suspect:'NA',
-    //baby_gender:'NA',
-    baby_condition_rds_yes_no:'NA',
-    baby_condition_yes_eos_los:'NA',
-    baby_apgar_score_ten_min:'NA',
-
-    baby_apgar_score_five_min:'NA',
-    baby_apgar_score_one_min:'NA',
-    baby_place_of_birth_pin_code:'NA',
-    place_of_delivery:'NA',
-    record_type:'NA',
-
-    prelim_diagnosis_hypoglycemia:'NA',
-    meningitis:'NA',
-    asphyxia:'NA',
-    septic_arthritis:'NA',
-    endocarditis:'NA',
-    peritonitis:'NA',
-    soft_tissue_abscess:'NA',
-    coagulopathy:'NA',
-    uti:'NA',
-    umblical_sepsis:'NA',
-    bleeding_manifestation:'NA',
-    central_peripheral:'NA',
-    hypoxia:'NA',
-    metabolic_acidosis:'NA',
-    skin_pustules:'NA',
-    seizures:'NA',
-    pulmonary_hemorrhage:'NA',
-    thrombocytopenia:'NA',
-    baby_lga_sga_aga_suspect:'NA',
-    pneumonia:'NA'
-    })
-      this.generalForm.controls["baby_place_of_birth_pin_code"].clearValidators();
-     this.generalForm.controls["baby_place_of_birth_pin_code"].updateValueAndValidity();
-    // this.generalForm.get('baby_birth_date').setValue(this.generalForm['value']['baby_birth_date']);
-    // this.generalForm.get('baby_date_of_admission').setValue(this.generalForm['value']['baby_date_of_admission']);
-    // this.generalForm.get('prelim_diagnosis_gastroenteritis').setValue('NA');
-    // this.generalForm.get('prelim_diagnosis_feeding_intolerence').setValue('NA');
-    // this.generalForm.get('prelim_diagnosis_hypocalcemia').setValue('NA');
-    // this.generalForm.get('prelim_diagnosis_perinatal').setValue('NA');
-    // this.generalForm.get('baby_condition_other_if_suspect').setValue('NA');
-    // this.generalForm.get('baby_day_of_event').setValue('NA');
-    // this.generalForm.get('baby_condition_suspect').setValue('NA');
-
-    // this.generalForm.get('baby_condition_lbw_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_anemia_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_dextrocordia_suspect').setValue('NA');
-    // this.generalForm.get('baby_shock_aga_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_sga_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_aga_suspect').setValue('NA');
-
-
-    // this.generalForm.get('baby_condition_lga_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_ttnb_suspect').setValue('NA');
-    // this.generalForm.get('baby_condition_jaundice_suspect').setValue('NA');
-    // this.generalForm.get('baby_gender').setValue('NA');
-    // this.generalForm.get('baby_condition_rds_yes_no').setValue('NA');
-    // this.generalForm.get('baby_condition_yes_eos_los').setValue('NA');
-    // this.generalForm.get('baby_apgar_score_ten_min').setValue('NA');
-
-    // this.generalForm.get('baby_apgar_score_five_min').setValue('NA');
-    // this.generalForm.get('baby_apgar_score_one_min').setValue('NA');
-    // this.generalForm.get('baby_place_of_birth_pin_code').setValue('NA');
-    // this.generalForm.get('place_of_delivery').setValue('NA');
-    // this.generalForm.get('record_type').setValue('NA');
-    // this.generalForm.controls["baby_place_of_birth_pin_code"].clearValidators();
-    // this.generalForm.controls["baby_place_of_birth_pin_code"].updateValueAndValidity();
-    // this.generalForm.get('baby_place_of_birth_pin_code').setValue('NA');
-    // this.generalForm.get('prelim_diagnosis_hypoglycemia').setValue('NA');
-    
-    
-
+    const newUser = vim.common_api.patient_general_info_updated(
+      vim.generalForm.value,vim.loggedInUserId
+    );
+    // const newUser = vim.common_api.patient_general_info_updated(
+    //   vim.generalForm.value
+    // );
+    newUser.subscribe(
+      response => {
+        if(response['status']!=200){
+          vim.toastr.error('',response["message"])
+          vim.commonAsyn.isHide();
+        }
+        else{
+        vim.reset();
+        vim.success(response, "BabyProfileFormSubmit");
+        vim.isBabyEditGeneral = false;
+        vim.isBabyCreateGeneral = false;
+        vim.readingDataService.setComponentFlag('mother-profile')
+        vim.readingDataService.showBabyProfileForm("message");
+        vim.readingDataService.setActiveTab("mother-profile")
+        vim.router.navigate(["dashboard/mother-profile"]);
+        }
+      },
+      error => {
+        console.error("errro", error);
+      }
+    );
   }
   /**
    *
@@ -1150,9 +951,6 @@ export class GeneralComponent implements OnInit {
 
           vim.responseArray = [];
           vim.responseArray = response["response"];
-          if(this.ashaUser){
-            vim.readingDataService.setAshaWorkerActiveStatus('baby-profile');
-            }
 
         } else {
           if (response["status"] == 404) {
@@ -1424,15 +1222,6 @@ export class GeneralComponent implements OnInit {
         })
     
   }
-
-  checkAshaPHCUser(){
-    if(this.login_hospital['user_type']== this.appConstant.asha_worker || this.login_hospital['user_type']== this.appConstant.phc_worker){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
   calculateAgeAtAdmission(){
     debugger;
     if(this.generalForm['value']['baby_birth_date']!="NA" && this.generalForm['value']['baby_birth_date']!="" && this.generalForm['value']['baby_date_of_admission']!="NA" && this.generalForm['value']['baby_date_of_admission']!="" ){
@@ -1458,59 +1247,6 @@ export class GeneralComponent implements OnInit {
 
   }
 
-  addAshaPHCPatient(){
-    this.createPatient['hospital_type_id']=this.login_hospital['user_type_id'];
-    this.createPatient['baby_medical_record_number']=this.generalForm.value['babyMedicalRecord'];
-    this.createPatient['baby_mother_medical_record_number']=this.generalForm.value['babyMotherMedicalRecord'];
-    this.createPatient['baby_name']=this.generalForm.value['baby_name'];
-    this.createPatient['baby_mother_name']=this.generalForm.value['baby_mother_name'];
-    this.createPatient['hospital_id']=this.login_hospital['hospital_id'];
-    this.createPatient['hospitalType']=this.login_hospital['user_type_id'];
-
-    this.common_api.createAshaPatient(this.createPatient).subscribe(response=>{
-      if(this.helper.success(response)){
-        this.generalForm['value']['study_id']=response['response']['id'];
-        this.readingDataService.setAshaWorkerActiveStatus('babyProfile');
-        this.addHospitalPatient();
-
-      }else{
-        this.commonAsyn.isHide();
-        this.helper.errorHandler(response);
-      }
-    })
-  }
-
-  addHospitalPatient(){
-    let vim=this;
-    const newUser = vim.common_api.patient_general_info_updated(
-      vim.generalForm.value,vim.loggedInUserId
-    );
-    // const newUser = vim.common_api.patient_general_info_updated(
-    //   vim.generalForm.value
-    // );
-    newUser.subscribe(
-      response => {
-        if(response['status']!=200){
-          vim.toastr.error('',response["message"])
-          vim.commonAsyn.isHide();
-        }
-        else{
-        vim.reset();
-        vim.success(response, "BabyProfileFormSubmit");
-        vim.isBabyEditGeneral = false;
-        vim.isBabyCreateGeneral = false;
-        vim.readingDataService.setComponentFlag('mother-profile')
-        vim.readingDataService.showBabyProfileForm("message");
-        vim.readingDataService.setActiveTab("mother-profile")
-        vim.router.navigate(["dashboard/mother-profile"]);
-        }
-      },
-      error => {
-        console.error("errro", error);
-      }
-    );
-  }
-
   convertDateFormat(formValue){
     if(typeof formValue['baby_birth_date'] =='string'){
       formValue['baby_birth_date']= this.datePipe.transform(formValue['baby_birth_date'], 'dd/MM/yyyy');
@@ -1519,9 +1255,4 @@ export class GeneralComponent implements OnInit {
       formValue['baby_date_of_admission']= this.datePipe.transform(formValue['baby_date_of_admission'], 'dd/MM/yyyy');
     }
   }
-
- birthDateChanged(){
-    this.generalForm.controls['baby_date_of_admission'].setValue('');
-  }
 }
-

@@ -3,14 +3,9 @@
   <!-- Page Heading -->
   <div class="mt-160">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      	<div class="col-md-4">
+      	<div class="col-md-8">
       <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-baby text-primary mr-2"></i>Medical Records</h4>
     </div>
-    <div class="col-md-4">
-        <app-heading></app-heading>
-        </div>
-        <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital Branch'">
-          </div>
     <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital'">
       <div class="form-group has-error has-danger text-right">
         <label for="" class="text-bold text-gray-900 pr-3 mt-2">Branch:</label>
@@ -41,34 +36,30 @@
         </div>
 
         <div class="card-body">
-          	<div class="table-responsive1">
-                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="row mb-3">
-                        <div class="col-sm-12 col-md-6">
-                          <div class="dataTables_length" id="dataTable_length">
-                            <label>
-                              Show
-                              <select name="dataTable_length" aria-controls="dataTable"
-                                class="custom-select custom-select-sm form-control form-control-sm" [(ngModel)]="pageLength"
-                                (change)="onDropDownChange(pageLength)">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                              </select>
-                              entries
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                          <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
-                                class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchMedicalRecords($event)" name="search_text" [(ngModel)]="search_text"></label></div>
-                        </div>
-                      </div>
-                </div>
-              </div>
           <div class="table-responsive">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+              <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length" id="dataTable_length">
+                    <label>
+                      Show
+                      <select name="dataTable_length" aria-controls="dataTable"
+                        class="custom-select custom-select-sm form-control form-control-sm" [(ngModel)]="pageLength"
+                        (change)="onDropDownChange(pageLength)">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      entries
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
+                        class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchMedicalRecords($event)" name="search_text" [(ngModel)]="search_text"></label></div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-sm-12">
                   <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
@@ -76,7 +67,7 @@
                     <thead>
                       <tr role="row">
                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                          aria-sort="ascending" aria-label="Name: activate to sort column descending">S.No</th>
+                          aria-sort="ascending" aria-label="Name: activate to sort column descending">ID</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="Position: activate to sort column ascending">BMR Number</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
@@ -95,7 +86,7 @@
                           aria-label="Salary: activate to sort column ascending">Created by</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="Salary: activate to sort column ascending">Modified by</th>
-                        <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                           aria-label="Salary: activate to sort column ascending">Action</th>
                       </tr>
                     </thead>
@@ -113,7 +104,7 @@
                         <td *ngIf="list.status==1"> <span class="text-success">Active</span></td>
                          <td *ngIf="list.status==0"> <span class="text-danger">Inactive</span></td>
                         <td> {{list.created_by | userPipe: list}}</td>
-                        <td> {{list.updated_by}}</td>
+                        <td> {{list.updated_by | userPipe: list}}</td>
                         <td class="text-right">
                           <button
                             class="d-sm-inline-block btn btn-sm btn-secondary shadow-sm mr-2" title="View"
@@ -382,22 +373,16 @@
         </div>
         <div class="col-md-8">
           <div class="form-group has-error has-danger ">
-            <!-- <input type="text" class="form-control" [patterns]="namePatters"  [dropSpecialCharacters]="false" formControlName="state" mask="S*" autocomplete="doNotAutoComplete"> -->
-            <select class="form-control" formControlName="state" >
-              <option value="">--Select State--</option>
-            <option *ngFor="let list of stateList" [value]="list.state_name" [selected]="list.state_name == addMedicalRecordForm['value']['state']">
-              {{list.state_name}}
-            </option>
-          </select>
+            <input type="text" class="form-control" [patterns]="namePatters"  [dropSpecialCharacters]="false" formControlName="state" mask="S*" autocomplete="doNotAutoComplete">
             <div
               *ngIf="addMedicalRecordForm.controls['state'].invalid && (addMedicalRecordForm.controls['state'].dirty || addMedicalRecordForm.controls['state'].touched)"
               class="error-msg">
               <div *ngIf="addMedicalRecordForm.controls['state'].errors.required">
                 This field is required.
               </div>
-              <!-- <div *ngIf="addMedicalRecordForm.controls.state.errors.maxlength">
+              <div *ngIf="addMedicalRecordForm.controls.state.errors.maxlength">
                 State should not be more than 32 characters
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -449,7 +434,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group has-error has-danger ">
-            <label for="" class="text-bold text-gray-900">Email Id</label>
+            <label for="" class="text-bold text-gray-900">Email ID</label>
           </div>
         </div>
         <div class="col-md-8">
@@ -507,7 +492,7 @@
 <ng-template #medicalRecordDetail let-c="close" let-d="dismiss">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Medical Record Details</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Medical Record Detail</h5>
       <button class="close" type="button" data-dismiss="modal" (click)="d('Cross click');closeDetail()"
         aria-label="Close">
         <span aria-hidden="true">×</span>
@@ -678,7 +663,7 @@
       <div class="row">
         <div class="col-md-5">
           <div class="form-group has-error has-danger ">
-            <label for="" class="text-bold text-gray-900">Email Id</label>
+            <label for="" class="text-bold text-gray-900">Email</label>
           </div>
         </div>
         <div class="col-md-7">

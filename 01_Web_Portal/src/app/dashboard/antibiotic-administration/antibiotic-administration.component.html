@@ -10,7 +10,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-4">
-            <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+            <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
           </div>
           <div class="col-md-4">
             <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -28,7 +28,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a' || 'Loading...'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content, responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -47,7 +47,7 @@
                             <td class="tb-value text-right">
                               {{responseArray[0]['date_of_administration_of_antiobiotic']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Time of administration (0-23 Hours)</td>
                             <td class="tb-value text-right">
                               {{responseArray[0]['time_of_administration_of_antiobiotic_hours']}} Hrs.
@@ -67,13 +67,13 @@
                             <td class="tb-value text-right">
                               {{responseArray[0]['date_of_blood_samples_sent_for_culture_test']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Time of Blood Samples (0-23 Hours)</td>
                             <td class="tb-value text-right">
                               {{responseArray[0]['time_of_blood_samples_sent_for_culture_test_hours']}} Hrs.
                               {{ responseArray[0]['time_of_blood_samples_sent_for_culture_test_minute']}} Min.</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Blood Sample Taken Prior to Antiobiotic administration</td>
                             <td class="tb-value text-right">
                               {{responseArray[0]['blood_sample_taken_prior_to_antiobiotic_administration']}}</td>
@@ -112,7 +112,7 @@
                   formControlName="antibiotic_given">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="antibioticAdministrationForm.controls['antibiotic_given'].invalid &&
                   (antibioticAdministrationForm.controls['antibiotic_given'].dirty ||
@@ -398,7 +398,7 @@
                   formControlName="blood_sample_taken_prior_to_antiobiotic_administration">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="antibioticAdministrationForm.controls['blood_sample_taken_prior_to_antiobiotic_administration'].invalid
                     &&

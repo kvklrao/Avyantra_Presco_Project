@@ -7,6 +7,11 @@ import { AppHelper } from '../shared/helper/app.helper';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MedicalRecordsComponent } from './medical-records.component';
 import { userTypePipe } from '../shared/pipes/user-type.pipe';
+import { emptyDataPipe } from '../shared/pipes/empty-data.pipe';
+import { statusPipe } from '../shared/pipes/status.pipe';
+import { of } from 'rxjs';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MedicalRecordsComponent', () => {
   let component: MedicalRecordsComponent;
@@ -14,12 +19,12 @@ describe('MedicalRecordsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MedicalRecordsComponent, userTypePipe ],
+      declarations: [ MedicalRecordsComponent, userTypePipe,emptyDataPipe ,statusPipe],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
         HttpClientModule,
         NgxPaginationModule,
-        ToastrModule.forRoot()],
+        ToastrModule.forRoot(),BrowserAnimationsModule,NgbModalModule],
       providers:[AppHelper]
     })
     .compileComponents();
@@ -96,5 +101,130 @@ describe('MedicalRecordsComponent', () => {
     expect(errors['maxlength']).toBeFalsy();
     expect(babyName.errors).toBeFalsy();
   });
+  it("when changeBranch method is called",()=>{
+    spyOn(component,'createForm');
+   // expect(component.changeBranch({})).toB
+    let event={
+      target:{value:"1"}
+    }
+    component.changeBranch(event);  
+    expect(component.createForm).toHaveBeenCalled();
+  });
+  it("onDropDownChange method",()=>{
+    spyOn(component,'getMedicalRecords');
+    component.onDropDownChange(1);
+    expect(component.getMedicalRecords).toHaveBeenCalled();
+  });
+  it("nextPage method",()=>{
+     spyOn(component,'getMedicalRecords');
+     component.nextPage(1);
+     expect(component.getMedicalRecords).toHaveBeenCalled();
+  });
+  it("close method",()=>{
+    spyOn(component,'close');
+    component.close();
+    expect(component.close).toHaveBeenCalled();
+  });
+  it("updateMedicalRecord method",()=>{
+    component.updateMedicalRecord();
+    expect(component.addMedicalRecordForm.invalid).toBeTruthy();
+  })
+  it("updateForm method ",()=>{
+    let medical=component.addMedicalRecordForm;
+     let obj={
+      mmrn: "",
+      babyName: "",
+      motherName:""
+     }
+     spyOn(medical,'patchValue');
+     component.updateForm(obj);
+     expect(medical.patchValue).toHaveBeenCalled();
+  });
+  it("onMedicalRecordSubmit method",()=>{
+    component.onMedicalRecordSubmit();
+    expect(component.addMedicalRecordForm.invalid).toBeTruthy();
+  });
+
+  it("searchMedicalRecords method",()=>{
+    let event:Event;
+    spyOn(component,'getMedicalRecordsCount');
+    component.search_text="abc";
+    component.searchMedicalRecords(event);
+    expect(component.getMedicalRecordsCount).toHaveBeenCalled();
+    component.search_text="";
+    component.searchMedicalRecords(event);
+    expect(component.getMedicalRecordsCount).toHaveBeenCalled();
+  });
+
+  it("updateMedicalRecord method",()=>{
+    component.createForm();
+    component.addMedicalRecordForm.patchValue({
+      bmrn:"122",
+      mmrn: "123",
+      babyName:  "test",
+      motherName: "test",
+      fatherName:  "test",
+      contactNumberPrimary:  "1234567890",
+      contactNumberSecondary:  "1234567890",
+      address: "city",
+      city:  "test",
+      state: "MP",
+      pincode: "453441",
+      nationality: "indian",
+      email: "test@gmail.com",
+      status: 1,
+  });
+    let res = {
+      response:{
+        referral_count:101
+      }
+  }
+      var spy = spyOn(component['commomService'],'updateMedicalRecord').and.returnValue(of(res));
+      component.updateMedicalRecord()
+      spy.calls.mostRecent().returnValue.subscribe(response=>{
+          expect(response).toBe(res);
+      }) 
+  });
+
+  it("onMedicalRecordSubmit method",()=>{
+    component.createForm();
+    component.addMedicalRecordForm.patchValue({
+      bmrn:"122",
+      mmrn: "123",
+      babyName:  "test",
+      motherName: "test",
+      fatherName:  "test",
+      contactNumberPrimary:  "1234567890",
+      contactNumberSecondary:  "1234567890",
+      address: "city",
+      city:  "test",
+      state: "MP",
+      pincode: "453441",
+      nationality: "indian",
+      email: "test@gmail.com",
+      status: 1,
+  });
+    let res = {
+      response:{
+        message:"sucess"
+      }
+  }
+      var spy = spyOn(component['commomService'],'addMedicalRecord').and.returnValue(of(res));
+      component.onMedicalRecordSubmit()
+      spy.calls.mostRecent().returnValue.subscribe(response=>{
+          expect(response).toBe(res);
+      }) 
+  });
+
+  it("open method called",()=>{
+    component.hospitalBranchId=100;
+    spyOn(component,'createForm');
+    component.open('content',{});
+    expect(component.createForm).toHaveBeenCalled();
+    spyOn(component,'updateForm');
+    component.open('content',{data:12});
+    expect(component.updateForm).toHaveBeenCalled();
+  });
+
 
 });

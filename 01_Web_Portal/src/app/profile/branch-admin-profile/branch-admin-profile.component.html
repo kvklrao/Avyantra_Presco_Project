@@ -4,14 +4,7 @@
   <!-- Page Heading -->
   <div class="mt-160">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <div class="col-md-4">
-          <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-hospital text-primary mr-2"></i>Profile</h4>
-        </div>
-          <div class="col-md-4">
-              <app-heading></app-heading>
-              </div>
-              <div class="col-md-4">
-                  </div>
+      <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-hospital text-primary mr-2"></i>Profile</h4>
     </div>
   </div>
 
@@ -123,7 +116,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group has-error has-danger ">
-                    <label for="" class="text-bold text-gray-900">Email Id</label>
+                    <label for="" class="text-bold text-gray-900">Email</label>
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -329,13 +322,13 @@
           </div>
           <div class="card-body" *ngIf="branchProfile?.length>0">
             <form [formGroup]="branchProfileForm" (ngSubmit)="f.form.valid"
-            #f="ngForm" (keydown.enter)="$event.preventDefault()" novalidate>
+            #f="ngForm" novalidate>
             <div class="row">
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">Hospital Name&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">Hospital Name</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -350,7 +343,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">Branch Name&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">Branch Name</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -366,7 +359,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">User Name&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">User Name</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -391,7 +384,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">Password&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">Password</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -422,7 +415,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">Email Id&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">Email</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -446,7 +439,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group has-error has-danger ">
-                      <label for="" class="text-bold text-gray-900">Contact Number&nbsp;<span class="text-danger">*</span></label>
+                      <label for="" class="text-bold text-gray-900">Contact Number</label>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -527,19 +520,14 @@
                   </div>
                   <div class="col-md-8">
                     <div class="form-group has-error has-danger ">
-                      <select class="form-control" formControlName="state" >
-                        <option value="">--Select State--</option>
-                      <option *ngFor="let list of stateList" [value]="list.state_name" [selected]="list.state_name == branchProfileForm['value']['state']">
-                        {{list.state_name}}
-                      </option>
-                    </select>
-                        <!-- <div
+                        <input class="form-control" formControlName="state" autocomplete="doNotAutoComplete"/>
+                        <div
                         *ngIf="branchProfileForm.controls['state'].invalid && (branchProfileForm.controls['state'].dirty || branchProfileForm.controls['state'].touched)"
                         class="error-msg">
                         <div *ngIf="branchProfileForm.controls['state'].errors.required">
                           This field is required.
                         </div>
-                      </div> -->
+                      </div>
                     </div>
                   </div>
                 </div>

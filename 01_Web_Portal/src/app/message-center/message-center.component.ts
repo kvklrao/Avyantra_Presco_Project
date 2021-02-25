@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppConstant } from '../shared/constant/app-constant';
 import { CommonService } from '../shared/service/common/common.service';
 import { AppHelper } from '../shared/helper/app.helper';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-message-center',
@@ -11,7 +10,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./message-center.component.css']
 })
 export class MessageCenterComponent implements OnInit {
-  formRef:any;
 isListItemClicked: Boolean = false;
 h2:Number;
   loggedInUser:any={};
@@ -26,12 +24,11 @@ h2:Number;
   selectedUserDropDown=2;
   selectedItem=0;
   senderId:number;staffId:number;
-  recieverId:number;textMessage:string='';activeChatUserName:String;chatModalResized=false;
+  recieverId:number;textMessage:string='';
   messageJson:any={};referralId:number;referralLogin=5;searchText:string;userId:number;hospitalBranchId:number;noUserSelected=true;
-  constructor(private constant:AppConstant,private common:CommonService,private helper:AppHelper,private toasty:ToastrService,private modalService:NgbModal) { }
+  constructor(private constant:AppConstant,private common:CommonService,private helper:AppHelper,private toasty:ToastrService) { }
   @ViewChild('container') container: ElementRef
   @ViewChild('bottomDiv') bottomDiv: ElementRef
-  @ViewChild('chatModal') chatModal:ElementRef;
   
   ngOnInit() {
     this.pageLength=1000;
@@ -109,7 +106,7 @@ h2:Number;
       this.participantList=response['response'];
     }
     if(apiType=='sendMessage'){
-     // this.toasty.success(response['message'],'')
+      this.toasty.success(response['message'],'')
     }
     if(apiType=='hospitalAndBranchAdmins'){
       this.participantList=response['response'];
@@ -147,7 +144,7 @@ h2:Number;
     })
   }
 
-  getUserMessages(id,isRead,index,listObj){
+  getUserMessages(id,isRead,index){
     this.msgsList=[];
     this.selectedItem=id;
     this.recieverSelected=true;
@@ -155,7 +152,6 @@ h2:Number;
     this.participantList[index]['is_read']=1;
     this.textMessage='';
     this.noUserSelected=false;
-    this.activeChatUserName=listObj['name'];
     this.updateReadStatus(this.senderId,this.recieverId,isRead);
     //this.getMessages(this.senderId,this.recieverId);
   }
@@ -197,11 +193,11 @@ h2:Number;
   }
 
   getMessages(senderId, recieverId) {
+    debugger;
     this.common.getMessages(senderId, recieverId).subscribe(result => {
       if (this.helper.success(result)) {
         this.success('getMessages', result);
         this.isListItemClicked = true;
-        this.openChatModal();
         if (this.msgsList.length <= 0) {
           this.isListItemClicked = false;
         }
@@ -210,17 +206,6 @@ h2:Number;
         this.isListItemClicked = false;
       }
     })
-  }
-
-  openChatModal(){
-    if(window.innerWidth<500)
-    this.formRef=this.modalService.open(this.chatModal,this.helper.ngbModalChatOptions);
-    this.chatModalResized=true;
-  }
-
-  close(){
-    this.formRef.close();
-    this.chatModalResized=false;
   }
 
   checkEmptyMessage(){
@@ -311,16 +296,11 @@ getStaffReferralDoctors(){
   }
 
   checkLoggedInUser(){
+    debugger;
     const index = this.participantList.findIndex(userobj => userobj['user_id'] == this.senderId);
     if(index>=0){
     this.participantList.splice(index,1);
     }
   }
-
-@HostListener('window:resize', ['$event'])
-onResize(event) {
- if(window.innerWidth>500 && this.chatModalResized)
-    this.formRef.close();
-}
 
 }

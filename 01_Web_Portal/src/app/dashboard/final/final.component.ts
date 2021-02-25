@@ -10,8 +10,6 @@ import { Common } from "../../shared/service/common/common";
 import { DatePipe } from '@angular/common';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppHelper } from 'src/app/shared/helper/app.helper';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 
 @Component({
@@ -51,7 +49,6 @@ export class FinalComponent implements OnInit {
   content:any;
   public dataServiceObj;
   public readingDataObj;
-  phcUser=false;
   @ViewChild('saveReadingContent') saveReadingContent;
 
   public customPatterns = { 'S': { pattern: new RegExp('\[a-zA-Z,/\]') } };
@@ -67,7 +64,7 @@ export class FinalComponent implements OnInit {
     private commonAsyn: Common,
     private datePipe: DatePipe,
     private dataService: DataService,
-    public readingDataService:ReadingDataService,private helper:AppHelper,private constant:AppConstant
+    public readingDataService:ReadingDataService
     
   ) {
     this.dataServiceObj = dataService.getOption();
@@ -85,7 +82,6 @@ export class FinalComponent implements OnInit {
     vim.readingDataObj=vim.readingDataService.getReadingFormData('baby_final') ;
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    vim.checkUser();
     vim.id = vim.dataServiceObj.study_id;
     vim.createForm(vim.dataServiceObj.study_id);
     if(vim.readingDataObj!=undefined){
@@ -105,12 +101,6 @@ export class FinalComponent implements OnInit {
     vim.onChanges();
   }
 
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
-  }
-
   createForm(id) {
     const vim = this;
 
@@ -125,7 +115,7 @@ export class FinalComponent implements OnInit {
       final_diagnosis_ttnb: ["", Validators.required],
       final_diagnosis_jaundice: ["", Validators.required],
       final_diagnosis_lbw: ["", Validators.required],
-      final_lga_sga_aga_suspect: ["", Validators.required],
+      baby_lga_sga_aga_suspect: ["", Validators.required],
       // final_diagnosis_aga: ["", Validators.required],
       final_diagnosis_anemia: ["", Validators.required],
       final_diagnosis_dextochordia: ["", Validators.required],
@@ -142,25 +132,19 @@ export class FinalComponent implements OnInit {
       // final_diagnosis_sga: ["", Validators.required],
       final_diagnosis_eos_los: ["", Validators.required],
       final_diagnosis_other: ["", Validators.required],
-      discharge_status:["",Validators.required],
-      final_diagnosis_meningitis:["",Validators.required],
-      final_diagnosis_hypoxia:["",Validators.required],
-      final_diagnosis_metabolic_acidosis:["",Validators.required],
-      final_diagnosis_asphyxia:["", Validators.required],
-      final_diagnosis_septic_arthritis:["", Validators.required],
-      final_diagnosis_endocarditis:["", Validators.required],
-      final_diagnosis_peritonitis:["", Validators.required],
-      final_diagnosis_soft_tissue_abscess:["", Validators.required],
-      final_diagnosis_coagulopathy:["", Validators.required],
-      final_diagnosis_uti:["", Validators.required],
-      final_diagnosis_umblical_sepsis:["", Validators.required],
-      final_diagnosis_bleeding_manifestation:["", Validators.required],
-      final_diagnosis_central_peripheral:["", Validators.required],
-      final_diagnosis_seizures:["",Validators.required],
-      final_diagnosis_skin_pustules:["",Validators.required],
-      final_diagnosis_pulmonary_hemorrhage:["",Validators.required],
-      final_diagnosis_thrombocytopenia:["",Validators.required],
-      final_diagnosis_pneumonia:["",Validators.required]
+      meningitis:["",Validators.required],
+      hypoxia:["",Validators.required],
+      metabolic_acidosis:["",Validators.required],
+      asphyxia:["", Validators.required],
+      septic_arthritis:["", Validators.required],
+      endocarditis:["", Validators.required],
+      peritonitis:["", Validators.required],
+      soft_tissue_abscess:["", Validators.required],
+      coagulopathy:["", Validators.required],
+      uti:["", Validators.required],
+      umblical_sepsis:["", Validators.required],
+      bleeding_manifestation:["", Validators.required],
+      central_peripheral:["", Validators.required],
     });
   }
 
@@ -197,7 +181,7 @@ export class FinalComponent implements OnInit {
       final_diagnosis_ttnb: obj["final_diagnosis_ttnb"],
       final_diagnosis_jaundice: obj["final_diagnosis_jaundice"],
       final_diagnosis_lbw: obj["final_diagnosis_lbw"],
-      final_lga_sga_aga_suspect: obj["final_lga_sga_aga_suspect"],
+      baby_lga_sga_aga_suspect: obj["baby_lga_sga_aga_suspect"],
       // final_diagnosis_aga: obj["final_diagnosis_aga"],
       final_diagnosis_anemia: obj["final_diagnosis_anemia"],
       final_diagnosis_dextochordia: obj["final_diagnosis_dextochordia"],
@@ -213,25 +197,19 @@ export class FinalComponent implements OnInit {
       // final_diagnosis_sga: obj["final_diagnosis_sga"],
       final_diagnosis_eos_los: obj["final_diagnosis_eos_los"],
       final_diagnosis_other: obj["final_diagnosis_other"],
-      discharge_status:obj["discharge_status"],
-      final_diagnosis_meningitis:obj["final_diagnosis_meningitis"],
-      final_diagnosis_hypoxia:obj["final_diagnosis_hypoxia"],
-      final_diagnosis_metabolic_acidosis:obj["final_diagnosis_metabolic_acidosis"],
-      final_diagnosis_asphyxia:obj["final_diagnosis_asphyxia"],
-      final_diagnosis_septic_arthritis:obj["final_diagnosis_septic_arthritis"],
-      final_diagnosis_endocarditis:obj["final_diagnosis_endocarditis"],
-      final_diagnosis_peritonitis:obj["final_diagnosis_peritonitis"],
-      final_diagnosis_soft_tissue_abscess:obj["final_diagnosis_soft_tissue_abscess"],
-      final_diagnosis_coagulopathy:obj["final_diagnosis_coagulopathy"],
-      final_diagnosis_uti:obj["final_diagnosis_uti"],
-      final_diagnosis_umblical_sepsis:obj["final_diagnosis_umblical_sepsis"],
-      final_diagnosis_bleeding_manifestation:obj["final_diagnosis_bleeding_manifestation"],
-      final_diagnosis_central_peripheral:obj["final_diagnosis_central_peripheral"],
-      final_diagnosis_seizures:obj["final_diagnosis_seizures"],
-      final_diagnosis_skin_pustules:obj["final_diagnosis_skin_pustules"],
-      final_diagnosis_pulmonary_hemorrhage:obj["final_diagnosis_pulmonary_hemorrhage"],
-      final_diagnosis_thrombocytopenia:obj["final_diagnosis_thrombocytopenia"],
-      final_diagnosis_pneumonia:obj["final_diagnosis_pneumonia"]
+      meningitis:obj["meningitis"],
+      hypoxia:obj["hypoxia"],
+      metabolic_acidosis:obj["metabolic_acidosis"],
+      asphyxia:obj["asphyxia"],
+      septic_arthritis:obj["septic_arthritis"],
+      endocarditis:obj["endocarditis"],
+      peritonitis:obj["peritonitis"],
+      soft_tissue_abscess:obj["soft_tissue_abscess"],
+      coagulopathy:obj["coagulopathy"],
+      uti:obj["uti"],
+      umblical_sepsis:obj["umblical_sepsis"],
+      bleeding_manifestation:obj["bleeding_manifestation"],
+      central_peripheral:obj["central_peripheral"],
     });
   }
 
@@ -561,7 +539,7 @@ export class FinalComponent implements OnInit {
     }
   }
     openModal() {
-    this.formRef = this.modalService.open(this.saveReadingContent, this.helper.ngbModalSmallOptions);
+    this.formRef = this.modalService.open(this.saveReadingContent, { size: "sm" });
   }
 
   close() {
@@ -586,10 +564,6 @@ export class FinalComponent implements OnInit {
            vim.toastr.success('',response['message']);
            vim.readingDataService.clearReadingFormData();
           //  vim.readingDataService.reset();
-          if(this.login_hospital['user_type']==this.constant.phc_worker){
-            this.readingDataService.ashaPhcScore=true;
-            this.readingDataService.reading=localStorage.getItem('reading');
-          }
           this.readingDataService.showSaveReadingButton=true;
           vim.readingDataService.setActiveTab("baby-appearence")
            vim.router.navigate(['dashboard/baby-appearence']);
@@ -605,6 +579,7 @@ export class FinalComponent implements OnInit {
     this.messageString='';
     this.invalidForm=false;
     this.allFormData=this.readingDataService.getFormValidationStatus();
+    console.log(this.allFormData,'checkForms')
     if( this.allFormData['baby_appears']==false){
       this.setMessage('Baby Appears')
          this.invalidForm=true;

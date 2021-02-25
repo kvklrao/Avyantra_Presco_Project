@@ -10,7 +10,6 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 @Component({
   selector: "app-antibiotic-administration",
@@ -52,7 +51,7 @@ export class AntibioticAdministrationComponent implements OnInit {
   getMedicalRecordNumber: string;
 
   temp_study_id = 0;
-phcUser=false;
+
   login_hospital: any = {};
   content:any;
   public dataServiceObj;
@@ -68,7 +67,7 @@ loggedInUserId:number;
     private commonAsyn: Common,
     private datePipe: DatePipe,
     private dataService: DataService,
-    public readingDataService:ReadingDataService,private constant:AppConstant
+    public readingDataService:ReadingDataService
   ) {
     this.dataServiceObj = dataService.getOption();
   }
@@ -88,7 +87,6 @@ loggedInUserId:number;
     vim.readingDataObj=vim.readingDataService.getReadingFormData('baby_antibiotic') ;
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.loggedInUserId=vim.login_hospital['user_id'];
-    this.checkUser();
     vim.id = vim.dataServiceObj.study_id;
     vim.createForm(vim.dataServiceObj.study_id);
     if(vim.readingDataObj!=undefined){
@@ -103,8 +101,6 @@ loggedInUserId:number;
    // vim.onChanges();
 }
     vim.temp_study_id = vim.id;
-  
-
 
     this.antibioticNameList = [
       { "id": 1, "itemName": "Amikacin" },
@@ -114,13 +110,12 @@ loggedInUserId:number;
       { "id": 5, "itemName": "Cefotaxim" },
       { "id": 6, "itemName": "Tozobactum" },
       { "id": 7, "itemName": "Other" },
-     // { "id": 8, "itemName": "NA" }
+      { "id": 8, "itemName": "NA" }
     ];
 
     this.settings = {
       limitSelection: false,
-      badgeShowLimit: 2,
-      maxHeight:140
+      badgeShowLimit: 2
     };
     vim.onChanges();
   }
@@ -158,12 +153,6 @@ loggedInUserId:number;
         Validators.required
       ]
     });
-  }
-
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
   }
 
   updateForm(obj) {
@@ -411,102 +400,25 @@ loggedInUserId:number;
     if (vim.antibioticAdministrationForm.invalid) {
       return;
     }
-
-    if (vim.antibioticAdministrationForm.controls["antibiotic_name"].value == 'NA') {
-      vim.antibioticAdministrationForm.value["antibiotic_name"] = 'NA';
-    } else {
-      vim.antibioticAdministrationForm.value["antibiotic_name"] = JSON.stringify(vim.selectedItems);
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] == '') {
-      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] == '') {
-      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] == '') {
-      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] == '') {
-      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] = 'NA';
-    }
-
-    // vim.commonAsyn.showLoader();
-    // const newUser = vim.common_api.antibiotic_add(
-    //   vim.antibioticAdministrationForm.value
-    // );
-    // newUser.subscribe(
-    //   response => {
-    //     vim.reset();
-    //     vim.success(response, "antibioticFormSubmit");
-    //   },
-    //   error => {
-    //     console.error("errro", error);
-    //   }
-    // );
     this.antibioticAdministrationForm.value["reading"] = localStorage.getItem('reading');
+   this.setData()
    vim.goToNextReadingForm();
   }
-  /**
-   *
-   * @param response
-   * @param api_type
-   * @method: success
-   * @purpose :-  it is a common helper
-   */
+ 
   success(response, api_type) {
     const vim = this;
-    if (api_type == "antibioticFormSubmit") {
-      if (vim.isSuccess(response)) {
-        vim.toastr.success(
-          "",
-          "Information Updated succesfully"
-        );
-        vim.responseArray = [];
-        this.page = 1;
-        vim.dataServiceObj = vim.dataService.getOption();
-        vim.get_antibiotic(vim.dataServiceObj.study_id, vim.login_hospital['id'], vim.page, vim.readingDataService.reading);
-      } else {
-        if (vim.isAlreadyExist(response)) {
-          vim.toastr.warning("Already Exist!!", response["message"]);
-        } else {
-          vim.errorToasty(response);
-        }
-      }
-    } else if (api_type == "get_antibiotic") {
+    if (api_type == "get_antibiotic") {
       if (vim.isSuccess(response)) {
         if (this.page == 1) {
           vim.responseArray = [];
           vim.responseArray = response["response"];
-        } else {
-          if (response["status"] == 404) {
-            // vim.responseArray = [];
-          }
-          else if (response["response"].length > 0) {
-            vim.temp_study_id = response["response"][0].study_id;
-            if (vim.temp_study_id == vim.id) {
-            } else {
-              vim.responseArray = [];
-            }
-
-            for (var i = 0; i < response["response"].length; i++) {
-              vim.responseArray.push(response["response"][i]);
-              vim.temp_study_id = vim.id;
-            }
-          }
-        }
+        } 
         vim.commonAsyn.isHide();
       } else {
         vim.responseArray = [];
         vim.commonAsyn.isHide();
         if (vim.isAlreadyExist(response)) {
-          // vim.toastr.warning('Already Exist!!', response['message']);
-        } else {
-          // vim.errorToasty(response);
-        }
+        } else {  }
       }
     }
   }
@@ -638,32 +550,18 @@ loggedInUserId:number;
       }
     });
   }
+ }
+
+  setFormValidationAndValue(name,flag){
+    this.readingDataService.setFormValidationStatus(name,flag)
+    if(this.readingDataObj!=undefined){
+      this.saveReadingFormData(this.antibioticAdministrationForm['value']);
+    }
   }
 
 
   updateAntibioticForm(){
-    this.transformDate(this.antibioticAdministrationForm.value);
-    if (this.antibioticAdministrationForm.controls["antibiotic_name"].value == 'NA') {
-      this.antibioticAdministrationForm.value["antibiotic_name"] = 'NA';
-    } else {
-      this.antibioticAdministrationForm.value["antibiotic_name"] = JSON.stringify(this.selectedItems);
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] == '') {
-      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] == '') {
-      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] == '') {
-      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] = 'NA';
-    }
-
-    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] == '') {
-      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] = 'NA';
-    }
+   this.setData();
     if(!this.antibioticAdministrationForm.valid){
       return ;
     }
@@ -696,5 +594,31 @@ loggedInUserId:number;
     if(typeof formData['antibiotic_name'] != 'string'){
       formData['antibiotic_name']=JSON.stringify(formData['antibiotic_name']);
       }
+  }
+
+  setData(){
+    let vim=this;
+    vim.transformDate(vim.antibioticAdministrationForm.value);
+    if (vim.antibioticAdministrationForm.controls["antibiotic_name"].value == 'NA') {
+      vim.antibioticAdministrationForm.value["antibiotic_name"] = 'NA';
+    } else {
+      vim.antibioticAdministrationForm.value["antibiotic_name"] = JSON.stringify(vim.selectedItems);
+    }
+
+    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] == '') {
+      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_hours"] = 'NA';
+    }
+
+    if (this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] == '') {
+      this.antibioticAdministrationForm.value["time_of_administration_of_antiobiotic_minute"] = 'NA';
+    }
+
+    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] == '') {
+      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_hours"] = 'NA';
+    }
+
+    if (this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] == '') {
+      this.antibioticAdministrationForm.value["time_of_blood_samples_sent_for_culture_test_minute"] = 'NA';
+    }
   }
 }

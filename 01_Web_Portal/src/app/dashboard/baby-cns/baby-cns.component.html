@@ -10,7 +10,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-4">
-            <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+            <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
           </div>
           <div class="col-md-4">
             <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -28,7 +28,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a' || 'Loading...'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content, responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -42,11 +42,11 @@
                             <td class="tb-label">Features of Encephalopathy</td>
                             <td class="tb-value text-right">{{responseArray[0]['features_of_encephalopathy']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Seizures</td>
                             <td class="tb-value text-right">{{responseArray[0]['seizures']}}</td>
                           </tr>
-                          <tr class="">
+                          <tr class="border-bottom">
                             <td class="tb-label">Baby Movement with Stimulation</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_movement']}}</td>
                           </tr>
@@ -104,7 +104,7 @@
                   <option value="Stupor">Stupor</option>
                   <option value="Coma">Coma</option>
                   <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCnsForm.controls['features_of_encephalopathy'].invalid &&
                     (babyCnsForm.controls['features_of_encephalopathy'].dirty ||
@@ -124,7 +124,7 @@
                 <select class="form-control" name="seizures" id="seizures" formControlName="seizures">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCnsForm.controls['seizures'].invalid && (babyCnsForm.controls['seizures'].dirty ||
                       babyCnsForm.controls['seizures'].touched || submitted)" class="error-msg">
@@ -142,7 +142,7 @@
                   formControlName="abnormal_movements_like_tonic_posturing">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCnsForm.controls['abnormal_movements_like_tonic_posturing'].invalid &&
                       (babyCnsForm.controls['abnormal_movements_like_tonic_posturing'].dirty ||
@@ -163,7 +163,7 @@
                 <select class="form-control" name="af_bulge" id="af_bulge" formControlName="af_bulge">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCnsForm.controls['af_bulge'].invalid && (babyCnsForm.controls['af_bulge'].dirty ||
                       babyCnsForm.controls['af_bulge'].touched || submitted)" class="error-msg">
@@ -180,7 +180,7 @@
                 <select class="form-control" name="baby_movement" id="baby_movement" formControlName="baby_movement">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="babyCnsForm.controls['baby_movement'].invalid && (babyCnsForm.controls['baby_movement'].dirty ||
                       babyCnsForm.controls['baby_movement'].touched || submitted)" class="error-msg">

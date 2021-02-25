@@ -46,13 +46,13 @@
           <div class="hamburger-line"></div>
         </div>
         <div class="hamburger-flyout">
-          <div class="card"  *ngIf="!ashaUser">
+          <div class="card">
             <div class="card-header m-0 p-3">
               <h5 class="m-0 font-weight-bold card-title">NEONATAL FACTORS</h5>
             </div>
             <hr class="m-0">
             <ul class="list-group" id="myList" role="tablist">
-              <li  [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
+              <li [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
                 (click)="closeMenu();">
                 <a class="list-group-item list-group-item-action" data-toggle="list" role="tab">BABY PROFILE</a>
               </li>
@@ -160,53 +160,7 @@
                 </li>
               </ng-template>
             </ul>
-
-
-            <!-- <ul *ngIf="ashaUser" class="list-group" id="myList" role="tablist">
-              <li  [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
-                (click)="closeMenu();">
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab">BABY PROFILE</a>
-              </li>
-              <li [ngClass]="{'active': selectedItem==='mother-profile'}" routerLink="/dashboard/mother-profile"
-                (click)="closeMenu();">
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"> MOTHER PROFILE </a>
-              </li>
-
-              <li [ngClass]="{'active': selectedItem==='health-parameters'}" routerLink="/dashboard/health-parameters"
-                (click)="closeMenu();"
-                *ngIf="readingDataService.checkComponentState['health-parameters'] == true;else elseHpMobile">
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"> HEALTH PARAMETERS </a>
-              </li>
-              <ng-template #elseHpMobile>
-                <li style="opacity:0.3;pointer-events:none; padding: 13px 20px;">
-                  HEALTH PARAMETERS
-                </li>
-              </ng-template>
-            </ul> -->
           </div>
-
-
-          <div class="card"  *ngIf="ashaUser">
-            <div class="card-header m-0 p-3">
-              <h5 class="m-0 font-weight-bold card-title">NEONATAL FACTORS</h5>
-            </div>
-            <hr class="m-0">
-            <ul class="list-group" id="myList" role="tablist">
-              <li  [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
-                (click)="closeMenu();">
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab">BABY PROFILE</a>
-              </li>
-              <li [ngClass]="{'active': selectedItem==='mother-profile'}" routerLink="/dashboard/mother-profile"
-                (click)="closeMenu();">
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"> MOTHER PROFILE </a>
-              </li>
-              <li  [ngClass]="{'active': selectedItem==='health-parameters'}"  (click)="closeMenu();" routerLink="/dashboard/health-parameters"
-              (click)="activeTab('health-parameters')">
-              <a class="list-group-item list-group-item-action"> BABY HEALTH PARAMETERS <span class="sr-only">(current)</span></a>
-              </li>
-              </ul>
-          </div>
-
         </div>
       </div>
 
@@ -220,8 +174,9 @@
                      Create New Record </button>
                    </div> -->
 
-        <div class="card mt-3" *ngIf="!ashaUser">
-            <ul  class="factors-list p-0 my-0">
+        <div class="card mt-3">
+          <ng-container>
+            <ul class="factors-list p-0 my-0">
               <li [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
                 (click)="activeTab('baby-profile')">
                 <a class=""> BABY PROFILE <span class="sr-only">(current)</span></a>
@@ -315,49 +270,19 @@
                   FINAL DIAGNOSIS
                 </li>
               </ng-template>
-              <!-- <li [ngClass]="{'active': selectedItem==='health-parameters'}" routerLink="/dashboard/health-parameters"
-              (click)="closeMenu();"
-              *ngIf="readingDataService.checkComponentState['health-parameters'] == true && false;else elseHpMobile">
-              <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"> HEALTH PARAMETERS </a>
-            </li>
-            <ng-template #elseHpMobile>
-              <li style="opacity:0.3;pointer-events:none; padding: 13px 20px;">
-                HEALTH PARAMETERS
-              </li>
-            </ng-template> -->
             </ul>
+          </ng-container>
         </div>
 
-        <div class="card mt-3" *ngIf="ashaUser">
-            <ul  class="factors-list p-0 my-0">
-              <li [ngClass]="{'active': selectedItem==='baby-profile'}" routerLink="/dashboard/baby-profile"
-                (click)="activeTab('baby-profile')">
-                <a class=""> BABY PROFILE <span class="sr-only">(current)</span></a>
-              </li>
-              <li [ngClass]="{'active': selectedItem==='mother-profile'}" routerLink="/dashboard/mother-profile"
-                (click)="activeTab('mother-profile')">
-                <a> MOTHER PROFILE </a>
-              </li>
-              <li [ngClass]="{'active': selectedItem==='health-parameters'}" routerLink="/dashboard/health-parameters"
-              (click)="activeTab('health-parameters')">
-              <a class=""> BABY HEALTH PARAMETERS <span class="sr-only">(current)</span></a>
-            </li>
-            <!-- <ng-template #elseHpMobile>
-              <li style="opacity:0.3;pointer-events:none; padding: 13px 20px;">
-                HEALTH PARAMETERS
-              </li>
-            </ng-template> -->
-            </ul>
-        </div>
 
       </div>
-      <div class="col-md-9 col-12 mt-3"  >
-        <div class="row avy-logo mb-3" *ngIf="!ashaUser && !phcUser">
-          <div class="col-md-12 d-md-flex justify-content-space" >
+      <div class="col-md-9 col-12 mt-3">
+        <div class="row avy-logo mb-3">
+          <div class="col-md-12 d-md-flex justify-content-space">
             <!-- <button class="btn create-btn text-white my-1" style="background:#615c5d;"
               (click)="openBabyProfile()"><i class="fas fa-plus-circle"></i>
               Create New Profile </button> -->
-            <button *ngIf="!ashaUser" class="btn create-btn text-white my-1 ml-md-3" style="background:#bd6924;"
+            <button class="btn create-btn text-white my-1 ml-md-3" style="background:#bd6924;"
               [disabled]="this.readingDataService.isMotherProfileHaveResp" (click)="openBabyAppear()"><i
                 class="fas fa-plus-circle"></i>
               Create New Reading </button>
@@ -369,13 +294,6 @@
               [disabled]="readingDataService.showSaveReadingButton"><i class="fas fa-plus-circle"></i>
               Save Reading </button>
           </div> -->
-        </div>
-        <div class="row avy-logo mb-3" *ngIf="ashaUser || phcUser">
-          <div class="col-md-12 d-md-flex justify-content-space" >
-            <button class="btn create-btn text-white my-1 ml-md-3" style="background:#bd6924;"
-              (click)="newAshaUser()"><i class="fas fa-plus-circle"></i>
-              Create New Profile </button>
-          </div>
         </div>
         <router-outlet></router-outlet>
       </div>

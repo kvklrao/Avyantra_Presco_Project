@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import * as _ from "underscore";
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 @Component({
   selector: "app-baby-cns",
@@ -38,7 +37,7 @@ export class BabyCnsComponent implements OnInit {
   public dataServiceObj;
   public readingDataObj;
   isEditClicked=false;
-phcUser=false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -47,7 +46,7 @@ phcUser=false;
     private modalService: NgbModal,
     private commonAsyn: Common,
     private dataService: DataService,
-    public readingDataService:ReadingDataService,private constant:AppConstant
+    public readingDataService:ReadingDataService
   ) {
     this.dataServiceObj = dataService.getOption();
   }
@@ -59,7 +58,6 @@ phcUser=false;
     vim.login_hospital = JSON.parse(
       localStorage.getItem("login_hospital"));
       vim.loggedInUserId=vim.login_hospital['user_id'];
-      this.checkUser();
     vim.id = vim.dataServiceObj.study_id;
     vim.createForm(vim.dataServiceObj.study_id);
     vim.temp_study_id = vim.id;
@@ -79,12 +77,6 @@ phcUser=false;
     this.subscription = this.common_api.getMedicalRecordNumber().subscribe(message => {
       this.getMedicalRecordNumber = message.text;
     });
-  }
-
-  checkUser(){
-    if(this.login_hospital['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
   }
 
   createForm(id) {

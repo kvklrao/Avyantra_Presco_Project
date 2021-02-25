@@ -20,11 +20,13 @@ export class TopNavBarComponent implements OnInit {
   ReferralUser=["DashboardRD","MyProfile","hospitalConnect","MessageCenter"];
   branchAdmin=["Dashboard","MedicalRecords","HospitalStaff","Settings","MessageCenter","MyProfile"];
   hospitalAdmin=["Dashboard","MedicalRecords","HospitalStaff","Settings","MessageCenter","MyProfile","AddBranch"];
-  ashaPhc=["DashboardAsha","dataEntry"];
   ngOnInit() {
 
     this.selectedTab='dashboard';
-    this.selectedTab = this.route.children[0].url['value'][0].path;
+    if(this.route.children.length>0){
+      this.selectedTab = this.route.children[0].url['value'][0].path;
+
+    }
     if(this.selectedTab == 'staff-profile' || this.selectedTab == 'referral-profile' || this.selectedTab == 'my-profile' || this.selectedTab == 'branch-admin-profile') {
       this.selectedTab = 'my-profile';
     }
@@ -43,16 +45,6 @@ export class TopNavBarComponent implements OnInit {
     if(this.loginHospital['user_type']===this.constant.hospital_type_login ){
       this.loggedUserName=this.loginHospital['hospital_name'];
     }
-    if(this.loginHospital['user_type']==this.constant.asha_worker){
-      this.loggedUserName=this.loginHospital['username'];
-      if(this.selectedTab=='baby-profile')
-        this.selectedTab="data-entry";
-    }
-    if(this.loginHospital['user_type']==this.constant.phc_worker){
-      this.loggedUserName=this.loginHospital['username'];
-      if(this.selectedTab=='baby-profile')
-        this.selectedTab="data-entry";
-    }
   }
 
   logout(){
@@ -62,7 +54,6 @@ export class TopNavBarComponent implements OnInit {
     this.readingDataService.isMotherProfileHaveResp = true;
     this.readingDataService.clearReadingFormData();
     this.readingDataService.reset();
-    this.readingDataService.resetAshaWorker();
     this.readingDataService.resetAll();
   }
 
@@ -84,9 +75,6 @@ export class TopNavBarComponent implements OnInit {
 
   activeTab(tabName){
     this.selectedTab=tabName;
-    if(tabName=='data-entry'){
-      this.readingDataService.reset();
-    }
   }
 
   showPermission(tabName){
@@ -102,15 +90,13 @@ export class TopNavBarComponent implements OnInit {
     if(this.loginHospital['user_type']==this.constant.referral_doctor_login){
       return this.ReferralUser.includes(tabName);
     }
-    if(this.loginHospital['user_type']==this.constant.asha_worker || this.loginHospital['user_type']==this.constant.phc_worker){
-      return this.ashaPhc.includes(tabName);
-    }
   }
 
-  goDataAshaPhcForm(){
-    this.selectedTab="data-entry";
-    this.readingDataService.ashaPhcScore=false;
-    //this.router.navigate(['/dashboard']);
+  toggleCollapse(){
+    if(window.screen.width < 1000){
+      return "#navbarSupportedContent";
+    }
+    return "";
   }
 
 }

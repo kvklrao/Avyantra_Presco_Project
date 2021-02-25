@@ -27,7 +27,7 @@
             <form [formGroup]="signupReferralForm" (ngSubmit)="signup()" novalidate>
               <div class="signup-form w-75 mx-auto">
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="firstName" class="form-control"
                     formControlName="firstName" [patterns]="namePatters"
                     [dropSpecialCharacters]="false" mask="S*" placeholder="First Name*"  autocomplete="doNotAutoComplete">
                     <div
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="text"   class="form-control"
+                  <input type="text"  id="lastName" class="form-control"
                     formControlName="lastName" [patterns]="namePatters" [dropSpecialCharacters]="false" mask="S*" placeholder="Last Name*"  autocomplete="doNotAutoComplete">
                     <div
                     *ngIf="signupReferralForm.controls['lastName'].invalid && (signupReferralForm.controls['lastName'].dirty || signupReferralForm.controls['lastName'].touched || submitted)"
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="contactNumber" class="form-control"
                     formControlName="contactNumber" mask="0000000000" placeholder="Contact Number*"  autocomplete="doNotAutoComplete">
                     <div
                       *ngIf="signupReferralForm.controls['contactNumber'].invalid && (signupReferralForm.controls['contactNumber'].dirty || signupReferralForm.controls['contactNumber'].touched || submitted)"
@@ -103,23 +103,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
-                    formControlName="hospitalName" [patterns]="namePatters"
-                    [dropSpecialCharacters]="false" mask="S*" placeholder="Hospital Name*"  autocomplete="doNotAutoComplete">
-                    <div
-                    *ngIf="signupReferralForm.controls['hospitalName'].invalid && (signupReferralForm.controls['hospitalName'].dirty || signupReferralForm.controls['hospitalName'].touched || submitted)"
-                    class="error-msg">
-                    <div *ngIf="signupReferralForm.controls['hospitalName'].errors.required">
-                      This field is required.
-                    </div>
-                    <div *ngIf="signupReferralForm.controls.hospitalName.errors.maxlength">
-                      Hospital name can have only 20 characters
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="address" class="form-control"
                     formControlName="address" [patterns]="customPatterns" mask="S*" placeholder="Address*"  autocomplete="doNotAutoComplete">
                     <div
                     *ngIf="signupReferralForm.controls['address'].invalid && (signupReferralForm.controls['address'].dirty || signupReferralForm.controls['address'].touched || submitted)"
@@ -131,7 +115,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="city" class="form-control"
                     formControlName="city" [patterns]="namePatters" mask="S*" placeholder="City*"  autocomplete="doNotAutoComplete">
                     <div
                     *ngIf="signupReferralForm.controls['city'].invalid && (signupReferralForm.controls['city'].dirty || signupReferralForm.controls['city'].touched || submitted)"
@@ -146,23 +130,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <select class="form-control" style="padding: 0px 28px 1px;" formControlName="state" >
-                      <option hidden [ngValue]="null">State*</option>
-                    <option *ngFor="let list of stateList" [value]="list.state_name">
-                      {{list.state_name}}
-                    </option>
-                  </select>
-                  <div *ngIf="signupReferralForm.controls['state'].invalid && (signupReferralForm.controls['state'].dirty ||
-                  signupReferralForm.controls['state'].touched || submitted)" class="error-msg text-left">
-                    <div *ngIf="signupReferralForm.controls['state'].errors.required">
-                      Required Field.
-                    </div>
-                  </div>
-                </div>
-
-
-                <!-- <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="state" class="form-control"
                     formControlName="state"  [patterns]="namePatters" mask="S*" placeholder="State*"  autocomplete="doNotAutoComplete">
                     <div
                     *ngIf="signupReferralForm.controls['state'].invalid && (signupReferralForm.controls['state'].dirty || signupReferralForm.controls['state'].touched || submitted)"
@@ -174,10 +142,10 @@
                       State should not be more than 32 characters
                     </div>
                   </div>
-                </div> -->
+                </div>
 
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="pincode" class="form-control"
                     formControlName="pincode" mask="000000" placeholder="Pincode"  autocomplete="doNotAutoComplete">
                     <div
                     *ngIf="signupReferralForm.controls['pincode'].invalid && (signupReferralForm.controls['pincode'].dirty || signupReferralForm.controls['pincode'].touched || submitted)"
@@ -189,7 +157,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="text" autocomplete="off"  class="form-control"
+                  <input type="text" autocomplete="off" id="userName" class="form-control"
                     formControlName="userName" [patterns]="customPatterns" mask="S*" placeholder="User Name*"  autocomplete="doNotAutoComplete" [dropSpecialCharacters]="false" >
                     <div *ngIf="signupReferralForm.controls['userName'].invalid && (signupReferralForm.controls['userName'].dirty ||
                       signupReferralForm.controls['userName'].touched || submitted)" class="error-msg text-left">
@@ -202,7 +170,7 @@
                 </div>
 
                 <div class="form-group position-relative">
-                  <input type="password" autocomplete="off" class="form-control"
+                  <input type="text" autocomplete="off" class="form-control"
                     formControlName="password" [patterns]="customPatterns" mask="S*" placeholder="Password*" >
                   <div *ngIf="signupReferralForm.controls['password'].invalid && (signupReferralForm.controls['password'].dirty ||
                   signupReferralForm.controls['password'].touched || submitted)" class="error-msg text-left">
@@ -212,9 +180,6 @@
                     <div *ngIf="signupReferralForm.controls['password'].errors.minlength">
                       Minimum 6 digits required
                     </div>
-                    <div *ngIf="signupReferralForm.controls['password'].errors.maxlength">
-                        Maximum 15 digits allowed
-                      </div>
                   </div>
                 </div>
 

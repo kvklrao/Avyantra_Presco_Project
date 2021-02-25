@@ -11,19 +11,36 @@ import { LoginComponent } from './login.component';
 import { SignupComponent } from '../signup/signup.component';
 import { ForgetComponent } from '../forget/forget.component';
 import { By } from '@angular/platform-browser';
+import { RefferalSignupModule } from '../referral-signup/referral-signup.module';
+import { Component } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+@Component({
+  selector: "test-test",
+  template:""
+})
+class MackCompo{
+
+}
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: MackCompo
   },
   {
     path: 'signup',
-    component: SignupComponent
+    component: MackCompo
   },
   {
     path: 'forget_password',
-    component: ForgetComponent
+    component: MackCompo
+  },
+  {
+    path: 'referral-signup',
+    component : MackCompo
+  },
+  {
+    path: 'admin', component: MackCompo,
   }
 ];
 
@@ -35,8 +52,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent, SignupComponent, ForgetComponent ],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      declarations: [ LoginComponent, MackCompo],
+      imports: [FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,
         RouterTestingModule.withRoutes(routes), NgxMaskModule.forRoot(),
         ToastrModule.forRoot()],
         providers: [
@@ -135,4 +152,78 @@ describe('LoginComponent', () => {
     // expect(location.path()).toBe('/dashboard');
     //expect(component.login).toHaveBeenCalledTimes(1);
   }));
+
+
+  it('referralSignup method', () => {
+    component.referralSignup()
+    expect(location.path()).toBe('/');
+  });
+
+  it('navIgateUser method', () => {
+    let res = {
+      user_type: "Hospital"
+    }
+    spyOn(router,'navigateByUrl')
+    component.navIgateUser(res)
+    expect(router.navigateByUrl).toHaveBeenCalled();
+
+    res["user_type"] = "Hospital Branch"
+    component.navIgateUser(res)
+    expect(router.navigateByUrl).toHaveBeenCalled();
+
+    res["user_type"] = "Hospital Staff"
+    component.navIgateUser(res)
+    expect(router.navigateByUrl).toHaveBeenCalled();
+
+    res["user_type"] = "Referral Doctor"
+    component.navIgateUser(res)
+    expect(router.navigateByUrl).toHaveBeenCalled();
+  });
+
+  it('isSuccess method', () => {
+    var value = component.isSuccess({})
+    expect(value).toBeFalsy();
+    let res = {
+      status: 200
+    }
+    var value = component.isSuccess(res)
+    expect(value).toBeTruthy();
+  });
+
+    it('success method', () => {
+    spyOn(component['commonAsyn'],'isHide')
+    component.success({},null);
+    expect(component['commonAsyn'].isHide).toHaveBeenCalled()
+
+    let res = {
+      status: 200,
+      response: {
+        user_type:"Hospital"
+      }
+    }
+    component.loginForm.value["remember_me"] = true
+    spyOn(component['cookieService'],'set')
+    spyOn(component['cookieService'],'deleteAll')
+    component.success(res,null);
+    expect(component['cookieService'].set).toHaveBeenCalled()
+
+    component.loginForm.value["remember_me"] = false
+    component.success(res,null);
+    expect(component['cookieService'].deleteAll).toHaveBeenCalled()
+  });
+
+  it('login method', () => {
+    component.submitted = false;
+    component.login()
+    expect(component.submitted).toBeTruthy()
+    component.loginForm.setValue({
+      username:"getwell",
+      password: "getwell",
+      remember_me: false
+    })
+    spyOn(component['commonAsyn'],'showLoader')
+    component.login()
+    expect(component['commonAsyn'].showLoader).toHaveBeenCalled()
+  });
+
 });

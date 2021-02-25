@@ -107,8 +107,8 @@ export class CommonService {
   get_new_reading(study_id){
     return this.http.get(this.baseUrl + 'patient/readingId/'+study_id,this.jwt());
   }
-  search_patient_reading(str, hospital_id,branchId){
-    return this.http.get(this.baseUrl + "patient/search/" + str +'/'+ hospital_id + '/' + branchId, this.jwt());
+  search_patient_reading(str, hospital_id){
+    return this.http.get(this.baseUrl + "patient/search/" + str +'/'+ hospital_id, this.jwt());
   }
   updateFormData(url,study_id,reading,data,loggedIdUserId){
     return this.http.put(this.baseUrl+url+study_id+'/'+reading+'/'+loggedIdUserId,data,this.jwt());
@@ -155,8 +155,8 @@ export class CommonService {
   removeSpeciality(hospital_branch_speciality_id) {
     return this.http.delete(this.baseUrl + 'hospitalBranch/speciality/' + hospital_branch_speciality_id, this.jwt());
   }
-  adsStaff(hospitalId,branchId,data,userType){
-    return this.http.post(this.baseUrl +'hospitalStaff/addStaff/'+ hospitalId +'/'+ branchId +'?userType='+userType , data, this.jwt());
+  adsStaff(hospitalId,branchId,data){
+    return this.http.post(this.baseUrl +'hospitalStaff/addStaff/'+ hospitalId +'/'+ branchId , data, this.jwt());
   }
   getStaff(hospitalId,branchId,start,limit,searchtext,flag){
     return this.http.get(this.baseUrl+'hospitalStaff/getStaff/'+ hospitalId +'/'+ branchId+'/'+start+'/'+limit+'/'+flag+'?searchText='+searchtext , this.jwt());
@@ -179,8 +179,8 @@ export class CommonService {
   getMedicalRecordsCount(hospitalId,branchId,searchText,activeFlag, staffID){
     return this.http.get(this.baseUrl +'patient/medicalRecordCount/'+hospitalId+'/'+branchId+'/'+ staffID +'/'+activeFlag+'?searchText='+searchText, this.jwt());
   }
-  updateMedicalRecord(study_id, patient_id,hospitalId,branchId, userId, data){
-    return this.http.put(this.baseUrl+'patient/medicalRecord/'+study_id+'/'+patient_id+'/'+hospitalId+'/'+ branchId + '/' + userId, data,this.jwt())
+  updateMedicalRecord(study_id, patient_id,hospitalId,branchId, userType, data){
+    return this.http.put(this.baseUrl+'patient/medicalRecord/'+study_id+'/'+patient_id+'/'+hospitalId+'/'+ branchId + '/' + userType, data,this.jwt())
   }
   getMyProfile(id){
     return this.http.get(this.baseUrl + "hospital/hospitalProfile/" + id , this.jwt());
@@ -295,8 +295,8 @@ export class CommonService {
     return this.http.post(this.baseUrl +'hospitalStaff/staffReferral/'+ staffId +'/'+ branchId , data, this.jwt()); 
   }
 
-  getReferralOpinonList(referralId,start,limit){
-    return this.http.get( this.baseUrl +'hospitalStaff/getReferralDetail/'+referralId+'/'+start+'/'+limit, this.jwt());
+  getReferralOpinonList(referralId){
+    return this.http.get( this.baseUrl +'hospitalStaff/getReferralDetail/'+referralId, this.jwt());
   }
 
   saveOpinion(staffReferralId,data){
@@ -305,83 +305,6 @@ export class CommonService {
 
   getOpinions(studyId){
     return this.http.get( this.baseUrl +'hospitalStaff/getReferralOpinion/'+studyId, this.jwt());
-  }
-  getScore(studyId,reading,userTypeId){
-    return this.http.get( this.baseUrl +'patient/getScore/'+studyId+'/'+reading+'?hospitalType='+userTypeId, this.jwt());
-  }
-  uploadFile(formData){
-    return this.http.post(this.baseUrl +'hospitalStaff/upload', formData, this.mulipartJwt());
-  }
-
-  mulipartJwt(token = null) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // "Content-Type": "multipart/form-data",
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      }),
-    };
-    return httpOptions;
-  }
-
-  downloadReferralAttachmentFile(referralFileId){
-    return this.http.get( this.baseUrl +'hospitalStaff/downloadFile/'+referralFileId,{
-      observe: 'response', responseType: 'blob'
-    });
-  }
-
-  getReferralOpinonListCount(referralId){
-    return this.http.get( this.baseUrl +'hospitalStaff/referralDetailCount/'+referralId, this.jwt());
-  }
-
-  downloadBmrReport(bmrNo,reading){
-    return this.http.get( this.baseUrl +'patient/downloadReport/'+bmrNo+'/'+reading,{
-      observe: 'response', responseType: 'blob'
-    });
-  }
-
-  updateBranch(data,hospitalBranchId){
-    return this.http.put(this.baseUrl + "hospitalBranch/" + hospitalBranchId , data,this.jwt());
-  }
-
-  getStates(){
-    return this.http.get( this.baseUrl +'hospital/statelist', this.jwt());
-  }
-
-  ashaPhcSignup(data){
-    return this.http.post(this.baseUrl +'hospital/signUp/aasha', data, this.jwt()); 
-  }
-
-  createAshaPatient(data){
-    return this.http.post(this.baseUrl +'patient/create', data, this.jwt());
-  }
-
-  getHealthParameters(studyId){
-    return this.http.get( this.baseUrl +'hospitalStaff/aasha/'+studyId, this.jwt());
-  }
-
-  getAshaBMRRecords(start,limit,ashaUserId,searchText,userTypeId){
-    return this.http.get( this.baseUrl +'patient/aashaBaby/'+ashaUserId+'/'+start+'/'+limit+'?searchText='+searchText+'&hospitalType='+userTypeId, this.jwt());
-  }
-
-  getAshaBMRCounts(ashaUserId,searchText,userTypeId){
-    return this.http.get( this.baseUrl +'patient/aashaBabyCount/'+ashaUserId+'?searchText='+searchText+'&hospitalType='+userTypeId, this.jwt());
-  }
-
-  getAllRegisteredReferralDoctors(){
-    return this.http.get( this.baseUrl +'hospitalStaff/getAashaReferral', this.jwt());
-  }
-
-  getAshaPhcOpinionCount(referralId,userType){
-    return this.http.get( this.baseUrl +'hospitalStaff/aashaReferralDetailCount/'+referralId+'?hospitalType='+userType, this.jwt());
-  }
-
-  getAshaPhcOpinion(referralId,start,limit,userType){
-    return this.http.get( this.baseUrl +'hospitalStaff/aashaReferralDetail/'+referralId+'/'+start+'/'+limit+'?hospitalType='+userType, this.jwt());
-  }
-
-  getAshaPhcViewOpinion(studyId){
-    return this.http.get( this.baseUrl +'hospitalStaff/getAashaReferralOpinion/'+studyId, this.jwt());
   }
 
 

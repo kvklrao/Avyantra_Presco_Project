@@ -6,16 +6,10 @@
        <div class="d-sm-flex align-items-center justify-content-between mb-4">
    
    
-     <div class="col-md-4">
+     <div class="col-md-8">
      <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-tachometer-alt text-primary mr-2"></i> Dashboard</h4>
      </div>
-
-     <div class="col-md-4">
-       <app-heading></app-heading>
-        </div>
-        <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital Branch'">
-            </div>
-
+     
      <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital'">
      <div class="form-group has-error has-danger text-right">
              <label for="" class="text-bold text-gray-900 pr-3 mt-2">Branch:</label>
@@ -38,8 +32,8 @@
              <div class="card-body">
                <div class="row no-gutters align-items-center">
                  <div class="col mr-2">
-                   <div class="text-sm font-weight-bold text-primary  mb-1">{{branchHopitalName}}</div>
-                   <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">ID: A12547845</div> -->
+                   <div class="text-sm font-weight-bold text-primary text-uppercase mb-1">{{dashboardData['hospital_name']}}</div>
+                   <div class="h5 mb-0 font-weight-bold text-gray-800">ID: A12547845</div>
                  </div>
                  <div class="col-auto">
                    <i class="fas fa-hospital fa-2x text-primary"></i>
@@ -55,7 +49,7 @@
              <div class="card-body">
                <div class="row no-gutters align-items-center">
                  <div class="col mr-2">
-                   <div class="text-sm font-weight-bold text-info text-uppercase mb-1">Total Baby medical Record Number</div>
+                   <div class="text-sm font-weight-bold text-info text-uppercase mb-1">Total Baby medical Record No.</div>
                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{dashboardData['medical_record_count']}}</div>
                  </div>
                  <div class="col-auto">

@@ -35,8 +35,7 @@ export class MedicalRecordsComponent implements OnInit {
   usertypeConst:number;
   branchList=[];
   statusList:any=[{id:0,name:'Inactive'},{id:1,name:'Active'}];
-  doNotAutoComplete:any={};search_text:string;userdId;
-  stateList=[];
+  doNotAutoComplete:any={};search_text:string;
   constructor(private modalService: NgbModal,private formBuilder:FormBuilder,
               private commomService:CommonService,private helper:AppHelper,
               private toasty:ToastrService,private constant:AppConstant) { }
@@ -48,7 +47,6 @@ export class MedicalRecordsComponent implements OnInit {
     this.getLoggedInUserInfo();
     this.getBranches();
     this.getMedicalRecordsCount(this.search_text);
-    this.getStates();
   }
 
   createForm(){
@@ -84,7 +82,7 @@ export class MedicalRecordsComponent implements OnInit {
         address: obj['address'],
         city:  obj['city'],
         state: obj['state'],
-        pincode: (obj['pincode']==0 ?"":obj['pincode']),
+        pincode: obj['pincode'],
         nationality: obj['nationality'],
         email: obj['email_id'],
         status: obj['status'],
@@ -97,19 +95,19 @@ export class MedicalRecordsComponent implements OnInit {
         this.toasty.error("Please Create Branch.", '');
       }else{
       this.createForm();
-      this.formRef = this.modalService.open(content, this.helper.ngbModalOptions);
+      this.formRef = this.modalService.open(content, { size: "lg" });
       }
     }
     else{
       this.updateForm(obj);
       this.isEdit=true;
-      this.formRef = this.modalService.open(content, this.helper.ngbModalOptions);
+      this.formRef = this.modalService.open(content, { size: "lg" });
     }
   }
 
   openDetail(openDetail, obj) {
     this.medicalRecordDetailObj=obj;
-    this.formRefDetail = this.modalService.open(openDetail, this.helper.ngbModalOptions);
+    this.formRefDetail = this.modalService.open(openDetail, { size: "lg" });
   }
 
   getLoggedInUserInfo() {
@@ -117,7 +115,6 @@ export class MedicalRecordsComponent implements OnInit {
     this.hospitalId = this.login_hospital['id'];
     this.hospitalBranchId = this.login_hospital['hospital_branch_id'];
     this.staffID = 0;
-    this.userdId=this.login_hospital['user_id'];
     this.usertypeConst = this.login_hospital['user_type'] === 'Hospital'? this.constant.hospital_type:this.constant.hospital_branch_type;
   }
 
@@ -141,7 +138,7 @@ export class MedicalRecordsComponent implements OnInit {
       return;
     }
 
-    this.commomService.updateMedicalRecord(this.study_id,this.patient_id,this.hospitalId,this.hospitalBranchId, this.userdId , this.addMedicalRecordForm['value']).subscribe(result=>{
+    this.commomService.updateMedicalRecord(this.study_id,this.patient_id,this.hospitalId,this.hospitalBranchId, this.usertypeConst , this.addMedicalRecordForm['value']).subscribe(result=>{
     if(this.helper.success(result)){
         this.success(result,'updateMedicalRecord')
         this.isEdit=false;
@@ -236,13 +233,5 @@ export class MedicalRecordsComponent implements OnInit {
         this.search_text=null;
         this.getMedicalRecordsCount(this.search_text);
       }
-    }
-
-    getStates(){
-      this.commomService.getStates().subscribe(result=>{
-        if(this.helper.success(result)){
-            this.stateList=result['response'];
-        }
-    })
     }
 }

@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
 import { ToastrModule } from "ngx-toastr";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CookieService } from 'ngx-cookie-service';
@@ -80,11 +80,6 @@ import { statusPipe } from './shared/pipes/status.pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ScoreAnalysisComponent } from './score-analysis/score-analysis.component';
 import { RessetPasswordComponent } from './resset-password/resset-password.component';
-import { ScorePercentage } from './shared/pipes/score-percentage.pipe';
-import { ButtonCursorDirective } from './shared/directives/button-cursor.directive';
-import { HeadingComponent } from './shared/core/components/heading/heading.component';
-import { AshaPhcDashboardComponent } from './user-dashboards/asha-phc-dashboard/asha-phc-dashboard.component';
-import { HealthParametersComponent } from './dashboard/health-parameters/health-parameters.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true
 };
@@ -116,7 +111,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SettingsComponent,
     MedicalRecordsComponent,
     ReferralDoctorStaffComponent,
-    MyProfileComponent,passwordPipe,userTypePipe, HospitalStaffDashboardComponent, StaffProfileComponent, BranchAdminProfileComponent, ReferralProfileComponent, HospitalConnectComponent,emptyDataPipe,MessageCenterComponent,statusPipe, ScoreAnalysisComponent, RessetPasswordComponent,ScorePercentage, ButtonCursorDirective, HeadingComponent, AshaPhcDashboardComponent, HealthParametersComponent],
+    MyProfileComponent,passwordPipe,userTypePipe, HospitalStaffDashboardComponent, StaffProfileComponent, BranchAdminProfileComponent, ReferralProfileComponent, HospitalConnectComponent,emptyDataPipe,MessageCenterComponent,statusPipe, ScoreAnalysisComponent, RessetPasswordComponent],
     imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -149,6 +144,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CookieService,
     DataService,
     AppHelper,
+    FormBuilder,
     AppConstant,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

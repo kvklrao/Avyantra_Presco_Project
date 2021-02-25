@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Common } from 'src/app/shared/service/common/common';
 import { CommonService } from 'src/app/shared/service/common/common.service';
 import { AppHelper } from 'src/app/shared/helper/app.helper';
-import { AppConstant } from 'src/app/shared/constant/app-constant';
 
 @Component({
   selector: 'app-hospital-admin-info',
@@ -13,8 +12,8 @@ export class HospitalAdminInfoComponent implements OnInit {
   hospitalId:number;
   login_hospital:any={};
   hospitalBranchId:number;userType:string;
-  page=1;branchHopitalName:string;
-  constructor(private common:CommonService,private helper:AppHelper,private constant:AppConstant) { }
+  page=1;
+  constructor(private common:CommonService,private helper:AppHelper) { }
   branchList=[];dashboardData={};msgList=[];
   ngOnInit() {
     this.getUserInfo();
@@ -54,7 +53,6 @@ getDashBoardData(){
         if(this.helper.success(result)){
           this.dashboardData=result['response'][0];
           this.msgList=this.dashboardData['messages'];
-          this.setName(this.dashboardData)
           // console.log(this.dashboardData)
         }
         else{
@@ -63,14 +61,5 @@ getDashBoardData(){
           this.msgList=[];
         }
     })
-}
-
-setName(data){
-  if(this.userType==this.constant.hospital_type_login){
-      this.branchHopitalName=data['hospital_name'];
-  }
-  if(this.userType==this.constant.branch_type_login){
-    this.branchHopitalName=data['branch_name'];
-  }
 }
 }

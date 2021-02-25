@@ -104,8 +104,6 @@ export class MyProfileComponent implements OnInit {
 
   cancel() {
     this.isEdit = false;
-    this.is_toggle=true;
-    this.show_password();
   }
 
   success(response,apitype){

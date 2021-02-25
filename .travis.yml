@@ -28,6 +28,8 @@ env:
 before_script:
   - cd 01_Web_Portal
   - npm install
+  - npm uninstall caniuse-lite
+  - npm install caniuse-lite 
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

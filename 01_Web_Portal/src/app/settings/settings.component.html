@@ -2,16 +2,11 @@
   <!-- Page Heading -->
   <div class="mt-160">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <div class="col-md-4">
+      <div class="col-md-8">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h4 class="h4 mb-0 text-gray-800"> <i class="fas fa-fw fa-cog text-primary mr-2"></i>Settings</h4>
         </div>
       </div>
-      <div class="col-md-4">
-          <app-heading></app-heading>
-        </div>
-        <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital Branch'">
-          </div>
       <div class="col-md-4" *ngIf="login_hospital['user_type']=='Hospital'">
         <div class="form-group has-error has-danger text-right">
           <label for="" class="text-bold text-gray-900 pr-3 mt-2">Branch:</label>
@@ -81,7 +76,7 @@
                   <tr role="row">
                     <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                       aria-sort="ascending" aria-label="Name: activate to sort column descending">Role Name</th>
-                    <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                       aria-label="Salary: activate to sort column ascending text-right">Action</th>
                   </tr>
                 </thead>
@@ -90,13 +85,13 @@
                   <tr role="row" *ngFor="let list of roleList; let i=index; let odd=odd; let even=even;"
                     [ngClass]="{ odd: odd, even: even }">
                     <td *ngIf="!editFlag[i]" class="sorting_1"> {{list.role}}</td>
-                    <td *ngIf="editFlag[i]" class="sorting_1"> <input class="form-control" [patterns]="namePatters"
-                      [dropSpecialCharacters]="false" mask="S*"[(ngModel)]="updatedRole" type="text"></td>
+                    <td *ngIf="editFlag[i]" class="sorting_1"> <input class="form-control"
+                        [dropSpecialCharacters]="false" mask="S*" [(ngModel)]="updatedRole" type="text"></td>
                     <td class="text-right">
                       <a *ngIf="!editCalled[i]" (click)="edit(i,list.role)"
                         class="d-sm-inline-block btn btn-sm btn-light border shadow-sm mr-2" title="View">Edit</a>
                       <button *ngIf="!editCalled[i]" class="d-sm-inline-block btn btn-sm btn-danger shadow-sm"
-                        (click)="open(content, list.hospital_branch_role_id, 'role',i,list.role)" title="View">Delete</button>
+                        (click)="open(content, list.hospital_branch_role_id, 'role',i)" title="View">Remove</button>
                       <button *ngIf="editCalled[i]" class="d-sm-inline-block btn btn-sm btn-succes shadow-sm"
                         (click)="updateRole(i,list['hospital_branch_role_id'])" title="View"
                         [disabled]="updatedRole==''">Update</button>
@@ -152,7 +147,7 @@
                   <tr role="row">
                     <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                       aria-sort="ascending" aria-label="Name: activate to sort column descending">Speciality Name</th>
-                    <th class="sorting text-right" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                       aria-label="Salary: activate to sort column ascending text-right">Action</th>
                   </tr>
                 </thead>
@@ -162,8 +157,7 @@
                     <td *ngIf="!specialityEditFlag[i]" class="sorting_1">{{list.speciality}}</td>
                     <td *ngIf="specialityEditFlag[i]" class="sorting_1"> <input class="form-control"
                         [(ngModel)]="updatedSpeciality" (change)="checkData(updatedSpeciality)"
-                        [patterns]="namePatters"
-                          [dropSpecialCharacters]="false" mask="S*" type="text"></td>
+                        [dropSpecialCharacters]="false" mask="S*" type="text"></td>
                     <td class="text-right">
                       <a *ngIf="!specialityEditCalled[i]" (click)="editSpeaciality(i,list['speciality'])"
                         class="d-sm-inline-block btn btn-sm btn-light border shadow-sm mr-2" title="View">Edit</a>
@@ -173,8 +167,8 @@
                       <button *ngIf="specialityEditCalled[i]" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                         (click)="closeSpecialty(i)" title="View">Cancel</button>
                       <button *ngIf="!specialityEditCalled[i]" class="d-sm-inline-block btn btn-sm btn-danger shadow-sm"
-                        (click)="open(content, list.hospital_branch_speciality_id, 'speciality',i,list.speciality)"
-                        title="View">Delete</button>
+                        (click)="open(content, list.hospital_branch_speciality_id, 'speciality')"
+                        title="View">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -190,35 +184,31 @@
           <!-- User Access -->
           <div *ngIf="isUserAccess" class="container-fluid tab-pane active"><br>
             <div class="card-body">
-                <div class="table-responsive1">
-                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row mb-3">
-                            <div class="col-sm-12 col-md-6">
-                              <div class="dataTables_length" id="dataTable_length">
-                                <label>
-                                  Show
-                                  <select name="dataTable_length" aria-controls="dataTable"
-                                    class="custom-select custom-select-sm form-control form-control-sm" [(ngModel)]="pageLength"
-                                    (change)="onDropDownChange(pageLength)">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                  </select>
-                                  entries
-                                </label>
-                              </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                              <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
-                                    class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchUser($event)" name="search_text" [(ngModel)]="search_text"></label>
-                              </div>
-                            </div>
-                          </div>
-                     </div>
-                  </div>
               <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                  <div class="row mb-3">
+                    <div class="col-sm-12 col-md-6">
+                      <div class="dataTables_length" id="dataTable_length">
+                        <label>
+                          Show
+                          <select name="dataTable_length" aria-controls="dataTable"
+                            class="custom-select custom-select-sm form-control form-control-sm" [(ngModel)]="pageLength"
+                            (change)="onDropDownChange(pageLength)">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                          </select>
+                          entries
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                      <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
+                            class="form-control form-control-sm" placeholder="" aria-controls="dataTable" (keyup)="searchUser($event)" name="search_text" [(ngModel)]="search_text"></label>
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-sm-12">
                       <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
@@ -226,7 +216,7 @@
                         <thead>
                           <tr role="row">
                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                              aria-sort="ascending" aria-label="Name: activate to sort column descending">S.No</th>
+                              aria-sort="ascending" aria-label="Name: activate to sort column descending">Sr. No.</th>
                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                               aria-label="Position: activate to sort column ascending">Staff Name</th>
                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
@@ -234,7 +224,7 @@
                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
                               aria-label="Age: activate to sort column ascending">Data Entry / Review</th>
                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                              aria-label="Start date: activate to sort column ascending">Score Generation</th>
+                              aria-label="Start date: activate to sort column ascending">Score Generate</th>
                           </tr>
                         </thead>
                         <tbody *ngIf="userList?.length > 0">
@@ -324,9 +314,9 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group has-error has-danger ">
-            <label for="" *ngIf="isRole" class="text-bold text-gray-900">Are you sure you want delete {{deletedField}} ?</label>
-            <label for="" *ngIf="isSpeciality" class="text-bold text-gray-900">Are you sure you want delete
-              {{deletedField}} ?</label>
+            <label for="" *ngIf="isRole" class="text-bold text-gray-900">Are you sure you want remove Role?</label>
+            <label for="" *ngIf="isSpeciality" class="text-bold text-gray-900">Are you sure you want remove
+              Speciality?</label>
           </div>
         </div>
       </div>
@@ -335,9 +325,9 @@
       <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal"
         (click)="d('Cross click');close()">Cancel</button>
       <button class="btn btn-danger btn-sm" *ngIf="isRole"
-        (click)="removeBranchRole(this.hospital_branch_role_id)">Delete</button>
+        (click)="removeBranchRole(this.hospital_branch_role_id)">Remove</button>
       <button class="btn btn-danger btn-sm" *ngIf="isSpeciality"
-        (click)="removeSpeciality(this.hospital_branch_speciality_id)">Delete</button>
+        (click)="removeSpeciality(this.hospital_branch_speciality_id)">Remove</button>
     </div>
   </form>
 </ng-template>

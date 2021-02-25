@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AppConstant } from '../../shared/constant/app-constant';
 import { ReadingDataService } from 'src/app/shared/service/reading-data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from 'src/app/shared/service/data.service';
 @Component({
   selector: 'app-hospital-staff-dashboard',
   templateUrl: './hospital-staff-dashboard.component.html',
@@ -30,24 +29,15 @@ export class HospitalStaffDashboardComponent implements OnInit {
 
   constructor(private router: Router,private modalService: NgbModal,
     private commomService:CommonService,private helper:AppHelper,
-    private toasty:ToastrService,private constant:AppConstant,private readingDataService:ReadingDataService,private dataService:DataService) { }
+    private toasty:ToastrService,private constant:AppConstant,private readingDataService:ReadingDataService) { }
 
   ngOnInit() {
-    this.checkLastPage();
-    this.clearReadingData();
     this.searchText=null;
     this.pageLength=this.constant.pageLimit;
     this.getLoggedInUserInfo();
     this.getMedicalRecordsCount(this.searchText);
     this.getDashBoardData();
     this.getStaffBranches();
-  }
-
-  checkLastPage(){
-    if(localStorage.getItem('page')){
-      this.page=JSON.parse(localStorage.getItem('page'));
-      localStorage.removeItem('page');
-    }
   }
 
   getLoggedInUserInfo() {
@@ -109,8 +99,7 @@ export class HospitalStaffDashboardComponent implements OnInit {
   readingDashboard(list) {
     this.readingDataService.setActiveTab('baby-profile')
     localStorage.setItem('staffMedicalRecord',JSON.stringify(list));
-    // this.getLastReadingData(list['study_id']);
-    this.setPage(this.page);
+    this.getLastReadingData(list['study_id']);
     this.router.navigate(['dashboard']);
   }
 
@@ -197,7 +186,7 @@ open(openModal,obj) {
   this.getOpinions(obj['study_id'])
   this.bmrNo=obj['baby_medical_record_number'];
   this.motherName=obj['mother_name']
-  this.formRef = this.modalService.open(openModal, this.helper.ngbModalOpinionOptions);
+  this.formRef = this.modalService.open(openModal, { windowClass : "myCustomModalClass"});
 }
 
 getOpinions(studyId){
@@ -206,7 +195,7 @@ getOpinions(studyId){
       this.success(response,'referralOpinions')
     }else{
       this.opinionList=[];
-     // this.helper.errorHandler(response);
+      this.helper.errorHandler(response);
     }
   })
 }
@@ -214,21 +203,4 @@ getOpinions(studyId){
 //   this.dataEntry=this.login_hospital['data_entry'];
 //   this.generateScore=this.login_hospital['generate_score'];
 // }
-clearReadingData(){
-  this.dataService.clearOption();
-  this.readingDataService.reset();
-  this.readingDataService.reading=undefined;
-  this.readingDataService.clearReadingFormData();
-}
-
-setPage(page){
-  if(this.page>1){
-    localStorage.setItem('page',page);
-  }
-}
-
-redirectToGenerateScore(mrNo,studyId,reading){
-  this.setPage(this.page);
- this.router.navigate(['/admin/score-analysis/'+mrNo+'/'+studyId+'/'+reading]);   
-}
 }

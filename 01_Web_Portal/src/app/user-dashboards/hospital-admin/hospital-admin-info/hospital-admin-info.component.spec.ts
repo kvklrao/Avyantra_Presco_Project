@@ -3,60 +3,64 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppHelper } from '../../../shared/helper/app.helper';
 import { ToastrModule } from "ngx-toastr";
 import { HospitalAdminInfoComponent } from './hospital-admin-info.component';
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { CommonService } from 'src/app/shared/service/common/common.service';
+import { of } from 'rxjs';
 
 describe('HospitalAdminInfoComponent', () => {
   let component: HospitalAdminInfoComponent;
   let fixture: ComponentFixture<HospitalAdminInfoComponent>;
-
+  let httpMock: HttpTestingController;
+  let commonService:CommonService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HospitalAdminInfoComponent ],
+      declarations: [HospitalAdminInfoComponent],
       imports: [
-        HttpClientModule, ToastrModule.forRoot()],
-      providers:[AppHelper]
+        HttpClientModule, ToastrModule.forRoot(),HttpClientTestingModule],
+      providers: [AppHelper,CommonService]
     })
-    .compileComponents();
+      .compileComponents();
+      httpMock = TestBed.get(HttpTestingController);
+      commonService = TestBed.get(CommonService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HospitalAdminInfoComponent);
     component = fixture.componentInstance;
-  //   let store = {};
-  //   const mockLocalStorage = {
-  //     getItem: (key: string): string => {
-  //       return key in store ? store[key] : null;
-  //     },
-  //     setItem: (key: string, value: string) => {
-  //       store[key] = `${value}`;
-  //     },
-  //     removeItem: (key: string) => {
-  //       delete store[key];
-  //     },
-  //     clear: () => {
-  //       store = {};
-  //     }
-  //   };
-  //   spyOn(localStorage, 'getItem')
-  //   .and.callFake(mockLocalStorage.getItem);
-  // spyOn(localStorage, 'setItem')
-  //   .and.callFake(mockLocalStorage.setItem);
-  // spyOn(localStorage, 'removeItem')
-  //   .and.callFake(mockLocalStorage.removeItem);
-  // spyOn(localStorage, 'clear')
-  //   .and.callFake(mockLocalStorage.clear);
-  //   localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}))
-  let store = {};
-  spyOn(window.localStorage, 'getItem').and.callFake(function() {
-    return JSON.stringify({"test":"test"});
-  });
-   spyOn(localStorage, 'setItem').and.callFake(function (key, value) {
-      return store[key]=value;
+    let store = {};
+    spyOn(window.localStorage, 'getItem').and.callFake(function () {
+      return JSON.stringify({ "test": "test" });
+    });
+    spyOn(localStorage, 'setItem').and.callFake(function (key, value) {
+      return store[key] = value;
     });
     fixture.detectChanges();
   });
 
   it('should create local storage', () => {
-    localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}))
-    expect( component ).toBeTruthy();
+    localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92, "hospital_name": "getwell", "hospital_branch_name": "getwell indore", "hospital_branch_id": 59 }))
+    expect(component).toBeTruthy();
   });
+  it('getDashBoardData method',()=>{
+    let res = {
+      response:{
+      branch:101
+      }
+  }
+      var spy = spyOn(commonService,'getHospitalAdminDashboardData').and.returnValue(of(res));
+      component.getDashBoardData()
+      spy.calls.mostRecent().returnValue.subscribe(commonService=>{
+      expect(commonService).toBe(res);
+      }) 
+  });
+  it('changeBranch method',()=>{
+    let event = {
+      target: {
+        name: "HospitalAdminInfo",
+        value: 2
+      }
+    }
+    component.changeBranch(event);
+    expect(component.page).toBe(1);
+  })
 });

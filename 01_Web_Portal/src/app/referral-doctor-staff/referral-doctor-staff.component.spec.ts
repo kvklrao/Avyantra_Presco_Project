@@ -8,6 +8,9 @@ import { ToastrModule } from "ngx-toastr";
 import { AppHelper } from '../shared/helper/app.helper';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ReferralDoctorStaffComponent } from './referral-doctor-staff.component';
+import { emptyDataPipe } from '../shared/pipes/empty-data.pipe';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const routes: Routes = [
   {
@@ -22,13 +25,13 @@ describe('ReferralDoctorStaffComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReferralDoctorStaffComponent ],
+      declarations: [ ReferralDoctorStaffComponent,emptyDataPipe ],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
         HttpClientModule,
         NgxPaginationModule,
         RouterTestingModule.withRoutes(routes),
-        ToastrModule.forRoot()],
+        ToastrModule.forRoot(),BrowserAnimationsModule],
       providers:[AppHelper]
     })
     .compileComponents();
@@ -190,4 +193,107 @@ describe('ReferralDoctorStaffComponent', () => {
     expect(component.addReferralForm.valid).toBeTruthy();
   });
 
+  it('next page method called', () => {
+    spyOn(component,'getRegisteredReferralDoctors');
+   component.user_type='Hospital';
+   component.nextPage(1);
+   expect(component.getRegisteredReferralDoctors).toHaveBeenCalled();
+   spyOn(component,'getReferralDoctorRecords');
+   component.user_type='Hospital_branch';
+   component.nextPage(1);
+   expect(component.getReferralDoctorRecords).toHaveBeenCalled();
+  });
+
+  it('ondropdownchange method called', () => {
+    spyOn(component,'getRegisteredReferralDoctors');
+   component.user_type='Hospital';
+   component.onDropDownChange(1);
+   expect(component.getRegisteredReferralDoctors).toHaveBeenCalled();
+   spyOn(component,'getReferralDoctorRecords');
+   component.user_type='Hospital_branch';
+   component.onDropDownChange(1);
+   expect(component.getReferralDoctorRecords).toHaveBeenCalled();
+  });
+
+  it('setNewStatus method called', () => {
+    spyOn(component,'setStatus');
+   component.setNewStatus(1,{});
+   expect(component.setStatus).toHaveBeenCalled();
+   component.setNewStatus(2,{});
+   expect(component.setStatus).toHaveBeenCalled();
+   component.setNewStatus(3,{});
+   expect(component.setStatus).toHaveBeenCalled();
+   component.setNewStatus(4,{});
+   expect(component.setStatus).toHaveBeenCalled();
+  });
+
+  it('getRegisteredHospitalRecordsCount has been called',()=>{
+    let res = {
+      response:{
+        referral_count:101
+      }
+  }
+      var spy = spyOn(component,'getRegisteredHospitalRecordsCount').and.returnValue(of(res));
+      component.getRegisteredHospitalRecordsCount('')
+      spy.calls.mostRecent().returnValue.subscribe(commonService=>{
+          expect(commonService).toBe(res);
+      }) 
+  })
+
+  it('getReferralDoctorRecordsCount has been called',()=>{
+    let res = {
+      response:{
+        referral_count:101
+      }
+  }
+      var spy = spyOn(component,'getReferralDoctorRecordsCount').and.returnValue(of(res));
+      component.getReferralDoctorRecordsCount('')
+      spy.calls.mostRecent().returnValue.subscribe(commonService=>{
+          expect(commonService).toBe(res);
+      }) 
+  })
+
+  it('searchReferralDoctors has been called',()=>{
+    spyOn(component,'getRegisteredHospitalRecordsCount');
+    component.searchText='abc';
+    component.user_type="Hospital";
+    component.searchReferralDoctors();
+    expect(component.getRegisteredHospitalRecordsCount).toHaveBeenCalled();
+    component.searchText='';
+    component.searchReferralDoctors();
+    expect(component.getRegisteredHospitalRecordsCount).toHaveBeenCalled();
+    spyOn(component,'getReferralDoctorRecordsCount');
+    component.searchText='abc';
+    component.user_type="Hospital Branch";
+    component.searchReferralDoctors();
+    expect(component.getReferralDoctorRecordsCount).toHaveBeenCalled();
+    component.searchText='';
+    component.searchReferralDoctors();
+    expect(component.getReferralDoctorRecordsCount).toHaveBeenCalled();
+  })
+
+  it('updateStatus has been called',()=>{
+    let res = 
+      {
+        message: "status updated successfully",
+        response: {
+          referral_hospital_id: 14,
+          hospital_id: "1"
+        },
+        status:200
+      }
+  
+      var spy = spyOn(component['commomService'],'updateSubscriptionStatus').and.returnValue(of(res));
+      let obj ={"referral_hospital_id":12 ,"hospital_initiation_status_id":2 ,"previousStatus":1,"currentStatus":2,"requesterType":"Hospital","hospitalActionStatus":2,"referralActionStatus":3,"referralHospitalId":null}
+      component.updateStatus(obj)
+      spy.calls.mostRecent().returnValue.subscribe(commonService=>{
+        
+        
+          expect(commonService).toBe(res);
+          
+      })
+      console.log(component.newStatusObj); 
+  })
+
+  
 });

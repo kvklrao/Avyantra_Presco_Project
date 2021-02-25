@@ -9,7 +9,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-          <h5 *ngIf="readingDataService.reading && !phcUser" class="text-center">Reading: {{readingDataService.reading}} </h5>
+          <h5 *ngIf="readingDataService.reading" class="text-center">Reading: {{readingDataService.reading}} </h5>
         </div>
         <div class="col-md-4">
           <div class="float-right" *ngIf="getMedicalRecordNumber">
@@ -27,7 +27,7 @@
               <div class="card-body div-shadow">
                 <h5 class="">
                   {{responseArray[0]['createdAt'] | date:'dd MMMM yyyy, h:mm a' || 'Loading...'}}
-                  <button class="btn edit-btn float-right" *ngIf="!phcUser">
+                  <button class="btn edit-btn float-right">
                     <mat-icon (click)="open(content, responseArray[0])">edit</mat-icon>
                   </button>
                 </h5>
@@ -45,59 +45,55 @@
                             <td class="tb-label">Thyroid Result</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_thyroid_result']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Blood Glucose</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_blood_glucose']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Haemoglobin Level</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_haemoglobin_levels']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">C Reactive Protien Levels</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_c_reactive_protien_levels']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                              <td class="tb-label">C Reactive Protien Result</td>
-                              <td class="tb-value text-right">{{responseArray[0]['baby_c_reactive_protien_result']}}</td>
-                            </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Micro ESR</td>
                             <td class="tb-value text-right">{{responseArray[0]['micro_esr']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Procalcitonin</td>
                             <td class="tb-value text-right">{{responseArray[0]['baby_procalcitonin_levels']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Total Leucocytes Count</td>
                             <td class="tb-value text-right">{{responseArray[0]['total_leucocute_count']}} {{responseArray[0]['total_leucocute_count_unit']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Absolute Neutrophil Count</td>
                             <td class="tb-value text-right">{{responseArray[0]['absolute_neutrophil_count']}} {{responseArray[0]['absolute_neutrophil_count_unit']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Immature to mature neutrophil ratios > 0.2</td>
                             <td class="tb-value text-right">{{responseArray[0]['immature_to_mature_neutrophil_ratios']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Thrombocytopenia (Platelet Count)</td>
                             <td class="tb-value text-right">{{responseArray[0]['thrombocytopenia']}} {{responseArray[0]['thrombocytopenia_unit']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Urine test for Pus Cells</td>
                             <td class="tb-value text-right">{{responseArray[0]['urine_rest_for_pus_cells']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Urine culture test</td>
                             <td class="tb-value text-right">{{responseArray[0]['urine_culture_test']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Blood Culture Report</td>
                             <td class="tb-value text-right">{{responseArray[0]['blood_culture_report']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Other Organism</td>
                             <td class="tb-value text-right">{{responseArray[0]['other_organism']}}</td>
                           </tr>
@@ -159,20 +155,20 @@
                             <td class="tb-value text-right">{{responseArray[0]['arrhythmia']}}</td>
                           </tr>
                           <tr class="border-bottom">
-                            <td class="tb-label">CSF Culture Value</td>
+                            <td class="tb-label">CSF Culture (Result)</td>
                             <td class="tb-value text-right">{{responseArray[0]['csf_culture']}}</td>
                           </tr>
-                          <tr class="border-bottom">
-                            <td class="tb-label">TSB Value (mg/dl)</td>
+                          <tr class="">
+                            <td class="tb-label">CSF Culture</td>
                             <td class="tb-value text-right">{{responseArray[0]['csf_culture_tsb_value']}}</td>
                           </tr>
-                          <tr class="border-bottom">
+                          <tr class="">
                             <td class="tb-label">Prothrombin Type(PT)</td>
                             <td class="tb-value text-right">{{responseArray[0]['prothrombin_type']}}</td>
                           </tr>
                           <tr class="">
                             <td class="tb-label">Activated Partial Prothrombin</td>
-                            <td class="tb-value text-right">{{responseArray[0]['activated_partial_prothrombine_type']}}</td>
+                            <td class="tb-value text-right">{{responseArray[0]['activated_prothrombin_type']}}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -210,7 +206,7 @@
                   formControlName="baby_thyroid_status">
                   <option value="Normal">Normal</option>
                   <option value="Abnormal">Abnormal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['baby_thyroid_status'].invalid &&
                   (invetigationForm.controls['baby_thyroid_status'].dirty ||
@@ -240,7 +236,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyThyroidResult" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isBabyThyroidResult" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="baby_thyroid_result" formControlName="baby_thyroid_result" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyThyroidResult">
                     <span class="input-group-text">mlU/L</span>
@@ -274,7 +270,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyBloodGlucose" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isBabyBloodGlucose" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="baby_blood_glucose" formControlName="baby_blood_glucose" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyBloodGlucose">
                     <span class="input-group-text">mg/dL</span>
@@ -309,7 +305,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyHaemoglobin" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isBabyHaemoglobin" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="baby_haemoglobin_levels" formControlName="baby_haemoglobin_levels" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyHaemoglobin">
                     <span class="input-group-text">g/dL</span>
@@ -343,7 +339,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyProtien" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isBabyProtien" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="baby_c_reactive_protien_levels" formControlName="baby_c_reactive_protien_levels" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyProtien">
                     <span class="input-group-text">mg/l</span>
@@ -359,26 +355,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label for="baby_c_reactive_protien_result">C-Reactive Protein Result</label>
-                  <select class="form-control" name="baby_c_reactive_protien_result"
-                    id="baby_c_reactive_protien_result" formControlName="baby_c_reactive_protien_result">
-                    <option value="Positive">Positive</option>
-                  <option value="Negative">Negative</option>
-                  <!--<option value="NA">NA</option>-->
-                  </select>
-                  <div *ngIf="invetigationForm.controls['baby_c_reactive_protien_result'].invalid &&
-                    (invetigationForm.controls['baby_c_reactive_protien_result'].dirty ||
-                    invetigationForm.controls['baby_c_reactive_protien_result'].touched || submitted)"
-                    class="error-msg">
-                    <div *ngIf="invetigationForm.controls['baby_c_reactive_protien_result'].errors.required">
-                      This field is required.
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             <div class="col-md-6">
               <div class="form-group">
@@ -398,7 +374,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyEsr" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isBabyEsr" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="micro_esr" formControlName="micro_esr" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyEsr">
                     <span class="input-group-text">mm</span>
@@ -431,7 +407,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBabyProcalcitonin" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isBabyProcalcitonin" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="baby_procalcitonin_levels" formControlName="baby_procalcitonin_levels" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBabyProcalcitonin">
                     <span class="input-group-text">ng/mL</span>
@@ -456,7 +432,7 @@
                   <div class="form-check-inline">
                     <label class="form-check-label">
                       <input type="radio" class="form-check-input" [checked]="this.isprothrombin"
-                        (click)="onInputChange($event)" value="1" name="babyProthrombin">Time
+                        (click)="onInputChange($event)" value="1" name="babyProthrombin">Value
                     </label>
                   </div>
                   <div class="form-check-inline mr-0">
@@ -467,7 +443,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isprothrombin" [dropSpecialCharacters]="false" mask="9*"
+                  <input type="text" *ngIf="this.isprothrombin" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="prothrombin_type" formControlName="prothrombin_type" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isprothrombin">
                     <span class="input-group-text">second</span>
@@ -489,7 +465,7 @@
                   <div class="form-check-inline">
                     <label class="form-check-label">
                       <input type="radio" class="form-check-input" [checked]="this.isActiveProthrombin"
-                        (click)="onInputChange($event)" value="1" name="babyActiveProthrombin">Time
+                        (click)="onInputChange($event)" value="1" name="babyActiveProthrombin">Value
                     </label>
                   </div>
                   <div class="form-check-inline mr-0">
@@ -501,16 +477,16 @@
                 </div>
                 <div class="input-group">
                   <input type="text" *ngIf="this.isActiveProthrombin" [dropSpecialCharacters]="false" mask="9*"
-                    class="form-control" id="baby_procalcitonin_levels" formControlName="activated_partial_prothrombine_type" min="0" autocomplete="off">
+                    class="form-control" id="baby_procalcitonin_levels" formControlName="activated_prothrombin_type" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isActiveProthrombin">
                     <span class="input-group-text">second</span>
                   </div>
                   <input type="text" readonly value="NA" *ngIf="!this.isActiveProthrombin" class="form-control">
                 </div>
-                <div *ngIf="invetigationForm.controls['activated_partial_prothrombine_type'].invalid &&
-                  (invetigationForm.controls['activated_partial_prothrombine_type'].dirty ||
-                  invetigationForm.controls['activated_partial_prothrombine_type'].touched || submitted)" class="error-msg">
-                  <div *ngIf="invetigationForm.controls['activated_partial_prothrombine_type'].errors.required">
+                <div *ngIf="invetigationForm.controls['activated_prothrombin_type'].invalid &&
+                  (invetigationForm.controls['activated_prothrombin_type'].dirty ||
+                  invetigationForm.controls['activated_prothrombin_type'].touched || submitted)" class="error-msg">
+                  <div *ngIf="invetigationForm.controls['activated_prothrombin_type'].errors.required">
                     This field is required.
                   </div>
                 </div>
@@ -527,7 +503,7 @@
                     <select class="form-control" name="total_leucocute_count_unit" id="total_leucocute_count_unit"
                       formControlName="total_leucocute_count_unit" (change)="changeDropdown($event.target.value,'total_leucocute_count')">
                       <option value="cu mm">cu mm</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="invetigationForm.controls['total_leucocute_count_unit'].invalid &&
                       (invetigationForm.controls['total_leucocute_count_unit'].dirty ||
@@ -562,7 +538,7 @@
                     <select class="form-control" name="absolute_neutrophil_count_unit" id="absolute_neutrophil_count_unit"
                       formControlName="absolute_neutrophil_count_unit" (change)="changeDropdown($event.target.value,'absolute_neutrophil_count')">
                       <option value="cu mm">cu mm</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="invetigationForm.controls['absolute_neutrophil_count_unit'].invalid &&
                       (invetigationForm.controls['absolute_neutrophil_count_unit'].dirty ||
@@ -597,7 +573,7 @@
                   id="immature_to_mature_neutrophil_ratios" formControlName="immature_to_mature_neutrophil_ratios">
                   <option value="High">High</option>
                   <option value="Normal">Normal</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['immature_to_mature_neutrophil_ratios'].invalid &&
                   (invetigationForm.controls['immature_to_mature_neutrophil_ratios'].dirty ||
@@ -617,7 +593,7 @@
                     <select class="form-control" name="thrombocytopenia_unit" id="thrombocytopenia_unit"
                       formControlName="thrombocytopenia_unit" (change)="changeDropdown($event.target.value,'thrombocytopenia_unit')">
                       <option value="Count">Count</option>
-                      <!--<option value="NA">NA</option>-->
+                      <option value="NA">NA</option>
                     </select>
                     <div *ngIf="invetigationForm.controls['thrombocytopenia_unit'].invalid &&
                       (invetigationForm.controls['thrombocytopenia_unit'].dirty ||
@@ -652,7 +628,7 @@
                   formControlName="urine_rest_for_pus_cells">
                   <option value="Positive">Positive</option>
                   <option value="Negative">Negative</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['urine_rest_for_pus_cells'].invalid &&
                   (invetigationForm.controls['urine_rest_for_pus_cells'].dirty ||
@@ -670,7 +646,7 @@
                   formControlName="urine_culture_test">
                   <option value="Positive">Positive</option>
                   <option value="Negative">Negative</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['urine_culture_test'].invalid &&
                   (invetigationForm.controls['urine_culture_test'].dirty ||
@@ -909,7 +885,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isSodium" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isSodium" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="sodium" formControlName="sodium" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isSodium">
                     <span class="input-group-text">mEq/L</span>
@@ -942,7 +918,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isPotassium" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isPotassium" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="potassium" formControlName="potassium" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isPotassium">
                     <span class="input-group-text">mEq/L</span>
@@ -976,7 +952,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isChlorine" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isChlorine" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="chlorine" formControlName="chlorine" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isChlorine">
                     <span class="input-group-text">mEq/L</span>
@@ -1009,7 +985,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isCalcium" [dropSpecialCharacters]="false" mask="0*.00" class="form-control" id="calcium"
+                  <input type="text" *ngIf="this.isCalcium" [dropSpecialCharacters]="false" mask="999.09" class="form-control" id="calcium"
                     formControlName="calcium" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isCalcium">
                     <span class="input-group-text">mmol/L</span>
@@ -1043,7 +1019,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" [dropSpecialCharacters]="false" mask="0*.00" *ngIf="this.isPhosphate"
+                  <input type="text" [dropSpecialCharacters]="false" mask="999.09" *ngIf="this.isPhosphate"
                     class="form-control" id="phosphate" formControlName="phosphate" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isPhosphate">
                     <span class="input-group-text">mmol/L</span>
@@ -1076,7 +1052,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isMagnesium" [dropSpecialCharacters]="false" mask="0*.00"
+                  <input type="text" *ngIf="this.isMagnesium" [dropSpecialCharacters]="false" mask="999.09"
                     class="form-control" id="magnesium" formControlName="magnesium" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isMagnesium">
                     <span class="input-group-text">mmol/L</span>
@@ -1110,7 +1086,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isUrea" [dropSpecialCharacters]="false" mask="0*.00" class="form-control" id="urea"
+                  <input type="text" *ngIf="this.isUrea" [dropSpecialCharacters]="false" mask="999.09" class="form-control" id="urea"
                     formControlName="urea" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isUrea">
                     <span class="input-group-text">mmol/L</span>
@@ -1144,7 +1120,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isCreatinine" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isCreatinine" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="creatinine" formControlName="creatinine" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isCreatinine">
                     <span class="input-group-text">mmol/L</span>
@@ -1178,7 +1154,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isLactate" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isLactate" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="lactate_levels" formControlName="lactate_levels" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isLactate">
                     <span class="input-group-text">mmol/L</span>
@@ -1212,7 +1188,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isBilirubin" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isBilirubin" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="bilirubin_levels" formControlName="bilirubin_levels" min="0" autocomplete="off">
                   <div class="input-group-append" *ngIf="this.isBilirubin">
                     <span class="input-group-text">mg/dL</span>
@@ -1247,7 +1223,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isCord" [dropSpecialCharacters]="false" mask="0*.00" class="form-control" id="cord_pH"
+                  <input type="text" *ngIf="this.isCord" [dropSpecialCharacters]="false" mask="999.09" class="form-control" id="cord_pH"
                     formControlName="cord_ph" autocomplete="off">
                   <input type="text" readonly value="NA" *ngIf="!this.isCord" class="form-control">
                 </div>
@@ -1265,7 +1241,7 @@
                 <select class="form-control" name="arrhythmia" id="arrhythmia" formControlName="arrhythmia">
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <!--<option value="NA">NA</option>-->
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['arrhythmia'].invalid && (invetigationForm.controls['arrhythmia'].dirty
                   || invetigationForm.controls['arrhythmia'].touched || submitted)" class="error-msg">
@@ -1278,11 +1254,11 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="csf_culture">CSF Culture Value</label>
+                <label for="csf_culture">CSF Culture (Result)</label>
                 <select class="form-control" name="csf_culture" id="csf_culture" formControlName="csf_culture">
-                  <option value="Normal">Normal</option>
-                  <option value="Abnormal">Abnormal</option>
-                 <!--<option value="NA">NA</option>-->
+                  <option value="Positive">Positive</option>
+                  <option value="Negative">Negative</option>
+                  <option value="NA">NA</option>
                 </select>
                 <div *ngIf="invetigationForm.controls['csf_culture'].invalid && (invetigationForm.controls['csf_culture'].dirty ||
                   invetigationForm.controls['csf_culture'].touched || submitted)" class="error-msg">
@@ -1294,7 +1270,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="csf_culture_tsb_value">TSB Value (mg/dl)</label>
+                <label for="csf_culture_tsb_value">CSF Culture</label>
                 <div class="float-right">
                   <div class="form-check-inline">
                     <label class="form-check-label">
@@ -1310,7 +1286,7 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  <input type="text" *ngIf="this.isTSBValue" [dropSpecialCharacters]="false" mask="0*.00" class="form-control"
+                  <input type="text" *ngIf="this.isTSBValue" [dropSpecialCharacters]="false" mask="999.09" class="form-control"
                     id="csf_culture_tsb_value"
                     formControlName="csf_culture_tsb_value" autocomplete="off">
                   <input type="text" readonly value="NA" *ngIf="!this.isTSBValue" class="form-control">
@@ -1322,23 +1298,14 @@
                   </div>
                 </div>
               </div>
-             
             </div>
           </div>
-          <div class="row">
-          <div class="col-md-6"></div>
-          <div class="col-md-6">
-              <div>
-                  <button type="submit" *ngIf="!isEditClicked" class="btn btn-primary float-right">
-                    <span>Next</span>
-                  </button>
-                  <button type="button" class="btn btn-primary float-right" *ngIf="isEditClicked" (click)="updateInvestigationForm()"
-                    class="btn btn-primary float-right">
-                    <span>Update</span>
-                  </button>
-                </div>
-            </div>
-            </div>
+          <button  *ngIf="!isEditClicked" type="submit" class="btn btn-primary float-right">
+            <span>Next</span>
+          </button>
+          <button *ngIf="isEditClicked" type="button" (click)="updateInvestigationForm()" class="btn btn-primary float-right">
+            <span>Update</span>
+          </button>
         </div>
       </form>
     </div>

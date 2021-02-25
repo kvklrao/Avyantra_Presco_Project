@@ -10,9 +10,6 @@ import { DatePipe } from '@angular/common';
 import { DataService } from '../../shared/service/data.service';
 import { ReadingDataService } from '../../shared/service/reading-data.service';
 import { of } from 'rxjs';
-import * as _ from "underscore";
-import { AppConstant } from 'src/app/shared/constant/app-constant';
-import { AppHelper } from 'src/app/shared/helper/app.helper';
 
 @Component({
   selector: "app-search",
@@ -35,16 +32,12 @@ export class SearchComponent implements OnInit {
   message:string;
   login_hospital;
   searchResultEmpty:boolean=false;
-  babyScoreData={};
-  login_user:any={};
-  ashaWorker=false;
-  ashaObj={};
-  phcUser=false;
+
   @Output() id: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private formBuilder: FormBuilder, public config: NgbModalConfig,  private modalService: NgbModal, private common_api: CommonService,
     private toastr: ToastrService,  private util: Util, private commonConst: Common, private router: Router, 
-    private dataService:DataService,public readingDataService:ReadingDataService,private constant:AppConstant,private helper:AppHelper) {
+    private dataService:DataService,private readingDataService:ReadingDataService) {
     config.backdrop = "static";
     config.keyboard = false;
   }
@@ -53,8 +46,6 @@ export class SearchComponent implements OnInit {
     const vim = this;
     vim.login_hospital = JSON.parse(localStorage.getItem("login_hospital"));
     vim.createForm();
-    this.getUserInfo();
-    vim.checkUser();
     this.dataService.currentMessage.subscribe(message => {
       this.message = message;
     })
@@ -97,7 +88,7 @@ export class SearchComponent implements OnInit {
       //     console.error("errro", error);
       //   }
       // );
-      const get_patient_data = await vim.common_api.search_patient_reading(this.search_str,vim.login_hospital['id'],vim.login_hospital['hospital_branch_id'] );
+      const get_patient_data = await vim.common_api.search_patient_reading(this.search_str,vim.login_hospital['id'] );
       get_patient_data.subscribe(
         response => {          
           vim.success(response, "search_patient");
@@ -231,8 +222,6 @@ export class SearchComponent implements OnInit {
   view_patient(obj: any) {
     this.isTableDisplay = false;
     const vim = this;
-    vim.babyScoreData={};
-    vim.babyScoreData=obj;
     vim.util.setUserInfo(obj);
     vim.id.emit(obj["id"]);
     obj.study_id =  obj["study_id"];
@@ -258,33 +247,4 @@ export class SearchComponent implements OnInit {
     vim.router.navigate(["dashboard/baby-profile"]);
     localStorage.removeItem('reading');
   }
-
-  generateScore(){
-    if(_.isEmpty(this.babyScoreData)){
-      this.toastr.error("Please search a BMR number.")
-    }else{
-      this.router.navigate(["admin/score-analysis/"+this.babyScoreData['baby_medical_record_number']+"/"+this.babyScoreData['study_id']+"/"+this.babyScoreData['reading']]);
-    }
-  }
-  checkUser(){
-    if(this.login_user['user_type']==this.constant.asha_worker){
-      this.ashaWorker= true;
-    }
-    if(this.login_user['user_type']==this.constant.phc_worker){
-      this.phcUser=true;
-    }
-  }
-
-  getUserInfo() {
-    this.login_user = JSON.parse(localStorage.getItem("login_hospital"));
-  }
-
-  generateAshaScore(){
-    this.ashaObj=this.dataService.getOption();
-    if(!_.isEmpty(this.ashaObj)){
-      this.router.navigate(["admin/score-analysis/"+this.ashaObj['baby_medical_record_number']+"/"+this.ashaObj['study_id']+"/"+"R1"]);
-    }else{
-      this.toastr.error("Please fill details first.")}
-
-    }
-  }
+}

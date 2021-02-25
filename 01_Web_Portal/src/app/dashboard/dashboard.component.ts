@@ -7,7 +7,6 @@ import {ReadingDataService} from '../shared/service/reading-data.service';
 import * as _ from "underscore";
 import { CommonService } from "../shared/service/common/common.service";
 import { ToastrService } from "ngx-toastr";import { Common } from '../shared/service/common/common';
-import { AppConstant } from '../shared/constant/app-constant';
 ;
 
 @Component({
@@ -27,7 +26,6 @@ export class DashboardComponent implements OnInit {
   invalidForm=false;
    messageString='';
    haveUnsavedData=false;
-   login_user:any={};
   // confirmationModalOpen: boolean =false;
 
   constructor(
@@ -39,7 +37,7 @@ export class DashboardComponent implements OnInit {
     public readingDataService:ReadingDataService,
     private common_api: CommonService,
     private toastr:ToastrService,
-    private commonAsyn: Common,private constant:AppConstant
+    private commonAsyn: Common
   ) {
 
   }
@@ -52,14 +50,12 @@ export class DashboardComponent implements OnInit {
   disable_btn=true;
   allFormData:any
   foundEmpty=false;
-  ashaUser=false;
-  phcUser=false;
+
   ngOnInit() {
-    debugger;
     this.foundEmpty = false;
     this.selectedItem='baby-profile';
     this.readinDataObj = this.readingDataService.getComponentFlag();
-    this.readingDataService.clearAshaReadingFormData();
+    
     if(this.router.url != '/dashboard/baby-profile')
     this.selectedItem='baby-profile';
     this.router.navigate(['dashboard/baby-profile']);
@@ -71,8 +67,6 @@ export class DashboardComponent implements OnInit {
     this.readingDataService.tabMessage.subscribe(message => {
       this.selectedItem=message;
     })
-    this.getUserInfo();
-    this.checkUser();
    }
 
    openBabyProfile() {
@@ -296,38 +290,6 @@ export class DashboardComponent implements OnInit {
     this.readingDataService.reset();
     this.readingDataService.reading=undefined;
     this.readingDataService.clearReadingFormData();
-    if(this.login_user['user_type']==this.constant.asha_worker){
-      this.router.navigate(['admin/asha-phc']);
-    }else{
     this.router.navigate(['admin/hospital-staff']);
-    }
-  }
-
-  checkUser(){
-    if(this.login_user['user_type']==this.constant.asha_worker){
-      this.selectedItem="baby-profile";
-      this.ashaUser=true;
-    }
-    else if(this.login_user['user_type']==this.constant.phc_worker){
-      this.selectedItem="baby-profile";
-      this.phcUser=true;
-    }
-    else{
-      this.selectedItem="baby-profile";
-      this.ashaUser=false;
-    }
-  }
-
-  getUserInfo() {
-    this.login_user = JSON.parse(localStorage.getItem("login_hospital"));
-  }
-
-  newAshaUser(){
-    this.dataService.clearOption();
-    this.readingDataService.reset();
-    this.readingDataService.clearReadingFormData();
-    this.readingDataService.resetAshaWorker();
-    this.readingDataService.setActiveTab('baby-profile')
-    this.router.navigate(['/dashboard']);
   }
 }

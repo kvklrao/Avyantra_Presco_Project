@@ -188,7 +188,7 @@ ul li{
 .mr-40{margin-right:40px;}
 .mr-50{margin-right:50px;}
 
-footer{background:#1a499d; position:absolute; bottom:0px; width:100%; z-index: 1;}
+footer{background:#1a499d; position:fixed; bottom:0px; width:100%; z-index: 1;}
 
 .text-bold{font-weight: bold;}
 

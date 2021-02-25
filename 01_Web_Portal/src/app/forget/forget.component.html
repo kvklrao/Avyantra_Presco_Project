@@ -45,37 +45,6 @@
                 </div>
               </div>
             </form>
-            <!-- <form *ngIf="this.isEmailExist"  [formGroup]="forgetWithPasswordForm" (ngSubmit)="forget_password()" novalidate>
-              <div class="forgot-form w-75 mx-auto">
-                <div class="form-group position-relative">
-                  <span class="position-absolute input-icon"><img src="assets/svgs/user-icon.svg" alt=""></span>
-                  <input type="password" autocomplete="off" id="password" class="form-control" formControlName="password"
-                    name="login" placeholder="Password" (keyup)="is_match()">
-                    <div *ngIf="forgetWithPasswordForm.controls['password'].invalid && (forgetWithPasswordForm.controls['password'].dirty ||
-                    forgetWithPasswordForm.controls['password'].touched || submitted)"
-                      class="error-msg text-left">
-                      <div *ngIf="forgetWithPasswordForm.controls['password'].errors.required">
-                        Required Field.
-                      </div>
-                      <div *ngIf="forgetWithPasswordForm.controls['password'].hasError('minlength') && forgetWithPasswordForm.controls['password'].touched">
-                        password should be more then 6 character.</div>
-  
-                    </div>
-                </div>
-                <div class="form-group position-relative">
-                  <span class="position-absolute input-icon"><img src="assets/svgs/user-icon.svg" alt=""></span>
-                  <input type="password" autocomplete="off" id="confirmPass" class="form-control" formControlName="confirmPass"
-                    placeholder="Confirm Password" (keyup)="is_match()">
-                    <div *ngIf="is_match()" class="error-msg">
-                      Please enter the same password as above
-                    </div>
-                </div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Send"
-                    [disabled]="forgetWithPasswordForm.invalid || is_match() == true">
-                </div>
-              </div>
-            </form> -->
           </div>
           <img src="assets/svgs/card-curve.svg" alt="" class="img-fluid curve-white">
           <img src="assets/svgs/card-curve-shadow.svg" alt="" class="img-fluid curve-shadow">
@@ -94,37 +63,6 @@
               <p class="text-grey-300"> A verification email has been sent to your registered email ID. </p>
             </div>
 
-            <!-- <form [formGroup]="forgetWithPasswordForm" (ngSubmit)="resetPassword()" novalidate>
-              <div class="forgot-form w-75 mx-auto">
-                <div class="form-group position-relative">
-                  <span class="position-absolute input-icon"><img class="form-img" src="assets/svgs/user-icon.svg" alt=""></span>
-                  <input type="password" autocomplete="off" id="password" class="form-control" formControlName="password"
-                    name="login" placeholder="Password" (keyup)="is_match()">
-                    <div *ngIf="forgetWithPasswordForm.controls['password'].invalid && (forgetWithPasswordForm.controls['password'].dirty ||
-                    forgetWithPasswordForm.controls['password'].touched || submitted)"
-                      class="error-msg text-left">
-                      <div *ngIf="forgetWithPasswordForm.controls['password'].errors.required">
-                        Required Field.
-                      </div>
-                      <div *ngIf="forgetWithPasswordForm.controls['password'].hasError('minlength') && forgetWithPasswordForm.controls['password'].touched">
-                        password should be more then 6 character.</div>
-  
-                    </div>
-                </div>
-                <div class="form-group position-relative">
-                  <span class="position-absolute input-icon"><img class="form-img" src="assets/svgs/user-icon.svg" alt=""></span>
-                  <input type="password" autocomplete="off" id="confirmPass" class="form-control" formControlName="confirmPass"
-                    placeholder="Confirm Password" (keyup)="is_match()">
-                    <div *ngIf="is_match()" class="error-msg">
-                      Please enter the same password as above
-                    </div>
-                </div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Send"
-                    [disabled]="forgetWithPasswordForm.invalid || is_match() == true">
-                </div>
-              </div>
-            </form> -->
           </div>
           <img src="assets/svgs/card-curve.svg" alt="" class="img-fluid curve-white">
           <img src="assets/svgs/card-curve-shadow.svg" alt="" class="img-fluid curve-shadow">

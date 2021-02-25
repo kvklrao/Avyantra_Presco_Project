@@ -12138,20 +12138,4 @@ body.sidebar-toggled footer.sticky-footer {
 
 .myCustomModalClass .modal-dialog {
   max-width: 87%;
-  margin-left: 4%;
 }
-
-.myCustomChatModalClass .modal-dialog{
-  height: 100vh;
-}
-.myCustomChatModalClass .modal-content{
-  height: auto;
-}
-
-.myCustomChatModalClass .modal-body{
-  position: relative;
--webkit-box-flex: 1;
-flex: 1 1 auto;
-padding: 0rem;
-}
-
