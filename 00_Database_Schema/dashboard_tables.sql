@@ -1,4 +1,4 @@
-create table fungi_list(
+﻿create table fungi_list(
 
     id int NOT NULL AUTO_INCREMENT,
     ItemName varchar(255) NOT NULL,
