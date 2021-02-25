@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HospitalBranchComponent } from './hospital-branch.component';
 import {NgxMaskModule} from 'ngx-mask';
 import { ToastrModule } from "ngx-toastr";
@@ -17,7 +17,7 @@ describe('HospitalBranchComponent', () => {
       declarations: [ HospitalBranchComponent,emptyDataPipe ],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
-        HttpClientModule,BrowserAnimationsModule,
+        HttpClientTestingModule,BrowserAnimationsModule,
         ToastrModule.forRoot()],
       providers:[AppHelper]
     })
@@ -37,27 +37,17 @@ describe('HospitalBranchComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}))
     expect(component).toBeTruthy();
   });
-  // it('name field validation', () => {
-  //   let errors={};
-  //   let name=component.addBranchForm.controls['name'];
-  //   // name.setValue('');
-  //   // errors = name.errors || {};
-  //   // expect(errors['required']).toBeTruthy();
 
-  //   name.setValue('testnametestnametestname');
-  //   errors = name.errors || {};
-  //   expect(errors['maxlength']).toBeTruthy();
-    
-  //   name.setValue('testname');
-  //   errors = name.errors || {};
-  //   expect(errors['required']).toBeFalsy();
-  // });
-  
-   it("contact_person field validation",()=>{
+  it("contact_person field validation",()=>{
      let errors={};
      let contact_person=component.addBranchForm.controls['contact_person'];
      contact_person.setValue('testContact');

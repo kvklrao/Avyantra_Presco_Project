@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -37,7 +37,7 @@ describe('PatentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SearchComponent],
-      imports: [FormsModule, NgbModalModule, ReactiveFormsModule,BrowserAnimationsModule, HttpClientModule, RouterTestingModule.withRoutes(routes),
+      imports: [FormsModule, NgbModalModule, ReactiveFormsModule,BrowserAnimationsModule, HttpClientTestingModule, RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot()],
       providers: [DataService,]
     })
@@ -51,6 +51,11 @@ describe('PatentComponent', () => {
 
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     expect(component).toBeTruthy();
   });

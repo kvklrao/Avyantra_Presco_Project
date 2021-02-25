@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -32,7 +32,7 @@ describe('FinalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FinalComponent, GeneralComponent],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         MatIconModule,
         NgbModalModule,
         RouterTestingModule.withRoutes(routes),
@@ -58,6 +58,11 @@ describe('FinalComponent', () => {
     babyFinalForm = component.babyFinalForm;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92 }))
     expect(component).toBeTruthy();
@@ -92,44 +97,6 @@ describe('FinalComponent', () => {
 
     babyFinalForm.controls.final_diagnosis_lbw.setValue("Yes");
     expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_lga.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_aga.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_sga.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-
-    // babyFinalForm.controls.final_diagnosis_anemia.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_dextochordia.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_hypoglycemia.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_hypocalcemia.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-
-    // babyFinalForm.controls.final_diagnosis_gastroenteritis.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_perinatal_respiratory_depression.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_shock.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_feeding_intolerence.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeFalsy();
-
-    // babyFinalForm.controls.final_diagnosis_eos_los.setValue("Yes");
-    // expect(babyFinalForm.valid).toBeTruthy();
 
   });
 

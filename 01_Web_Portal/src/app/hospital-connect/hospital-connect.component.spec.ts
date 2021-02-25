@@ -5,7 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHelper } from '../shared/helper/app.helper';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { OrderModule } from 'ngx-order-pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,11 +25,9 @@ describe('HospitalConnectComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         ToastrModule.forRoot(),
-        HttpClientModule,
+        HttpClientTestingModule,
         OrderModule,
-        BrowserAnimationsModule
-        
-       
+        BrowserAnimationsModule       
     ],
     providers:[AppHelper]
 
@@ -52,6 +50,11 @@ describe('HospitalConnectComponent', () => {
 
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"referral_id":123}));
     expect(component).toBeTruthy();

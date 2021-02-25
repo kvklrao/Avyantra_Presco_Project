@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+
 import { NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from "ngx-toastr";
 import { AppHelper } from '../shared/helper/app.helper';
@@ -24,7 +24,6 @@ describe('SettingsComponent', () => {
       declarations: [SettingsComponent],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
-        HttpClientModule,
         HttpClientTestingModule,
         NgxPaginationModule,NgbModalModule,
         ToastrModule.forRoot(), BrowserAnimationsModule],
@@ -50,6 +49,11 @@ describe('SettingsComponent', () => {
     component.formRef = {
       close:close
     }
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {
@@ -164,23 +168,6 @@ describe('SettingsComponent', () => {
     expect(_.each).toHaveBeenCalled();
   });
 
-  // fit('open method', () => {///
-  //   component.editCalled = [true];
-  //   component.editFlag = [true];
-
-  //   component.open({}, "123", 'role', 0);
-
-  //   expect(component.hospital_branch_role_id).toBe("123");
-  //   expect(component.editCalled[0]).toBeFalsy();
-  //   expect(component.editFlag[0]).toBeFalsy();
-
-  //   component.open({}, "123", 'speciality', 0);
-
-  //   expect(component.hospital_branch_speciality_id).toBe("123");
-  //   expect(component.editCalled[0]).toBeFalsy();
-  //   expect(component.editFlag[0]).toBeFalsy();
-  // });
-
   it('success method', () => {
     spyOn(component["toasty"], 'success');
     let res = {
@@ -279,22 +266,6 @@ describe('SettingsComponent', () => {
     component.updateList(0, 'test', 5);
     expect(component.userListDummy.length).toBe(2);
   });
-
-  // it('setPermission method', () => {
-  //   //spyOn(component, 'updateList');
-  //   let event = {
-  //     target:{
-  //       checked:false
-  //     }
-  //   }
-  //   // component.setPermission(event,0,'test');
-  //   // expect(component.updateList).toHaveBeenCalled();
-  //   // event.target.checked = true;
-  //   // component.setPermission(event,0,'test');
-  //   // expect(component.updateList).toHaveBeenCalled();
-  //   component.setPermission(event,0,'test');
-
-  // });
 
   it('changePermission method', () => {
     spyOn(component,'setPermission');

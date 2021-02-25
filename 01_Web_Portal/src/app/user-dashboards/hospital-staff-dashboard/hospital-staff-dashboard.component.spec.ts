@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HospitalStaffDashboardComponent } from './hospital-staff-dashboard.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppHelper } from 'src/app/shared/helper/app.helper';
 import { ToastrModule } from 'ngx-toastr';
@@ -40,7 +40,7 @@ describe('HospitalStaffDashboardComponent', () => {
         NgbModalModule,
         BrowserAnimationsModule,
         NgxPaginationModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot(),
       ],
@@ -68,6 +68,11 @@ describe('HospitalStaffDashboardComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"id":92,"hospital_branch_id":12345}));
 

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync,tick  } from '@angular/core/testing';
 import {Location} from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router, Routes} from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -38,7 +38,7 @@ describe('SignupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SignupComponent, LoginComponent ],
-      imports: [BrowserAnimationsModule,FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [BrowserAnimationsModule,FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes), NgxMaskModule.forRoot(),
         ToastrModule.forRoot()]
     })
@@ -54,6 +54,11 @@ describe('SignupComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('signup form should be loaded first', () => {
     expect(component).toBeTruthy();
   });

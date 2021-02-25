@@ -44,6 +44,10 @@ describe('Auth Guard Service', () => {
         });
     }));
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+      });
+      
 
     it('should create', () => {
         expect(auth).toBeTruthy();

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router, Routes} from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -20,7 +20,7 @@ describe('BasicComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BasicComponent ],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot()]
     })
@@ -40,10 +40,9 @@ describe('BasicComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59,"baby_medical_record_number":20}))
-  //  let app=fixture.debugElement.componentInstance;
-  //  app.patient_info={"baby_medical_record_number":20,"baby_mother_medical_record_number":20}
-  //   expect(component).toBeTruthy();
-  // });
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
 });

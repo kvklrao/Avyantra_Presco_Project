@@ -11,6 +11,10 @@ describe('DateLevelPipe', () => {
     pipe=new DateLevelPipe();
   })); 
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  
   it('create an instance', () => {
     let pipe = new DateLevelPipe();
     expect(pipe).toBeTruthy();

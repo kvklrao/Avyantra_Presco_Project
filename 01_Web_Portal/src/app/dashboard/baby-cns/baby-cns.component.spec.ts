@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router, Routes} from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -39,7 +39,7 @@ describe('BabyCnsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BabyCnsComponent, MockBabyGitComponent],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,BrowserAnimationsModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,BrowserAnimationsModule,
         MatIconModule,
         RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot()],
@@ -61,6 +61,11 @@ describe('BabyCnsComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59,"staff_id":12}))
     expect(component).toBeTruthy();

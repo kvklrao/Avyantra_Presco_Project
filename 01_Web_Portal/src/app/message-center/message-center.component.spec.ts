@@ -4,7 +4,7 @@ import { MessageCenterComponent } from './message-center.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { HttpClientModule } from "@angular/common/http";
+
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppHelper } from '../shared/helper/app.helper';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
@@ -27,8 +27,8 @@ describe('MessageCenterComponent', () => {
                 ScrollingModule,
                 FormsModule,
                 Ng2SearchPipeModule,
-                HttpClientModule,
-                HttpClientTestingModule,BrowserAnimationsModule,
+                HttpClientTestingModule,
+                BrowserAnimationsModule,
                 ToastrModule.forRoot()
             ],
             providers:[
@@ -56,6 +56,12 @@ describe('MessageCenterComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}));
     expect(component).toBeTruthy();

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -42,7 +42,7 @@ describe('AntibioticAdministrationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AntibioticAdministrationComponent, DateLevelPipe],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         MatIconModule,
         AngularMultiSelectModule,
         RouterTestingModule.withRoutes(routes),
@@ -69,6 +69,11 @@ describe('AntibioticAdministrationComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92, "hospital_name": "getwell", "hospital_branch_name": "getwell indore", "hospital_branch_id": 59 }))
     // localStorage.setItem("hospital_name",JSON.stringify({"hospital_name":"testname","hospital_branch_name":"testbname"}))

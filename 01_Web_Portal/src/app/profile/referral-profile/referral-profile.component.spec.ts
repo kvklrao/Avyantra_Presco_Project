@@ -3,7 +3,7 @@ import { ReferralProfileComponent } from './referral-profile.component';
 import { passwordPipe } from '../../shared/pipes/encrypt-password.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppHelper } from 'src/app/shared/helper/app.helper';
 import { ToastrModule } from "ngx-toastr";
 import { CommonService } from 'src/app/shared/service/common/common.service';
@@ -25,7 +25,7 @@ describe('ReferralProfileComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         NgxMaskModule.forRoot(),
-        HttpClientModule,
+        HttpClientTestingModule,
         ToastrModule.forRoot(),
       ],
       providers: [
@@ -50,6 +50,11 @@ describe('ReferralProfileComponent', () => {
 
     fixture.detectChanges();
 
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

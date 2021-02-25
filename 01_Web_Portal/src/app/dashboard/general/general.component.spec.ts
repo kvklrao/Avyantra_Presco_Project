@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -27,7 +27,7 @@ describe('GeneralComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GeneralComponent],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         MatIconModule,
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes(routes),
@@ -54,6 +54,11 @@ describe('GeneralComponent', () => {
       e.preventDefault()
     });
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

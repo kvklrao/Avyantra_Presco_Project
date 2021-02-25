@@ -29,6 +29,10 @@ describe('Helper Service', () => {
         // });
     }));
 
+    afterEach(() => {
+        TestBed.resetTestingModule();
+    });
+        
     it('should create', () => {
         // localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92, "hospital_name": "getwell", "hospital_branch_name": "getwell indore", "hospital_branch_id": 59 }))
         expect(appHelper).toBeTruthy();

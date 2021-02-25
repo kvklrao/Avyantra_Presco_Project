@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { NgxMaskModule } from 'ngx-mask';
@@ -64,6 +64,11 @@ describe('HospitalStaffComponent', () => {
 
     }
     component.formRef = {close: close}
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

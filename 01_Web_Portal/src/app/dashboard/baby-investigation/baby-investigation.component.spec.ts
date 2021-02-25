@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -42,7 +42,7 @@ describe('BabyInvestigationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BabyInvestigationComponent],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         MatIconModule,
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes(routes),
@@ -66,7 +66,11 @@ describe('BabyInvestigationComponent', () => {
     });
     fixture.detectChanges();
     babyInvestForm = component.invetigationForm;
+  });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

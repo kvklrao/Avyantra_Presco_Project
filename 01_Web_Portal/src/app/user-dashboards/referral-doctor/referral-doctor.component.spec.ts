@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReferralDoctorComponent } from './referral-doctor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+
 import { AppHelper } from 'src/app/shared/helper/app.helper';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +21,6 @@ describe('ReferralDoctorComponent', () => {
       imports:[FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        HttpClientModule, 
         ToastrModule.forRoot(),
         NgbModalModule
 ],
@@ -46,6 +45,12 @@ describe('ReferralDoctorComponent', () => {
     let cls = ()=>{}
     component.formRef = {close:cls}
   });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('sendOpinion method',()=>{
     component.selectedOpinion=null
     component.sendOpinion();

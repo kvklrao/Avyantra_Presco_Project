@@ -3,7 +3,7 @@ import { HospitalAdminComponent } from './hospital-admin.component';
 import { AppRoutingModule } from "../../app-routing.module";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
  import { ToastrModule } from 'ngx-toastr';
- import { HttpClientModule } from '@angular/common/http';
+ import { HttpClientTestingModule } from '@angular/common/http/testing';
  import { MatTabsModule, MatIconModule } from '@angular/material';
  import { NgxSpinnerModule } from 'ngx-spinner';
  import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
@@ -106,18 +106,16 @@ describe('HospitalAdminComponent', () => {
         imports: [
           ReactiveFormsModule,
           RouterTestingModule.withRoutes(rout),
-           ToastrModule.forRoot(),
-           HttpClientModule,
+          ToastrModule.forRoot(),
           FormsModule,
-           MatTabsModule,
+          MatTabsModule,
           MatIconModule,
-           HttpClientModule,
-          ReactiveFormsModule,
-           NgxSpinnerModule,
-           AngularMultiSelectModule,
-           BsDatepickerModule.forRoot(),
+          HttpClientTestingModule,
+          NgxSpinnerModule,
+          AngularMultiSelectModule,
+          BsDatepickerModule.forRoot(),
           NgxMaskModule.forRoot(),
-           NgxPaginationModule
+          NgxPaginationModule
         ],
         providers: [
           CommonService,
@@ -143,6 +141,11 @@ describe('HospitalAdminComponent', () => {
     fixture.detectChanges();
   }));
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     // localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}))
     expect(component).toBeTruthy();

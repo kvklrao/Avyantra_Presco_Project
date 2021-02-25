@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router, Routes} from "@angular/router";
 import {NgxMaskModule} from 'ngx-mask';
@@ -28,7 +28,7 @@ describe('ReferralDoctorStaffComponent', () => {
       declarations: [ ReferralDoctorStaffComponent,emptyDataPipe ],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
-        HttpClientModule,
+        HttpClientTestingModule,
         NgxPaginationModule,
         RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot(),BrowserAnimationsModule],
@@ -50,6 +50,11 @@ describe('ReferralDoctorStaffComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"username":"getwell","email":"get@yahoo.com","user_type":"Hospital","id":92,"hospital_name":"getwell","hospital_branch_name":"getwell indore","hospital_branch_id":59}))
     expect(component).toBeTruthy();

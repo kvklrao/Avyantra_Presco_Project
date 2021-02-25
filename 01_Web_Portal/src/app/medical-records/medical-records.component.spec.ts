@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {NgxMaskModule} from 'ngx-mask';
 import { ToastrModule } from "ngx-toastr";
 import { AppHelper } from '../shared/helper/app.helper';
@@ -22,7 +22,7 @@ describe('MedicalRecordsComponent', () => {
       declarations: [ MedicalRecordsComponent, userTypePipe,emptyDataPipe ,statusPipe],
       imports: [
         FormsModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
-        HttpClientModule,
+        HttpClientTestingModule,
         NgxPaginationModule,
         ToastrModule.forRoot(),BrowserAnimationsModule,NgbModalModule],
       providers:[AppHelper]
@@ -41,6 +41,11 @@ describe('MedicalRecordsComponent', () => {
         return store[key]=value;
       });
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

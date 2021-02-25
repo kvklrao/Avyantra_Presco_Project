@@ -4,7 +4,7 @@ import { BranchAdminProfileComponent } from './branch-admin-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { passwordPipe } from 'src/app/shared/pipes/encrypt-password.pipe';
 import { NgxMaskModule } from 'ngx-mask';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppHelper } from 'src/app/shared/helper/app.helper';
 import { ToastrModule } from 'ngx-toastr';
 import { By } from '@angular/platform-browser';
@@ -26,7 +26,7 @@ describe('BranchAdminProfileComponent', () => {
            ReactiveFormsModule,
            NgxMaskModule.forRoot(),
            ToastrModule.forRoot(),
-           HttpClientModule,
+           HttpClientTestingModule,
            BrowserAnimationsModule
          ],
          providers:[AppHelper,]
@@ -49,6 +49,11 @@ describe('BranchAdminProfileComponent', () => {
 
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     localStorage.setItem("login_hospital",JSON.stringify({"id":123,"hospital_branch_id":1234}))
     expect(component).toBeTruthy();

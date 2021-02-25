@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppHelper } from '../shared/helper/app.helper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,7 +20,7 @@ describe('RessetPasswordComponent', () => {
       imports:[FormsModule,ReactiveFormsModule,
         RouterTestingModule,
         ToastrModule.forRoot(),
-        HttpClientModule,BrowserAnimationsModule
+        HttpClientTestingModule,BrowserAnimationsModule
       ],
       providers:[
         AppHelper
@@ -35,6 +35,11 @@ describe('RessetPasswordComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create', () => {
     expect(component).toBeTruthy();
   });

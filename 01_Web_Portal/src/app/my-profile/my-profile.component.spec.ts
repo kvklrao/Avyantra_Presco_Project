@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrModule } from "ngx-toastr";
 import { AppHelper } from '../shared/helper/app.helper';
 import { NgxMaskModule } from 'ngx-mask';
@@ -16,7 +16,7 @@ describe('MyProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MyProfileComponent, passwordPipe],
-      imports: [ReactiveFormsModule, FormsModule, HttpClientModule, NgxMaskModule.forRoot(),BrowserAnimationsModule,
+      imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule, NgxMaskModule.forRoot(),BrowserAnimationsModule,
         ToastrModule.forRoot()],
       providers: [AppHelper]
     })
@@ -34,6 +34,11 @@ describe('MyProfileComponent', () => {
       return store[key] = value;
     });
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -48,7 +48,7 @@ describe('MaternalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MaternalComponent, MockBabyGitComponent],
-      imports: [BrowserAnimationsModule,FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [BrowserAnimationsModule,FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         MatIconModule,
         RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot(),
@@ -69,6 +69,11 @@ describe('MaternalComponent', () => {
       return store[key] = value;
     });
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

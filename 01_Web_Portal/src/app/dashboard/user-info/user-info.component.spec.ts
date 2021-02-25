@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrModule } from "ngx-toastr";
 import { UserInfoComponent } from './user-info.component';
 import { BasicComponent } from '../basic/basic.component';
@@ -12,7 +12,7 @@ describe('UserInfoComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserInfoComponent, BasicComponent ],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule,
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
         ToastrModule.forRoot()]
     })
     .compileComponents();
@@ -24,8 +24,13 @@ describe('UserInfoComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
   
 });

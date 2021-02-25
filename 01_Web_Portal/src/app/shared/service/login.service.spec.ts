@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { LoginService } from './login.service';
 import { Observable, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -9,7 +9,7 @@ describe('LoginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientTestingModule]
     })
     service = TestBed.get(LoginService);
   });

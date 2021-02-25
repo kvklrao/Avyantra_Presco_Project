@@ -16,7 +16,10 @@ module.exports = function (config) {
       'https://code.jquery.com/jquery-1.11.2.min.js'
     ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      jasmine: {
+        timeoutInterval: 10000
+      }
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../coverage'),

@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
 import { AppHelper } from '../../../shared/helper/app.helper';
 import { ToastrModule } from "ngx-toastr";
 import { HospitalAdminInfoComponent } from './hospital-admin-info.component';
@@ -16,7 +15,7 @@ describe('HospitalAdminInfoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HospitalAdminInfoComponent],
       imports: [
-        HttpClientModule, ToastrModule.forRoot(),HttpClientTestingModule],
+        ToastrModule.forRoot(),HttpClientTestingModule],
       providers: [AppHelper,CommonService]
     })
       .compileComponents();
@@ -37,6 +36,11 @@ describe('HospitalAdminInfoComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+  
   it('should create local storage', () => {
     localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92, "hospital_name": "getwell", "hospital_branch_name": "getwell indore", "hospital_branch_id": 59 }))
     expect(component).toBeTruthy();

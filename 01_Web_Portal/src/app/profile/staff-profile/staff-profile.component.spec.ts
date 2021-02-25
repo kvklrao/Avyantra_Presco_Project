@@ -8,16 +8,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonService } from 'src/app/shared/service/common/common.service';
 import { AppHelper } from 'src/app/shared/helper/app.helper';
 import { NgxMaskModule } from 'ngx-mask';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrModule } from "ngx-toastr";
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-
-
 
 describe('StaffProfileComponent', () => {
   let component: StaffProfileComponent;
@@ -33,7 +29,7 @@ describe('StaffProfileComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         NgxMaskModule.forRoot(),
-        HttpClientModule,
+        HttpClientTestingModule,
         ToastrModule.forRoot(),
         BrowserAnimationsModule
       ],
@@ -55,6 +51,11 @@ describe('StaffProfileComponent', () => {
     });
 
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

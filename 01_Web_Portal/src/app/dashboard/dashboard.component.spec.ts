@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material";
@@ -66,7 +67,7 @@ describe('DashboardComponent', () => {
             imports: [BrowserAnimationsModule,
                 MatTabsModule, MatIconModule, NgxMaskModule.forRoot(), BsDatepickerModule.forRoot(),
                 FormsModule, ReactiveFormsModule, AngularMultiSelectModule,
-                HttpClientModule, RouterTestingModule.withRoutes(routes),
+                HttpClientTestingModule, RouterTestingModule.withRoutes(routes),
                 ToastrModule.forRoot()],
             providers: [DataService]
         })
@@ -86,11 +87,10 @@ describe('DashboardComponent', () => {
         fixture.detectChanges();
     });
 
-    //   beforeEach(() => {
-    //     fixture = TestBed.createComponent(DashboardComponent);
-    //     component = fixture.componentInstance;
-    //     fixture.detectChanges();
-    //   });
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+      });
 
     it('should create', () => {
         localStorage.setItem("login_hospital", JSON.stringify({ "username": "getwell", "email": "get@yahoo.com", "user_type": "Hospital", "id": 92, "hospital_name": "getwell", "hospital_branch_name": "getwell indore", "hospital_branch_id": 59 }));
@@ -225,76 +225,4 @@ describe('DashboardComponent', () => {
             expect(component.getLastReadingData).toHaveBeenCalled();
         });
     }));
-
-    // it('saveReading method', inject([DataService, CommonService, Common],(ds:DataService, cs:CommonService, common:Common)=>{
-    //     spyOn(component,'validateAllFormData').and.callFake(()=>{
-    //         return true;
-    //     });
-    //     let res = {
-    //         status:200,
-    //         message:'test msg!'
-    //     }
-    //     let spy = spyOn(cs,'create_new_reading');
-    //     spyOn(common,'showLoader');
-    //     spyOn(common,'isHide');
-    //     spyOn(component.readingDataService,'clearReadingFormData');
-    //     spyOn(component.readingDataService,'showSaveReadingButton');
-    //     spyOn(component['router'],'navigate');
-    //     spy.and.returnValue(of(res));
-    //     component.saveReading();
-    //     spy.calls.mostRecent().returnValue.subscribe(dt=>{
-    //         expect(dt).toBe(res);
-    //         expect(common.isHide).toHaveBeenCalled();
-    //         expect(component.readingDataService.clearReadingFormData).toHaveBeenCalled();
-    //         expect(component.readingDataService.showSaveReadingButton).toHaveBeenCalled();
-            // expect(component['router'].navigate).toHaveBeenCalled();
-    //     });
-    //     res = {
-    //         status:404,
-    //         message:'test msg!'
-    //     }
-    //     spy.and.returnValue(of(res));
-    //     component.saveReading();
-    //     spy.calls.mostRecent().returnValue.subscribe(dt=>{
-    //         expect(common.isHide).toHaveBeenCalled();
-    //     });
-    //     expect(common.showLoader).toHaveBeenCalled();
-
-    // }));
-
-    // fit('getLastReadingData method', inject([DataService, CommonService, Common],(ds:DataService, cs:CommonService, common:Common)=>{
-    //     spyOn(component,'validateAllFormData').and.callFake(()=>{
-    //         return true;
-    //     });
-    //     let res = {
-    //         status:200,
-    //         message:'test msg!'
-    //     }
-    //     let spy = spyOn(cs,'getLastReadingData');
-    //     spyOn(common,'showLoader');
-    //     spyOn(common,'isHide');
-    //     spyOn(component.readingDataService,'clearReadingFormData');
-    //     spyOn(component.readingDataService,'showSaveReadingButton');
-    //     spyOn(component['router'],'navigate');
-    //     spy.and.returnValue(of(res));
-    //     component.saveReading();
-    //     spy.calls.mostRecent().returnValue.subscribe(dt=>{
-    //         expect(dt).toBe(res);
-    //         expect(common.isHide).toHaveBeenCalled();
-    //         expect(component.readingDataService.clearReadingFormData).toHaveBeenCalled();
-    //         expect(component.readingDataService.showSaveReadingButton).toHaveBeenCalled();
-    //         expect(component['router'].navigate).toHaveBeenCalled();
-    //     });
-    //     res = {
-    //         status:404,
-    //         message:'test msg!'
-    //     }
-    //     spy.and.returnValue(of(res));
-    //     component.saveReading();
-    //     spy.calls.mostRecent().returnValue.subscribe(dt=>{
-    //         expect(common.isHide).toHaveBeenCalled();
-    //     });
-    //     expect(common.showLoader).toHaveBeenCalled();
-
-    // }));
 });

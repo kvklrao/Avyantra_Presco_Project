@@ -9,7 +9,12 @@ describe('EncryptPassword Service', () => {
         providers:[]
       })
       encrypt=new passwordPipe();
-    }));  
+    }));
+
+    afterEach(() => {
+      TestBed.resetTestingModule();
+    });
+      
     it("should create",()=>{
         expect(encrypt).toBeTruthy();
     });

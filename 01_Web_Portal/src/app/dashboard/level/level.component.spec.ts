@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrModule } from "ngx-toastr";
 import { LevelComponent } from './level.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,7 +11,7 @@ describe('LevelComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LevelComponent ],
-      imports: [HttpClientModule,ToastrModule.forRoot(), BrowserAnimationsModule]
+      imports: [HttpClientTestingModule,ToastrModule.forRoot(), BrowserAnimationsModule]
     })
     .compileComponents();
   }));
@@ -22,9 +22,15 @@ describe('LevelComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
   it('isAlreadyExist method', () => {
     expect(component.isAlreadyExist({})).toBeFalsy();
 

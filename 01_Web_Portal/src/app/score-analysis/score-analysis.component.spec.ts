@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScoreAnalysisComponent } from './score-analysis.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-//import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
 import { AppHelper } from '../shared/helper/app.helper';
 import { ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,7 +22,7 @@ describe('ScoreAnalysisComponent', () => {
       declarations: [ ScoreAnalysisComponent ],
       imports:[FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterTestingModule,
         ToastrModule.forRoot(),
         NgbModalModule,
@@ -45,6 +45,11 @@ describe('ScoreAnalysisComponent', () => {
         return store[key]=value;
       });
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
   });
 
   it('should create', () => {

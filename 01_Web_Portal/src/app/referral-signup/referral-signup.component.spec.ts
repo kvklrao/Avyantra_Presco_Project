@@ -5,7 +5,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginService } from '../shared/service/login.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+
 import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -30,8 +30,6 @@ describe('ReferralSignupComponent', () => {
     }
   ]
 
-
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ReferralSignupComponent, LoginComponent],
@@ -41,7 +39,6 @@ describe('ReferralSignupComponent', () => {
         NgxMaskModule.forRoot(),
         RouterTestingModule.withRoutes(routs),
         ToastrModule.forRoot(),
-        HttpClientModule,
         HttpClientTestingModule,
         BrowserAnimationsModule
       ],
@@ -65,10 +62,14 @@ describe('ReferralSignupComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   ///validation
 
@@ -186,181 +187,12 @@ describe('ReferralSignupComponent', () => {
 
   });
 
-  ///btn testing
-
-  // it("Sign Up button validation", () => {
-  //   let signupRefForm = component.signupReferralForm;
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({ //all valid
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeTruthy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city test city test city test city test city", //invalid
-  //     contactNumber: "string number",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "abcdefgh",//invalid
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test", //invalid
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname testFname testFname", //invalid
-  //     lastName: "testLname testLname testLname", //invalid
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123", //invalid
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state test state test state test state test state test state", //invalid
-  //     userName: "test@123",
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test", //invalid
-  //   });
-
-  //   expect(signupRefForm.valid).toBeFalsy();
-
-  // });
-
-  //Routing Test
-
   it("should rout from '/' to '/login'", fakeAsync(() => {
     component.login();
     tick();
     expect(router.url).toEqual('/login');
   }));
 
-  //API Test
-
-  // it("Sign Up Api should work", () => {
-  //   let url = env + 'hospitalStaff/registerReferralDoctor';
-  //   let ls = TestBed.get(LoginService);
-  //   let signupRefForm = component.signupReferralForm;
-  //   signupRefForm.setValue({
-  //     address: "test address",
-  //     city: "test city",
-  //     contactNumber: "1234567890",
-  //     email: "test@ad101.com",
-  //     firstName: "testFname",
-  //     lastName: "testLname",
-  //     password: "1234567890",
-  //     pincode: "123456",
-  //     state: "test state",
-  //     userName: "test@123",
-  //   });
-
-  //   let obsr: Observable<any> = ls.referral_signup(signupRefForm.value);
-  //   obsr.subscribe((resData) => {
-  //     console.log(resData);
-  //     expect(resData).toEqual({'message':"ok"});
-
-  //     spyOn(component, "createForm");
-  //     component.success(resData, "signup");
-
-  //     expect(component.createForm).toHaveBeenCalled();
-
-  //   });
-
-  //   let req = httpTestingController.expectOne(url);
-
-  //   expect(req.request.method).toBe('POST');
-  //   expect(req.request.body).toBe(signupRefForm.value);
-
-  //   req.flush({'message':"ok"});
-  // });
-/////////////////////////////////////////////////////////
   it("success method called", () => {
     spyOn(component,'createForm')
     component.success({},'signup');
