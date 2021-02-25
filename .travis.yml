@@ -3,7 +3,7 @@ sudo: false
 
 language: node_js
 node_js:
-  - '8'
+  - '10'
 
 addons:
   chrome: stable
@@ -16,8 +16,7 @@ addons:
   #     - google-chrome-stable
 
 cache:
-  directories:
-    - ./node_modules
+  npm: false
 
 install:
   - npm install
