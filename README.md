@@ -22,4 +22,5 @@ In this repository you will the code and also the data models for our solution.
 - 02_Backend - Backend API code (NodeJS)
 - 03_Dashboard_Backend - API for the Dashboards
 - 04_Dashboard_Portal - Portal for the Dashboards
-- 05_PredictionCode - Code for doing the predictions.
+- 05_PredictionCode - Code for doing the predictions (batch process).
+- 06_PredictionCode_API - Code for doing the sepsis score prediction via an API.
