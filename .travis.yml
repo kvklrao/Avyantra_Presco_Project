@@ -27,12 +27,13 @@ env:
     - CC_TEST_REPORTER_ID=97a8020d30b630364b9a56ff0e36f226c29c1428f37ad70ad85915a384ce382a
 
 before_script:
+  - cd 01_Web_Portal
+  - npm install
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
 script:
-  - cd 01_Web_Portal
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
 
 after_script:
