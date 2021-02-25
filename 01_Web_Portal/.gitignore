@@ -26,7 +26,6 @@ original_README.md
 
 *.tsx
 ts-build
-tsconfig.json
 
 # Logs
 logs
