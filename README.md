@@ -24,3 +24,4 @@ In this repository you will the code and also the data models for our solution.
 - 04_Dashboard_Portal - Portal for the Dashboards
 - 05_PredictionCode - Code for doing the predictions (batch process).
 - 06_PredictionCode_Online - Code for doing the sepsis score prediction via an API.
+- 07_MobileApp - Code for the mobile application.
