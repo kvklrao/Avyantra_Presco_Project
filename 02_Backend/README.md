@@ -20,8 +20,10 @@ Set the appropriate parameters in the **settings.js** file in the **/config** fo
     - db_type - Database type (mysql in our case).
     - port - Database Port
 
-For user maintainance we use a service called AUTH0. 
+Also, the backend service also uses firebase to store the reports uploaded by the user and also validate mobile app users. Please set up the appropriate firebase bucket and configuration. Please note that access to firebase admin API is required More info here:- https://firebase.google.com/.  Please update the file **auth/firebase.js** accordingly.
 
-Various parameters for AUTH0 needs to be set up and an account needs to created in the Auth0 service for the user signup / login process to work. Further information may be obtained from https://auth0.com/docs
+For user maintainance we use a service called AUTH0. Various parameters for AUTH0 needs to be set up and an account needs to created in the Auth0 service for the user signup / login process to work. Further information may be obtained from https://auth0.com/docs
 
 Finally the APP sends a welcome email using the sendgrid service. You may signup for Sendgrid and enter the API key here. More info here :- https://sendgrid.com/docs
+
+

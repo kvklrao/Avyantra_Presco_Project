@@ -4,7 +4,11 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 
 require('custom-env').env()
+
 const app = express();
+const multer  = require('multer');
+
+import { fileUploder, fetchDownloadURL } from './file_utils/fileUploader'
 
 const proutes = require('./routes/patientRoutes')
 const hroutes = require('./routes/hospitalRoutes')
@@ -13,8 +17,7 @@ const hsroutes = require('./routes/hospitalStaffRoutes')
 
 const hospitalStaffController = require('./controllers/hospitalStaffController')
 const hospitalController = require('./controllers/hospitalController')
-
-const { checkJwt } = require("./auth/jwt-middleware");
+const dropdownList = require('./helper/dropDownList')
 
 const API_PORT = process.env.API_PORT || 8080;
 
@@ -23,13 +26,44 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+const {sequelize} = require('./sequelize')
+
 /**
  *
  * Auto-generated URL for the load-balancer. DONOT remove
  *
  */
 
-app.get("/CRIdRlDrEslki", (req, res) => {
+var upload = multer()
+
+app.post("/upload_file", upload.single('file'), async (req, res) => {
+
+  try{
+    const isFileUploaded = fileUploder(req);
+    if(!isFileUploaded){
+      return res.status(500).json({Error: 'Upload error'});
+    }
+  }
+  catch(e){
+    return res.status(500).json({Error: 'Upload error'});
+  }
+
+  return res.json({OK: 'OK'});
+});
+
+app.post("/fetch_download_url", async (req, res) => {
+
+  try{
+    const signedURL = await fetchDownloadURL(req.body.file_type, req.body.path);
+    return res.status(200).json({url: signedURL});
+  }
+  catch(e){
+    console.log(e);
+    return res.status(500).json({Error: 'Error fetching URL'});
+  }
+});
+
+app.get("/CRIdRlDrEslki", async (req, res) => {
   return res.json({OK: 'OK'});
 });
 
@@ -39,6 +73,8 @@ app.get("/CRIdRlDrEslki", (req, res) => {
  * 
  */
  
+app.get('/api/bacteriaList', dropdownList);
+
 app.put('/hospital/updateHospitalProfile/:hospitalId', (req, res, next) => {
   hospitalController.updateHospitalProfile(req, res, next);
 });
@@ -67,6 +103,10 @@ app.post('/hospitalStaff/registerReferralDoctor', (req, res, next) => {
 
 app.post('/hospital/signUp', (req, res, next) => {
   hospitalController.hospitalSignUp(req, res, next);
+});
+
+app.post('/referralDoctor/sendMail/:emailid', (req,res,next) => {
+  hospitalController.referralDoctorSendMail(req,res,next);
 });
 
 app.post('/hospital/signUp/aasha', (req, res, next) => {

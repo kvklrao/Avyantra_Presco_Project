@@ -8,6 +8,8 @@ prouter.put('/update/babyProfile/:studyId/:sUserId',patientController.updateBaby
 
 prouter.put('/update/motherProfile/:studyId/:sUserId',patientController.updateMotherProfileByStudyId)
 
+prouter.put('/update/babyHealthParameters/:studyId/:sUserId',patientController.updatebabyHealthParameters)
+
 prouter.post('/models/save/:sUserId',patientController.savePatientModels)
 
 //prouter.post('/models/save/:sUserId',patientValidation.validate('savePatientModels'),patientController.savePatientModels)
@@ -69,5 +71,13 @@ prouter.post('/create',patientController.createPatient)
 prouter.get('/aashaBaby/:hospitalId/:start/:end',patientController.getAashaBaby)
 
 prouter.get('/aashaBabyCount/:hospitalId',patientController.getAashaBabyCount)
+
+//reports
+prouter.post('/addReport/:study_id',patientController.addReport);
+prouter.get('/getReports/:study_id',patientController.getReports);
+prouter.delete('/deleteReport/:report_name',patientController.deleteReport);
+
+//referral doctors list 
+prouter.get('/referralDoctorsList',patientController.referralDoctorsList);
 
 module.exports= prouter

@@ -40,6 +40,7 @@ module.exports = {
   staff_updated_successfully:'Staff Updated Successfully',
   hospital_profile_updated_successfully:'Hospital profile updated successfully',
   message_send:'Message send Successfully',
+  email_sent:'Email is sent Successfully',
   email_validation:'Email id already exist !',
   contact_validation :'Contact no already exist!',
   status_update:'Status updated successfully !',

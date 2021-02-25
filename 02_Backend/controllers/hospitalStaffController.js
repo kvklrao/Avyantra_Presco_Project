@@ -8,7 +8,6 @@ const mapper = require('../mapper/mapper')
 const enumConst = require('../helper/enum')
 const util = require('../helper/util')
 const excel = require('exceljs');
-const nodeMailer = require('nodemailer');
 const alert = require('alert-node');
 const app = require('../server') 
 const multer = require('multer');
@@ -76,7 +75,7 @@ exports.addStaff = async(req,res,next)=> {
         "username": req.body.username,
         "connection": setting.AUTH0_CONNECTION
     }
-    
+    console.log(auth0_params)
     var staffUser ={}
     var staff={}
     var staffHospitalMapper={}
@@ -84,6 +83,7 @@ exports.addStaff = async(req,res,next)=> {
     staffUser = mapper.staffUserMapper(staffUser,req)  
      pReadingModels.user_model.findAll({
             where:{
+            
                 $or: [{
                     contact_number: req.body.contactNumber
                     },{
@@ -111,7 +111,8 @@ exports.addStaff = async(req,res,next)=> {
                    res.json( responseHelper.alreadyExist('Email ID already exists',result));                  
                } else if(userName){
                 res.json(responseHelper.alreadyExist('Username already exist', result))
-            } else {
+            } 
+            else {
                 res.json(responseHelper.alreadyExist('Invalid entries', result))
             } 
             }else{
@@ -132,6 +133,11 @@ exports.addStaff = async(req,res,next)=> {
                                 staffHospitalMapper.hospital_branch_id=req.body.branch[i]
                                 await pReadingModels.hospital_staff_model.create(staffHospitalMapper);
                             }
+
+                            // res.json(
+                            //     { usercreated :1}
+                            //   )
+                            res.json(responseHelper.success(constant.staff_add_successfull, result));
                         }
                     }
                 }
@@ -590,11 +596,6 @@ pReadingModels.user_model.findAll({
             return result
         }
     })
-    .then(result=>{
-        if(result != null){
-            res.json( responseHelper.success(constant.success,result))
-        }
-      }) 
     }
   })
 }
@@ -1752,11 +1753,7 @@ exports.submitForReferralOpinion =async(req,res,next)=>{
             console.log("attachment :", attachments)
 
             var fileResult = await  pReadingModels.referral_files_model.create(file)
-        })
-        if(referSource[0].referral_source == 1 ){
-
-        }
-       
+        })      
  })
    setTimeout(function () {
       res.json( responseHelper.success(constant.referral_select))
@@ -1918,59 +1915,45 @@ exports.getReferralOpinion = async(req,res,next)=>{
     var fresult = []
  
     var query = null
- 
-        //  query = `SELECT  
-        //  m_referral_opinions.id ,
-        //  m_referral_opinions.opinion,
-        //  m_referral_opinions.prescription , 
-        //  m_referral_opinions.createdAt ,
-        //  map_staff_referral_hospitals.reading,map_staff_referral_hospitals.study_id,map_staff_referral_hospitals.referral_id,
-        //  CONCAT(m_referral_doctors.first_name,' ', m_referral_doctors.last_name ) AS referral_name,
-        //  CONCAT(m_staffs.first_name,' ',m_staffs.last_name) AS reading_taken_by
-        //  FROM map_staff_referral_hospitals 
-        //  JOIN m_referral_opinions 
-        //  ON m_referral_opinions.staff_referral_hospital_id = map_staff_referral_hospitals.id
-        //  JOIN m_referral_doctors 
-        //  ON m_referral_doctors.referral_id = map_staff_referral_hospitals.referral_id
-        //  JOIN patient_infos 
-        //  ON patient_infos.study_id = map_staff_referral_hospitals.study_id
-        //  JOIN m_staffs 
-        //  ON m_staffs.user_id = patient_infos.updated_by
-        //  WHERE map_staff_referral_hospitals.study_id =:study_id`
-     
-         query = `SELECT 
-         m_referral_opinions.id,
-         m_referral_opinions.opinion,
-         m_referral_opinions.prescription,
-         m_referral_opinions.createdAt,
-         map_staff_referral_hospitals.reading,
-         map_staff_referral_hospitals.study_id,
-         map_staff_referral_hospitals.referral_id,
-         CONCAT(m_referral_doctors.first_name,
-         ' ',
-         m_referral_doctors.last_name) AS referral_name,
-         CONCAT(m_staffs.first_name,
-         ' ',
-         m_staffs.last_name) AS reading_taken_by
-         FROM
-         map_staff_referral_hospitals
-         LEFT JOIN
-         m_referral_opinions ON m_referral_opinions.staff_referral_hospital_id = map_staff_referral_hospitals.id
-         JOIN
-         m_referral_doctors ON m_referral_doctors.referral_id = map_staff_referral_hospitals.referral_id
-         JOIN
-         patient_infos ON patient_infos.study_id = map_staff_referral_hospitals.study_id
-         JOIN
-         m_staffs ON m_staffs.user_id = patient_infos.updated_by
-         WHERE
-         map_staff_referral_hospitals.study_id =:study_id`
+
+
+       query =`SELECT 
+       patient_basic_infos.id,
+       patient_baby_investigations.reading,
+       m_referral_opinions.id as m_referral_opinions_id,
+       m_referral_opinions.opinion,
+       m_referral_opinions.prescription,
+       map_staff_referral_hospitals.referral_id as map_staff_referral_hospitals_id,
+       CONCAT(m_referral_doctors.first_name, 
+               ' ',
+               m_referral_doctors.last_name) AS referral_name,
+       CONCAT(m_staffs.first_name,
+               ' ',
+               m_staffs.last_name) AS reading_taken_by,
+               m_referral_opinions.createdAt
+   FROM
+       patient_basic_infos
+           JOIN
+       patient_baby_investigations ON patient_basic_infos.id = patient_baby_investigations.study_id
+           LEFT JOIN
+       patient_infos ON patient_infos.study_id = patient_basic_infos.id
+           LEFT JOIN
+       map_staff_referral_hospitals ON map_staff_referral_hospitals.study_id = patient_basic_infos.id
+           LEFT JOIN
+       m_referral_opinions ON m_referral_opinions.staff_referral_hospital_id = map_staff_referral_hospitals.id
+           LEFT JOIN
+       m_referral_doctors ON m_referral_doctors.referral_id = map_staff_referral_hospitals.referral_id
+           LEFT JOIN
+       m_staffs ON m_staffs.user_id = patient_infos.updated_by
+       where patient_basic_infos.id = :study_id`
 
        var result = await sequelize.query(query,
          { replacements: { 
              study_id:req.params.studyId
          }, type: sequelize.QueryTypes.SELECT }
          )
-       // console.log(result)
+        
+        console.log(result)
          result.forEach(async(data, index)=>{
                  sequelize.query('SELECT * FROM vw_get_generated_score where study_id=:study_id and reading=:reading',
                  {
@@ -1981,15 +1964,15 @@ exports.getReferralOpinion = async(req,res,next)=>{
                    type: sequelize.QueryTypes.SELECT
                  })
                .then(result=>{
-                   console.log(result)
+                  
                   if(result.length > 0){
                      data.score= result[0].sepsis_score
                   }else{
                      data.score= null
                   }
-                  console.log(fresult)
+                
                   fresult.push(data)
-                  //console.log(fresult)
+        
                })
       })
  var reading = []
@@ -1998,6 +1981,7 @@ exports.getReferralOpinion = async(req,res,next)=>{
      reading.push(data.reading)
      //console.log(reading)
  })
+ console.log(reading);
  
  var uniqueReading = new Set(reading)
  
@@ -2049,201 +2033,6 @@ exports.getReferralOpinion = async(req,res,next)=>{
                  res.json(responseHelper.serveError("No opinion found",fresult))
          }
      }
-// exports.getReferralOpinion = async(req,res,next)=>{
-
-//     var fresult = []
- 
-//     var query = null
- 
-//         //  query = `SELECT  
-//         //  m_referral_opinions.id ,
-//         //  m_referral_opinions.opinion,
-//         //  m_referral_opinions.prescription , 
-//         //  m_referral_opinions.createdAt ,
-//         //  map_staff_referral_hospitals.reading,map_staff_referral_hospitals.study_id,map_staff_referral_hospitals.referral_id,
-//         //  CONCAT(m_referral_doctors.first_name,' ', m_referral_doctors.last_name ) AS referral_name,
-//         //  CONCAT(m_staffs.first_name,' ',m_staffs.last_name) AS reading_taken_by
-//         //  FROM map_staff_referral_hospitals 
-//         //  JOIN m_referral_opinions 
-//         //  ON m_referral_opinions.staff_referral_hospital_id = map_staff_referral_hospitals.id
-//         //  JOIN m_referral_doctors 
-//         //  ON m_referral_doctors.referral_id = map_staff_referral_hospitals.referral_id
-//         //  JOIN patient_infos 
-//         //  ON patient_infos.study_id = map_staff_referral_hospitals.study_id
-//         //  JOIN m_staffs 
-//         //  ON m_staffs.user_id = patient_infos.updated_by
-//         //  WHERE map_staff_referral_hospitals.study_id =:study_id`
-     
-//          query = `SELECT 
-//          m_referral_opinions.id,
-//          m_referral_opinions.opinion,
-//          m_referral_opinions.prescription,
-//          m_referral_opinions.createdAt,
-//          map_staff_referral_hospitals.reading,
-//          map_staff_referral_hospitals.study_id,
-//          map_staff_referral_hospitals.referral_id,
-//          CONCAT(m_referral_doctors.first_name,
-//          ' ',
-//          m_referral_doctors.last_name) AS referral_name,
-//          CONCAT(m_staffs.first_name,
-//          ' ',
-//          m_staffs.last_name) AS reading_taken_by
-//          FROM
-//          map_staff_referral_hospitals
-//          LEFT JOIN
-//          m_referral_opinions ON m_referral_opinions.staff_referral_hospital_id = map_staff_referral_hospitals.id
-//          JOIN
-//          m_referral_doctors ON m_referral_doctors.referral_id = map_staff_referral_hospitals.referral_id
-//          JOIN
-//          patient_infos ON patient_infos.study_id = map_staff_referral_hospitals.study_id
-//          JOIN
-//          m_staffs ON m_staffs.user_id = patient_infos.updated_by
-//          WHERE
-//          map_staff_referral_hospitals.study_id =:study_id`
-
-//        var result = await sequelize.query(query,
-//          { replacements: { 
-//              study_id:req.params.studyId
-//          }, type: sequelize.QueryTypes.SELECT }
-//          )
-//         console.log(result)
-//         var  all_reading_query=`SELECT  *  FROM vw_get_generated_score  WHERE  vw_get_generated_score.study_id = :study_id `
-
-//         var reading_result= await sequelize.query(all_reading_query,
-//             {
-//                 replacements:{
-//                     study_id:req.params.studyId
-//                 },type:sequelize.QueryTypes.SELECT
-//             })
-//         console.log(reading_result)
-//         reading_result.forEach(async(data,index)=>{
-//             data.opinion=null,
-//             data.prescription=null,
-//             data.refferal_name=null,
-//             data.reading_taken_by=null,
-//             data.referral_id=d.referral_id
-//         })
-//         console.log(reading_result)
-
-//        if(result.length>0){
-//          console.log("yes_opinon")
-//          reading_result.forEach(async(data,index)=>{
-//             result.forEach(async(d,index)=>{
-                
-//                 if(data.reading==d.reading){
-//                     console.log(d.reading)
-//                      data.opinion=d.opinion
-//                      data.prescription=d.prescription,
-//                      data.reading=d.reading
-//                      data.referral_id=d.referral_id
-                   
-//                 }
-//             })
-//          }) 
-//          console.log(reading_result)
-//        }
-       
-//        else{
-//            console.log("no_opinion")
-//         reading_result.forEach(async(data,index)=>{
-//                      data.opinion=null
-//                      data.prescription=null,
-//                      data.reading=null
-//             })
-            
-//        }
-//        if(reading_result.length>0){
-//           setTimeout(function () {
-//             res.json( responseHelper.success(constant.success,reading_result))
-//            },  400)
-//         }
-//        else{
-//           res.json(responseHelper.serveError("No score found ",fresult))
-//        }
-      
-// }
-
-
-
-// //   ///riya code
-      
-// //          result.forEach(async(data, index)=>{
-// //                  sequelize.query('SELECT * FROM vw_get_generated_score where study_id=:study_id',
-// //                  {
-// //                    replacements: { 
-// //                    study_id:req.params.studyId   ,
-// //                  //  reading:data.reading             
-// //                  }, 
-// //                    type: sequelize.QueryTypes.SELECT
-// //                  })
-// //                .then(result=>{
-// //                   if(result.length > 0){
-// //                      data.score= result[0].sepsis_score
-// //                   }else{
-// //                      data.score= null
-// //                   }
-// //                   fresult.push(data)
-// //                   //console.log(fresult)
-// //                })
-// //       })
-// //  var reading = []
- 
-// //  result.forEach((data, index)=>{
-// //      reading.push(data.reading)
-// //      //console.log(reading)
-// //  })
- 
-// //  var uniqueReading = new Set(reading)
- 
-// //  var r =Array.from(uniqueReading)
- 
-// //  if (r.length > 0){
-// //      var appearResult = await sequelize.query(`SELECT * FROM patient_baby_appears_infos 
-// //      WHERE study_id =:study_id and reading NOT IN (:reading)`,
-// //          { replacements: { 
-// //              study_id:req.params.studyId,
-// //              reading:Array.from(uniqueReading)
-// //          }, type: sequelize.QueryTypes.SELECT }
-// //          )
-     
-// //      appearResult.forEach(async(data , index)=>{
-// //              var object = {
-// //                  "id": null,
-// //                  "opinion": null ,
-// //                  "prescription": null,
-// //                  "createdAt": null,
-// //                  "study_id":req.params.studyId,
-// //                  "referral_id": null,
-// //                  "referral_name": null,
-// //                  "reading_taken_by":null
-// //                 }
-// //                 object.reading =data.reading
- 
-// //                 var scoreResult = await sequelize.query('SELECT * FROM vw_get_generated_score where study_id=:study_id and reading=:reading',
-// //                  {
-// //                    replacements: { 
-// //                    study_id:req.params.studyId   ,
-// //                    reading:data.reading             
-// //                  }, 
-// //                    type: sequelize.QueryTypes.SELECT
-// //                  })
- 
-// //                  object.score= scoreResult[0].sepsis_score
-// //                  object.reading_taken_by =result[0].reading_taken_by
-// //              fresult.push(object)
-// //          })
-// //  }
- 
-//     //   if(fresult.length>0){
-//     //              setTimeout(function () {
-//     //                  res.json( responseHelper.success(constant.success,fresult))
-//     //              }, 400)
-//     //      }
-//     //      else{
-//     //              res.json(responseHelper.serveError("No opinion found",fresult))
-//     //      }
-// //     }
-
 
      exports.getAashaReferralOpinion = async(req,res,next)=>{
      

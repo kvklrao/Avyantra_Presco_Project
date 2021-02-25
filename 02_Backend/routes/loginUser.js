@@ -5,12 +5,12 @@ import bcrypt from 'bcrypt';
 import res_help from '../helper/res';
 import constant from '../helper/constant';
 import { generatePasscode, portDecider } from '../helper/util';
+
 const responseHelper = require('../helper/res');
 let Validator = require('validatorjs');
 const BCRYPT_SALT_ROUNDS = constant.bcrypt_solt_text;
 const enumConst = require('../helper/enum')
 const {sequelize} = require('../sequelize')
-const nodeMailer = require('nodemailer');
 const { authClient, auth0 } = require("../auth/auth0");
 
 const setting = require('../config/setting')
@@ -31,10 +31,9 @@ module.exports = app => {
     authClient.oauth.passwordGrant(params, 
       function (err, userData) {
         if (err) {
-          res.json( res_help.notFound(constant.invalid_credential_msg,{}));
+          res.json( res_help.notFound(constant.invalid_credential_msg, {} ));
         }
         else{
-            
             let loginResponse = {auth0: userData};
 
             user_model.findOne({
@@ -51,9 +50,13 @@ module.exports = app => {
             })
             .then(result => {
               if(result!=null){
+                
                 var userId = result.user_id
+                
                 loginResponse.username=result.user_name
                 loginResponse.email=result.email_address
+                loginResponse.phone=result.contact_number
+
                 user_type_model.findOne({
                   where:{
                     user_type_id:result.user_type_id
@@ -259,7 +262,6 @@ module.exports = app => {
             })
         }
       });
-
   });
 
   /**

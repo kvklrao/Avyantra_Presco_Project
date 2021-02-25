@@ -141,122 +141,48 @@ module.exports = app => {
           return res.json(res_help.success(constant.patient_basic_success, response));
         });
       }
-
     });
-
   });
 
   app.post('/patient/basic/add_dup/:hospital_id', (req, res) => {
     const reqData = {
-    hospital_name: req.body.hospital_name,
-    hospital_branch_name: req.body.hospital_branch_name,
-    hospital_id : req.params.hospital_id,
-    baby_mother_medical_record_number: req.body.baby_mother_medical_record_number,
-    baby_medical_record_number: req.body.baby_medical_record_number,
-    
-    is_update: false
+      hospital_name: req.body.hospital_name,
+      hospital_branch_name: req.body.hospital_branch_name,
+      hospital_id : req.params.hospital_id,
+      baby_mother_medical_record_number: req.body.baby_mother_medical_record_number,
+      baby_medical_record_number: req.body.baby_medical_record_number,
+      
+      is_update: false
     };
     
     let rules = {
-    baby_medical_record_number: 'required',
-    baby_mother_medical_record_number: 'required'
+      baby_medical_record_number: 'required',
+      baby_mother_medical_record_number: 'required'
     };
     
     
     let validation = new Validator(reqData, rules);
-    if (validation.fails()) {
-    return res.status(200).json(res_help.notFound(constant.common_required));
-    }
+      if (validation.fails()) {
+        return res.status(200).json(res_help.notFound(constant.common_required));
+      }
     let whereObj = {
-    hospital_name: req.body.hospital_name,
-    'baby_medical_record_number': req.body.baby_medical_record_number
-    };
+      hospital_name: req.body.hospital_name,
+        'baby_medical_record_number': req.body.baby_medical_record_number
+      };
     //isExistsWhere(basic_model, whereObj, (status) => {
     /*if (status) {
     return res.json(res_help.alreadyExist('This record number already exist.'));
     } else {*/
     basic_model.create(reqData).then((response) => {
-    // level_update(req, req.body.study_id);
-    return res.json(res_help.success(constant.patient_basic_success, response));
+      // level_update(req, req.body.study_id);
+        return res.json(res_help.success(constant.patient_basic_success, response));
+      });
     });
-    });
 
-
-  /**
-   * @method :- patient general add
-   * @requires : - for the used the default Docter signup
-   * @return :-  User Response Send
-   */
-  // app.post('/patient/general/add', (req, res) => {
-  //   const reqData = req.body;
-  
-  //   const reqBasicData = {
-  //     hospital_id: req.body.hospital_id,
-  //     hospital_name: req.body.hospital_name,
-  //     hospital_branch_name: req.body.hospital_branch_name,
-  //     baby_mother_medical_record_number: req.body.babyMotherMedicalRecord,
-  //     baby_medical_record_number: req.body.babyMedicalRecord,
-  //     is_update: false
-  //   };
-   
-  //   let patientRules = {
-  //     baby_medical_record_number: 'required',
-  //     baby_mother_medical_record_number: 'required'
-  //   };
-
-  //   let validation1 = new Validator(reqBasicData, patientRules);
-  //   if (validation1.fails()) {
-  //     return res.status(200).json(res_help.notFound(constant.common_required));
-  //   }
-
-  //   basic_model.findAll({
-  //     where:{
-  //       hospital_id: req.body.hospital_id,
-  //       baby_medical_record_number:req.body.babyMedicalRecord
-  //     }
-  //   }).then(result=>{
-  //     if(result.length > 0){
-  //   res.json(res_help.resourceAlreadyExist(constant.record_already_exist, result));
-  //     }
-  //   }).catch(err=>{
-  //     res.json(responseHelper.serveError(constant.error_msg,err))
-  //   })
-
-  //   console.clear();
-  //   console.error(reqData)
-  //   let rules = {
-  //     study_id: 'required'
-  //   };
-  //   if(req.body.isCreateForm){
-
-  //     basic_model.create(reqBasicData).then((basicResp) => {
-  //       reqData.study_id = basicResp.id;
-
-  //       let validation = new Validator(reqData, rules);
-  //   if (validation.fails()) {
-  //     res.status(200).json(res_help.notFound(constant.common_required));
-  //   }
-  //       general_model.create(reqData).then((response) => {
-
-  //         res.json(res_help.success(constant.patient_basic_success, response));
-  //       }).catch((error) => {
-  //         res.json(res_help.serveError("Internal  server error.", []));
-  //       })
-  //     }).catch((error) => {
-  //       res.json(res_help.serveError("Internal  server error.", []));
-  //     });
-  //   }else{
-  //     general_model.create(reqData).then((response) => {
-  //       res.json(res_help.success(constant.patient_basic_success, response));
-  //     }).catch((error) => {
-  //       res.json(res_help.serveError("Internal  server error.", []));
-  //     })
-  //   }
-
-  // });
 
   app.post('/patient/general/add/:uStaffId', (req, res) => {
       const reqData = req.body;
+      
       reqData.active_flag = 1
       general_model.findAll({
         where:{
@@ -285,7 +211,6 @@ module.exports = app => {
       //  }
       })
   });
-
 
   /**
    * @method :- patient maternal add
@@ -325,25 +250,6 @@ module.exports = app => {
     * @return :-  User Response Send
     */
   app.post('/patient/baby_appears/add', (req, res) => {
-   /* const reqData = {
-      baby_appearance: req.body.baby_appearance,
-      baby_skin_colour: req.body.baby_skin_colour,
-      baby_cry_sound: req.body.baby_cry_sound,
-      baby_cry_sound_status: req.body.baby_cry_sound_status,
-      hypotonia_muscular_response_one_min_after_birth: req.body.hypotonia_muscular_response_one_min_after_birth,
-      hypotonia_muscular_response_five_min_after_birth: req.body.hypotonia_muscular_response_five_min_after_birth,
-      excessive_sleeping: req.body.excessive_sleeping,
-      hypothermia: req.body.hypothermia,
-      hypothermia_status: req.body.hypothermia_status,
-      hypothermia_status_value: req.body.hypothermia_status_value,
-      baby_feeding_status: req.body.baby_feeding_status,
-      baby_presence_of_convulsions: req.body.baby_presence_of_convulsions,
-      baby_jaundice: req.body.baby_jaundice,
-      breast_feeding_initiation: req.body.breast_feeding_initiation,
-      kangaroo_mother_care: req.body.kangaroo_mother_care,
-      umbilical_discharge: req.body.umbilical_discharge,
-      study_id: req.body.study_id
-    };*/
 
     const reqData = req.body;
 
@@ -362,15 +268,6 @@ module.exports = app => {
     })
   });
 
-
-
-
-
-  /**
-   * @method :- patient maternal add
-   * @requires : - for the used the default Docter signup
-   * @return :-  User Response Send
-   */
   /**
   * @method :- patient maternal add
   * @requires : - for the used the default Docter signup
@@ -451,43 +348,8 @@ module.exports = app => {
     })
   });
 
-
-  /**
-   * @method :- patient maternal add
-   * @requires : - for the used the default Docter signup
-   * @return :-  User Response Send
-   */
-  // app.post('/patient/baby_cns/add', (req, res) => {
-  //   const reqData = {
-  //     descriptor: req.body.descriptor,
-  //     features_of_encephalopathy: req.body.features_of_encephalopathy,
-  //     seizures: req.body.seizures,
-  //     abnormal_movements_like_tonic_posturing: req.body.abnormal_movements_like_tonic_posturing,
-  //     af_bulge: req.body.af_bulge,
-  //     capillary_refill: req.body.capillary_refill,
-  //     patient_id: req.body.patient_id,
-  //     tab_name: req.body.tab_name
-  //   };
-
-  //   let rules = {
-  //     patient_id: 'required'
-  //   };
-  //   let validation = new Validator(reqData, rules);
-  //   if (validation.fails()) {
-  //     res.status(200).json(res_help.notFound(constant.common_required));
-  //   }
-  //   baby_cns_model.create(reqData).then((response) => {
-  //     level_update(req, req.body.patient_id);
-  //     res.json(res_help.success(constant.success, response));
-  //   }).catch((error) => {
-  //     res.json(res_help.serveError("Internal  server error.", []));
-  //   })
-  // });
-
   app.post('/patient/baby_cns/add', (req, res) => {
     const reqData = req.body;
-    console.clear();
-    console.error(reqData)
     let rules = {
       study_id: 'required'
     };
@@ -537,8 +399,7 @@ module.exports = app => {
    */
   app.post('/patient/baby_investigation/add', (req, res) => {
     const reqData = req.body;
-    console.clear();
-    console.error(reqData)
+
     let rules = {
       study_id: 'required'
     };
@@ -696,8 +557,6 @@ module.exports = app => {
   app.post('/search_general', (req, res) => {
     // const queryStr = 'SELECT * FROM `patient_general_infos` WHERE (createdAt like "%' + req.body.date + '%") and  study_id = ' + req.body.study_id + ' ORDER by createdAt DESC';
     const queryStr = 'SELECT * FROM `patient_general_infos` WHERE DATE(createdAt )  ="' + req.body.date + '" AND  study_id = "' + req.body.study_id + '" ORDER BY createdAt DESC'
-    console.clear()
-    console.error(queryStr)
     sequelize.query(queryStr, {
       type: sequelize.QueryTypes.SELECT
     }).then(resp => {
@@ -786,25 +645,6 @@ let isExistsWhere = (schmea, where_obj, cb) => {
   cb(false, [])
   });
   }
-
-// let isExistsWhere = (schmea, where_obj, cb) => {
-//   const whereObj = {}
-//   // whereObj[col_name_text] = col_value;
-//   schmea.findOne({
-//     where: where_obj,
-//   })
-//     .then(response => {
-//       if (response != null) {
-//         cb(true, response);
-//       } else {
-//         cb(false, []);
-//       }
-//     }).catch(err => {
-//       cb(false, [])
-//     });
-// }
-
-
 /**
  * 
  * @param {*} patient_id 

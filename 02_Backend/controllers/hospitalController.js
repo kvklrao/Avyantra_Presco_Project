@@ -9,9 +9,29 @@ const enumConst = require('../helper/enum')
 const nodeMailer = require('nodemailer');
 const { auth0 } = require("../auth/auth0");
 const setting = require('../config/setting')
-const sgMail = require('@sendgrid/mail')
+const sgMail = require('@sendgrid/mail');
+import { fetchDownloadURL } from '../file_utils/fileUploader'
 
 sgMail.setApiKey(setting.SENDGRID_API_KEY)
+
+async function aashaHospitalSignUpAdditionalInfo (params) {
+   
+    await sequelize.query(`
+        REPLACE INTO m_users_additional_info 
+        (  
+            user_id,
+            user_type_id,
+            profession,
+            institution_name,
+            institution_type,
+            state
+        )
+        VALUES (?, ?, ?, ?, ?, ?) 
+        `, {
+            replacements: params,
+            type: sequelize.QueryTypes.INSERT
+        });
+}
 
 exports.hospitalSignUp = async (req,res,next)=>{
 
@@ -116,6 +136,8 @@ exports.aashaHospitalSignUp=async(req,res,next)=>{
         "connection": setting.AUTH0_CONNECTION
     }
 
+    let isMobileSignup = req.body["isMobile"];
+    
     let msg = {
         to: constant.avyantra_email,
         from: 'do-not-reply@avyantra.com',
@@ -126,7 +148,6 @@ exports.aashaHospitalSignUp=async(req,res,next)=>{
 
     try{
         const authRes = await auth0.createUser(auth0_params);
-        
     }
     catch(ex){
         res.json(responseHelper.alreadyExist(ex.message))
@@ -141,7 +162,8 @@ exports.aashaHospitalSignUp=async(req,res,next)=>{
         deleted_flag:0,
         active_flag:1,
         password:req.body.password,
-        email_address:req.body.email
+        email_address:req.body.email,
+        contact_number:req.body.mobile
     }
 
     var hospital={
@@ -158,7 +180,7 @@ exports.aashaHospitalSignUp=async(req,res,next)=>{
     }else{
         hospital.hospital_name = 'PHC'
         msg.text = 'PHC USER SIGNED UP :: ' + msg.text
-        msg.text = 'PHC USER SIGNED UP :: ' + msg.html
+        msg.html = 'PHC USER SIGNED UP :: ' + msg.html
     }
 
    var eResult = await pReadingModels.user_model.findAll({
@@ -181,17 +203,41 @@ exports.aashaHospitalSignUp=async(req,res,next)=>{
         res.json(responseHelper.alreadyExist('Username already exist', uResult))
     }
 
-    var result = await pReadingModels.user_model.create(user)
-    hospital.user_id = result.user_id
-    var hresult = await pReadingModels.hospital_model.create(hospital)
-    
-    sgMail.send(msg)
-    .then(() => {
-        res.json( responseHelper.success(constant.successfully_registered,hresult));
+    try{
+        var result = await pReadingModels.user_model.create(user)
+        hospital.user_id = result.user_id
+        var hresult = await pReadingModels.hospital_model.create(hospital)
+        
+        if(isMobileSignup){
+            let additionalParams = [
+                result.user_id, req.body.user_type_id, req.body.profession,
+                req.body.institution_name, req.body.institution_type, req.body.state
+            ];
 
-    }).catch(error => {
-        ;;
-    });   
+            aashaHospitalSignUpAdditionalInfo(additionalParams);
+            const signedURL = await fetchDownloadURL('ID', req.body.username);
+
+            msg = {
+                to:  constant.avyantra_email,
+                from: 'do-not-reply@avyantra.com',
+                subject: 'Identity of User',
+                html: `Please find the link to the identity document of user with email id 
+                       ${req.body.email}. To access the document please click on 
+                       this link :- ${signedURL}`,
+            };
+        }
+
+        sgMail.send(msg)
+        .then(() => {
+            res.json( responseHelper.success(constant.successfully_registered,hresult));
+    
+        }).catch(error => {
+            console.log(error);;
+        });  
+    }
+    catch (e) {
+        res.json(responseHelper.serveError(constant.error_msg, e))
+    }
 }
 
 exports.addRole= (req,res,next)=>{
@@ -957,4 +1003,26 @@ exports.getStateList =(req,res,next)=>{
      .catch(err => {
         res.json(responseHelper.serveError(constant.error_msg,err))
      })
+}
+
+exports.referralDoctorSendMail = async (req,res,next)=>{
+
+    console.log("in here");
+
+    let msg = {
+        to:  `'${req.params.emailid}'`,
+        from: 'do-not-reply@avyantra.com',
+        subject: 'Reports',
+        text: `Please find the reports by clicking on the link below '${req.body.link}'`,
+    };
+
+    sgMail.send(msg)
+    .then(() => {
+        res.json( responseHelper.success(constant.email_sent,msg));
+    }).catch(error => {
+        console.log("in error");
+    });  
+
+    console.log(msg,"message");
+
 }
