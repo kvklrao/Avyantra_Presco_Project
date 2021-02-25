@@ -28,6 +28,11 @@ const DashboardUser = sequelize.define('DashboardUser', {
     type: DataTypes.BIGINT,
     allowNull: false,
   },
+  is_super_user: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   is_primary_user: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

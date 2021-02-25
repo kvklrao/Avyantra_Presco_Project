@@ -15,6 +15,33 @@ const finalDiagnosisGraph = async (req, res) => {
     var mail = decoded.name;
     const user = await DashboardUser.findOne({ where: { email: mail } });
 
+    let all_hospitals = req.query.all_hospitals;
+    let all_branches = req.query.all_branches;
+    console.log(req.query.hospital_id, req.query.hospital_id)
+    if (all_hospitals == 1 && (req.query.hospital_id == "" || req.query.hospital_id == undefined)) {
+        console.log("all_hospitals")
+        var hospital_query = "";
+    } else {
+        if (req.query.hospital_id == "") {
+            var hospital_query = "and a.hospital_id= " + user.hospital_id;
+        } else {
+            var hospital_query = "and a.hospital_id = " + req.query.hospital_id;
+        }
+
+    }
+
+    if (all_branches == 1 && (req.query.branch_id == "" || req.query.branch_id == undefined)) {
+        console.log("all_branches")
+        var branch_query = "";
+    } else {
+        if (req.query.branch_id == "") {
+            var branch_query = "and a.hospital_branch_id=" + user.hospital_branch_id;
+        } else {
+            var branch_query = "and a.hospital_branch_id =" + req.query.branch_id;
+        }
+
+    }
+
 
     switch (parameter) {
 
@@ -176,7 +203,7 @@ const finalDiagnosisGraph = async (req, res) => {
             var parameter4 = 'LOS';
             var parameter5 = 'Eos';
             var parameter6 = 'Los';
-            var sepsis_condition = " and c.final_diagnosis_sepsis = 'Yes' and b.baby_condition_suspect = 'Yes'" ;
+            var sepsis_condition = " and c.final_diagnosis_sepsis = 'Yes' and b.baby_condition_suspect = 'Yes'";
             break;
 
         //17
@@ -191,35 +218,41 @@ const finalDiagnosisGraph = async (req, res) => {
 
     }
 
-    var userId = user.user_id;
     if (range == 0 || range == 1) {
-        const [results, metadata] = await sequelize.query(`select 
-        str_to_date(b.baby_date_of_admission, '%d/%m/%Y') as baby_adm_date,
-        c.${parameter},
-        count(case when c.${parameter} = '${parameter3}' then 1
-        else null end) AS final_diagnosis_positive_count,
-        count(case when c.${parameter} = '${parameter4}' then 1
-        else null end) AS final_diagnosis_negative_count ,
-        count(case when b.${parameter2} = '${parameter5}' then 1 
-        else null end) AS preliminary_diagnosis_positive_count, 
-        count(case when b.${parameter2} = '${parameter6}' then 1 
-        else null end) AS preliminary_diagnosis_negative_count
-     
+        const [results, metadata] = await sequelize.query(`select baby_adm_date,
+        sum(case when IsFinalSepsisYes = 1 then 1 else 0 end) as sepsis_final_positive_count,
+        sum(case when IsFinalSepsisYes = 0 then 1 else 0 end) as sepsis_final_negative_count,
+        sum(case when IsPrelimSepsisYes = 1 then 1 else 0 end) as sepsis_prelim_positive_count,
+        sum(case when IsPrelimSepsisYes = 0 then 1 else 0 end) as sepsis_prelim_negative_count
         from
-        avyantra_dev.patient_basic_infos a
-               join avyantra_dev.patient_general_infos b on
-                  a.id = b.study_id
-               join avyantra_dev.patient_baby_appears_infos d on
-              a.id = d.study_id   
-              join avyantra_dev.patient_baby_finals c on
-                  a.id = c.study_id
-                     and d.reading = c.reading
-              join avyantra_dev.dashboard_users l on
-                        l.hospital_id = a.hospital_id
-                        where l.user_id = '${userId}'
-                and  str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}'
-                ${sepsis_condition}
-               GROUP BY str_to_date(b.baby_date_of_admission, '%d/%m/%Y')       
+        (select
+             str_to_date(b.baby_date_of_admission, '%d/%m/%Y') as baby_adm_date,  
+             c.final_diagnosis_sepsis,
+             a.hospital_id as hospital_id,
+                a.hospital_branch_id as hospital_branch_id,
+                case when
+                sum(case when c.${parameter} = '${parameter3}' then 1 else 0 end) >0 then 1 else 0 end as IsFinalSepsisYes,
+                case when
+                sum(case when b.${parameter2} = '${parameter5}' then 1 else 0 end) >0 then 1 else 0 end as IsPrelimSepsisYes
+                        from
+                           avyantra_dev.patient_basic_infos a
+                       join avyantra_dev.patient_general_infos b on
+                          a.id = b.study_id
+                        join avyantra_dev.patient_baby_appears_infos d on
+                          a.id = d.study_id
+                          join m_hospitals mh on a.hospital_id = mh.hospital_id   
+                     join avyantra_dev.patient_baby_finals c on
+                            a.id = c.study_id
+                                   and d.reading = c.reading
+                                 where
+                                 c.final_diagnosis_sepsis <> 'NA' and 
+                                  b.baby_condition_suspect <> 'NA' and
+                           str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}'
+                           and mh.active_flag=1
+                           GROUP BY str_to_date(b.baby_date_of_admission, '%d/%m/%Y'),
+                           a.hospital_id,
+                           a.hospital_branch_id ) as a
+                           group by a.baby_adm_date       
     `, {
         });
 
@@ -235,34 +268,41 @@ const finalDiagnosisGraph = async (req, res) => {
         else if (range == 3) { var chartType = 'month'; console.log("here in y"); }
         else if (range == 4) { var chartType = 'year'; console.log("here in z"); }
 
-        const [results2, metadata] = await sequelize.query(`select 
-       ${chartType}(str_to_date(b.baby_date_of_admission, '%d/%m/%Y')) as ${chartType},
-     str_to_date(b.baby_date_of_admission, '%d/%m/%Y') as baby_adm_date,
-     c.${parameter},
-     count(case when c.${parameter} = '${parameter3}' then 1
-        else null end) AS final_diagnosis_positive_count,
-        count(case when c.${parameter} = '${parameter4}' then 1
-        else null end) AS final_diagnosis_negative_count ,
-        count(case when b.${parameter2} = '${parameter5}' then 1 
-        else null end) AS preliminary_diagnosis_positive_count, 
-        count(case when b.${parameter2} = '${parameter6}' then 1 
-        else null end) AS preliminary_diagnosis_negative_count
-      
-                from
-                   avyantra_dev.patient_basic_infos a
-               join avyantra_dev.patient_general_infos b on
-                  a.id = b.study_id
-                join avyantra_dev.patient_baby_appears_infos d on
-                  a.id = d.study_id   
-             join avyantra_dev.patient_baby_finals c on
-                    a.id = c.study_id
-                           and d.reading = c.reading
-                     join avyantra_dev.dashboard_users l on
-                             l.hospital_id = a.hospital_id
-                         where l.user_id = '${userId}'
-                   and  str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}'
-                   ${sepsis_condition}
-                   GROUP BY ${chartType}(str_to_date(b.baby_date_of_admission, '%d/%m/%Y')) 
+        const [results2, metadata] = await sequelize.query(`select ${chartType},
+        sum(case when IsFinalSepsisYes = 1 then 1 else 0 end) as sepsis_final_positive_count,
+        sum(case when IsFinalSepsisYes = 0 then 1 else 0 end) as sepsis_final_negative_count,
+        sum(case when IsPrelimSepsisYes = 1 then 1 else 0 end) as sepsis_prelim_positive_count,
+        sum(case when IsPrelimSepsisYes = 0 then 1 else 0 end) as sepsis_prelim_negative_count
+        from
+        (select
+              ${chartType}(str_to_date(b.baby_date_of_admission, '%d/%m/%Y')) as ${chartType}, 
+             str_to_date(b.baby_date_of_admission, '%d/%m/%Y') as baby_adm_date,  
+             c.final_diagnosis_sepsis,
+             a.hospital_id as hospital_id,
+                a.hospital_branch_id as hospital_branch_id,
+                case when
+                sum(case when c.${parameter} = '${parameter3}' then 1 else 0 end) >0 then 1 else 0 end as IsFinalSepsisYes,
+                case when
+                sum(case when b.${parameter2} = '${parameter5}' then 1 else 0 end) >0 then 1 else 0 end as IsPrelimSepsisYes
+                        from
+                           avyantra_dev.patient_basic_infos a
+                       join avyantra_dev.patient_general_infos b on
+                          a.id = b.study_id
+                        join avyantra_dev.patient_baby_appears_infos d on
+                          a.id = d.study_id
+                          join m_hospitals mh on a.hospital_id = mh.hospital_id   
+                     join avyantra_dev.patient_baby_finals c on
+                            a.id = c.study_id
+                                   and d.reading = c.reading
+                                 where
+                                 c.final_diagnosis_sepsis <> 'NA' and 
+                                  b.baby_condition_suspect <> 'NA' and
+                           str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}'
+                           and mh.active_flag=1
+                           GROUP BY ${chartType}(str_to_date(b.baby_date_of_admission, '%d/%m/%Y')),
+                           a.hospital_id,
+                           a.hospital_branch_id ) as a
+                           group by a.${chartType} 
        `, {
         });
         console.log("here in 3");

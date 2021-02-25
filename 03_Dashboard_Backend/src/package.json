@@ -4,8 +4,6 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^5.0.0",
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -13,9 +11,10 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.0.0-beta.2",
     "mongoose": "^5.10.4",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.5",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
     "validator": "^13.1.1"
@@ -24,6 +23,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Avyantra",
-  "license": "GPLv3"
+  "author": "",
+  "license": "ISC"
 }

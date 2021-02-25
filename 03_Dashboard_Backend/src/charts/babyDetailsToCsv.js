@@ -12,7 +12,34 @@ const babyDetailsToCsv = async (req, res) => {
     var mail = decoded.name;
     const user = await DashboardUser.findOne({ where: { email: mail } });
 
-    var userId = user.user_id;
+    let all_hospitals = req.query.all_hospitals;
+    let all_branches = req.query.all_branches;
+    console.log(req.query.hospital_id, req.query.hospital_id)
+
+    if (all_hospitals == 1 && (req.query.hospital_id == "" || req.query.hospital_id == undefined)) {
+        console.log("all_hospitals")
+        var hospital_query = "";
+      } else {
+        if (req.query.hospital_id == "") {
+          var hospital_query = "and a.hospital_id= " + user.hospital_id;
+        } else {
+          var hospital_query = "and a.hospital_id = " + req.query.hospital_id;
+        }
+    
+      }
+    
+      if (all_branches == 1 && (req.query.branch_id == "" || req.query.branch_id == undefined)) {
+        console.log("all_branches")
+        var branch_query = "";
+      } else {
+        if (req.query.branch_id == "") {
+          var branch_query = "and a.hospital_branch_id=" + user.hospital_branch_id;
+        } else {
+          var branch_query = "and a.hospital_branch_id =" + req.query.branch_id;
+        }
+    
+      }
+
     console.log(fromDate)
     if (asha == 2) {
         if (fromDate == undefined && toDate == undefined) {
@@ -22,6 +49,8 @@ const babyDetailsToCsv = async (req, res) => {
                 a.baby_medical_record_number AS baby_medical_record_number,
                 a.hospital_name AS hospital_name,
                 a.hospital_branch_name AS hospital_branch_name,
+                a.hospital_id as hospital_id,
+                a.hospital_branch_id as hospital_branch_id,
                 a.id AS study_id,
                 a.baby_mother_medical_record_number AS baby_mother_medical_record_number,
                 b.record_type AS record_type,
@@ -263,9 +292,10 @@ const babyDetailsToCsv = async (req, res) => {
             join avyantra_dev.patient_baby_finals k on
                 (((a.id = k.study_id)
                 and (d.reading = k.reading))))
-            join avyantra_dev.dashboard_users l on
-                l.hospital_id = a.hospital_id
-                where l.user_id = '${userId}' 
+                join m_hospitals mh on a.hospital_id = mh.hospital_id
+                where mh.active_flag = 1
+                ${hospital_query}
+                ${branch_query} 
             order by
                 a.hospital_name,
                 a.hospital_branch_name,
@@ -282,6 +312,8 @@ const babyDetailsToCsv = async (req, res) => {
             a.baby_medical_record_number AS baby_medical_record_number,
             a.hospital_name AS hospital_name,
             a.hospital_branch_name AS hospital_branch_name,
+            a.hospital_id as hospital_id,
+            a.hospital_branch_id as hospital_branch_id,
             a.id AS study_id,
             a.baby_mother_medical_record_number AS baby_mother_medical_record_number,
             b.record_type AS record_type,
@@ -523,10 +555,12 @@ const babyDetailsToCsv = async (req, res) => {
         join avyantra_dev.patient_baby_finals k on
             (((a.id = k.study_id)
             and (d.reading = k.reading))))
-        join avyantra_dev.dashboard_users l on
-            l.hospital_id = a.hospital_id
-            where l.user_id = '${userId}' and
+            join m_hospitals mh on a.hospital_id = mh.hospital_id
+            where 
             str_to_date(b.baby_date_of_admission , '%d/%m/%Y') between '${fromDate}' and '${toDate}'
+            and mh.active_flag = 1
+            ${hospital_query}
+        ${branch_query} 
         order by
             a.hospital_name,
             a.hospital_branch_name,
@@ -536,13 +570,15 @@ const babyDetailsToCsv = async (req, res) => {
             res.json({ results });
         }
     } else if (asha == 1) {
-        if(fromDate == undefined && toDate == undefined) {
+        if (fromDate == undefined && toDate == undefined) {
             const [results, metadata] = await sequelize.query(`select
             a.id AS study_id,
             a.baby_medical_record_number AS baby_medical_record_number,
             a.baby_mother_medical_record_number AS baby_mother_medical_record_number,
             b.baby_admission_type AS baby_admission_type,
             b.baby_place_of_birth_name AS baby_place_of_birth_name,
+            a.hospital_id as hospital_id,
+            a.hospital_branch_id as hospital_branch_id,
             b.baby_birth_date AS baby_birth_date,
             cast(replace(b.baby_birth_time_hours, 'NA', 99999) as unsigned) AS baby_birth_time_hours,
             cast(replace(b.baby_birth_time_minit, 'NA', 99999) as unsigned) AS baby_birth_time_minit,
@@ -605,12 +641,13 @@ const babyDetailsToCsv = async (req, res) => {
             and (d.reading = i.reading))))
         join avyantra_dev.patient_infos j on
             ((a.id = j.study_id)))
-        join avyantra_dev.dashboard_users l on
-                        l.hospital_id = a.hospital_id
-                        where l.user_id = '${userId}' `, {
+            join m_hospitals mh on a.hospital_id = mh.hospital_id
+                        where mh.active_flag = 1
+                        ${hospital_query}
+                        ${branch_query}  `, {
             });
-          
-             res.json({ results });
+
+            res.json({ results });
 
         } else {
             const [results, metadata] = await sequelize.query(`select
@@ -619,6 +656,8 @@ const babyDetailsToCsv = async (req, res) => {
             a.baby_mother_medical_record_number AS baby_mother_medical_record_number,
             b.baby_admission_type AS baby_admission_type,
             b.baby_place_of_birth_name AS baby_place_of_birth_name,
+            a.hospital_id as hospital_id,
+            a.hospital_branch_id as hospital_branch_id,
             b.baby_birth_date AS baby_birth_date,
             cast(replace(b.baby_birth_time_hours, 'NA', 99999) as unsigned) AS baby_birth_time_hours,
             cast(replace(b.baby_birth_time_minit, 'NA', 99999) as unsigned) AS baby_birth_time_minit,
@@ -681,13 +720,16 @@ const babyDetailsToCsv = async (req, res) => {
             and (d.reading = i.reading))))
         join avyantra_dev.patient_infos j on
             ((a.id = j.study_id)))
-        join avyantra_dev.dashboard_users l on
-                        l.hospital_id = a.hospital_id
-                        where l.user_id = where l.user_id = '${userId}' and
-                        str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}' `, {
+            join m_hospitals mh on a.hospital_id = mh.hospital_id
+       
+                        where 
+                        str_to_date(b.baby_date_of_admission, '%d/%m/%Y') between '${fromDate}' and '${toDate}' 
+                        and mh.active_flag = 1
+                        ${hospital_query}
+                        ${branch_query} `, {
             });
-          
-             res.json({ results });
+
+            res.json({ results });
 
         }
 

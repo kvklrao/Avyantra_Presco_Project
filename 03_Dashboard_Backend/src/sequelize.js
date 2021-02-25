@@ -1,8 +1,8 @@
 const { Sequelize } = require('sequelize');
 var path = require("path");
-var __dirname = process.cwd();
-__dirname = __dirname.slice(0,-3);
-require("dotenv").config({path: path.join(__dirname, '.env')});
+require('dotenv').config();
+
+console.log(process.env.DB_NAME);
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: process.env.AWS_LINK,

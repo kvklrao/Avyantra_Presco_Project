@@ -9,13 +9,6 @@ const babyRecord = async (req, res) => {
     const token = req.header('Authorization').replace('Bearer ', '')
     var decoded = jwt_decode(token);
 
-    
-
-    // var mail = decoded.name;
-    // const user = await DashboardUser.findOne({ where: { email: mail } });
-
-    // var userId = user.user_id;
-
 
     const [results, metadata] = await sequelize.query(`select distinct
     --     a.id AS id,
