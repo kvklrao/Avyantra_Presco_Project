@@ -1,3 +1,7 @@
+### Status
+
+[![Build Status](https://travis-ci.com/kvklrao/Avyantra_Presco_Project.svg?branch=main)](https://travis-ci.com/kvklrao/Avyantra_Presco_Project)
+
 ### What is this repository for? ###
 
 This repository has the front code written in AmgularJS. 
