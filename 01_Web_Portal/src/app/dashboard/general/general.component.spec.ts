@@ -514,11 +514,21 @@ describe('GeneralComponent', () => {
     component.createForm(100);
     component.updateGeneralForm();
   });
+
   it("when errorToasty method is called",()=>{
     var error={};
     component.errorToasty(error);
     expect(component.isHide).toBeTruthy();
   });
+
+  it("when errorHandler method is called", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "BabyProfileFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
   it("when onInputChange method is called",()=>{
     var event_1={
       target:{

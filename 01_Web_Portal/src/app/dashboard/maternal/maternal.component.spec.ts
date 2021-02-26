@@ -637,6 +637,31 @@ describe('MaternalComponent', () => {
 
   });
 
+  it("motherBMI validations", () => {
+
+    let mockEvent1 = {
+      target: {
+        name: "motherBMI",
+        value: "2"
+      }
+    }
+    component.onInputChange(mockEvent1);
+    fixture.detectChanges();
+    expect(component.hasBmi).toBeFalsy();
+
+    let mockEvent2 = {
+      target: {
+        name: "motherBMI",
+        value: "1"
+      }
+    }
+    component.onInputChange(mockEvent2);
+    fixture.detectChanges();
+    expect(component.hasBmi).toBeTruthy();
+
+  });
+
+
   it("AF Culture (If Positive) validations", () => {
     let matForm = component.maternalForm;
     expect(matForm.controls.amniotic_fluid_culture_three.valid).toBeFalsy();
@@ -844,6 +869,17 @@ describe('MaternalComponent', () => {
     }
     component.onInputChange(obj);
     expect(component.clearValidators).toHaveBeenCalled();
+
+    let obj2 = {
+      target:{
+        name: "mother_age",
+        value: 1
+      }
+    }
+    component.onInputChange(obj2);
+    expect(component.chkMotherAge).toBeTruthy();
+
+
   });
 
   it("maternalFormSubmit method", () => {
@@ -856,6 +892,54 @@ describe('MaternalComponent', () => {
     expect(component.findInvalidControls().length).toBe(31);
   });
 
+  it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "MaternalFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
+    spyOn(component,'errorToasty')
+    component.errorHandler(new Error(), "MaternalFormSubmit")
+    expect(component['errorToasty']).toHaveBeenCalled()
+  });
+
+  it("when Success method is called",()=>{
+     
+    let res = {
+      status:404,
+      response:[{data:"test"}]
+    }
+
+    spyOn(component['toastr'],'error');
+    component.success(res, "MaternalFormSubmit");
+    expect(component['toastr'].error).toHaveBeenCalled();
+
+    res = {
+      status:200,
+      response:[{data:"test"}]
+    }
+
+    component.success(res, "MaternalFormSubmit");
+    expect(component.is_api_call).toBeTruthy();
+
+    res = {
+      status:404,
+      response:[{data:"test"}]
+    }
+
+    component.success(res, "get_all");
+    expect(component.is_api_call).toBeTruthy();
+
+  });
+
+  it("when update_maternal_form method is called",()=>{
+    component.update_maternal_form();
+    expect(component.submitted).toBeTruthy();
+  });
+  
   it("changeDropdown method", () => {
     spyOn(component, 'clearValidators');
 

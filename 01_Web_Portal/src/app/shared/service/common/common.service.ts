@@ -306,32 +306,4 @@ export class CommonService {
   getOpinions(studyId){
     return this.http.get( this.baseUrl +'hospitalStaff/getReferralOpinion/'+studyId, this.jwt());
   }
-
-
-  // getOrderReport(filters){
-  //   return this.httpClient.post(API_ROUTES.GET_ORDER_REPORT(), filters,{
-  //     responseType: ResponseContentType.Blob | ResponseContentType.Json
-  //   }) 
-  //   .map(result => {
-  //     return{
-  //       response:result,
-  //       data: <Blob>result.blob()
-  //     };
-  //   })
-  // }
-
-  // uploadFile(fileToUpload:File,id:number) {
-  //   this.result= JSON.parse(localStorage.getItem('authUser'));
-  //   this.user_id=this.result['user_id'];
-  //   const formdata: FormData = new FormData();
-  //   formdata.append('file', fileToUpload);
-  //  let headers = new Headers({'Content-Type': 'multipart/form-data'});
-  //  return this.http.post(this.uploadBaseUrl+'excel/upload/'+this.user_id+'/',formdata)
-  //        .map(data => {
-  //        const rootObject =  new Rootobject().deserialize(data);
-  //         // console.log( "service:"+JSON.stringify(rootObject));
-  //         return rootObject;
-  //      })
-  //        .catch(this.handleError);
-  // }
 }

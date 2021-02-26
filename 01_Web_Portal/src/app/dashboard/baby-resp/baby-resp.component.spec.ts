@@ -367,7 +367,15 @@ describe('BabyRespComponent', () => {
   });
 
   it("errorHandler method", () => {
-    spyOn(component, 'errorToasty')
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "respiratoryFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
+    spyOn(component,'errorToasty')
     component.errorHandler(new Error(), "respiratoryFormSubmit")
     expect(component['errorToasty']).toHaveBeenCalled()
   });

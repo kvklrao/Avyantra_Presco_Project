@@ -174,25 +174,6 @@ export class MaternalComponent implements OnInit, OnChanges {
     this.createForm(null);
   }
 
-  petchUpdate(val, key) {
-    const vim = this;
-    const number = /^[0-9]+$/;
-    if (!number.test(val)) {
-      const updateObj = {};
-      updateObj[key] = "";
-      vim.maternalForm.patchValue(updateObj);
-    } else {
-      if (
-        vim.maternalForm.value["mother_height"] != "" &&
-        vim.maternalForm.value["mother_weight"] != ""
-      ) {
-        const squareOfHieght =
-          vim.maternalForm.value["mother_height"] *
-          vim.maternalForm.value["mother_height"];
-        const result = vim.maternalForm.value["mother_weight"] / squareOfHieght;
-      }
-    }
-  }
   open(content, obj) {
     const vim = this;
     vim.submitted = false;

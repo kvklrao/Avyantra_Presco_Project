@@ -339,10 +339,18 @@ describe('AntibioticAdministrationComponent', () => {
     expect(component.isSuccess).toHaveBeenCalled();
   });
 
-  it('errorHandler method', () => {
-    spyOn(component, "errorToasty");
-    component.errorHandler("test", "antibioticFormSubmit");
-    expect(component.errorToasty).toHaveBeenCalled();
+  it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "antibioticFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
+    spyOn(component,'errorToasty')
+    component.errorHandler(new Error(), "antibioticFormSubmit")
+    expect(component['errorToasty']).toHaveBeenCalled()
   });
 
   it('isSuccess method', () => {

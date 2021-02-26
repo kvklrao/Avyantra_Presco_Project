@@ -308,6 +308,14 @@ describe('BabyAppearComponent', () => {
   });
 
   it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "babyApearsFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
     spyOn(component,'errorToasty')
     component.errorHandler(new Error(), "babyApearsFormSubmit")
     expect(component['errorToasty']).toHaveBeenCalled()

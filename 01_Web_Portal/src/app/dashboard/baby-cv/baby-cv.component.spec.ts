@@ -349,6 +349,14 @@ describe('BabyCvComponent', () => {
   });
 
   it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "babyCVFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
     spyOn(component,'errorToasty')
     component.errorHandler(new Error(), "babyCVFormSubmit")
     expect(component['errorToasty']).toHaveBeenCalled()

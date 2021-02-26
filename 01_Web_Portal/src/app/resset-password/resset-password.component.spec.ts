@@ -43,10 +43,24 @@ describe('RessetPasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('resetPassword method',()=>{
     component.resetPassword();
   });
+
   it('success method',()=>{
     component.success({},"apiType");
   });
+
+  it('Password and confirm password should be same',()=>{
+    let component = fixture.debugElement.componentInstance;
+    let compiled=fixture.debugElement.nativeElement;
+    let passwordField=component.forgetWithPasswordForm.controls['password'];
+    let confirmPasswordField=component.forgetWithPasswordForm.controls['confirmPass'];
+    spyOn(component,'is_match');
+    passwordField.setValue('123456');
+    confirmPasswordField.setValue('123456');
+    expect(component.is_match).toBeTruthy();
+  });
+
 });

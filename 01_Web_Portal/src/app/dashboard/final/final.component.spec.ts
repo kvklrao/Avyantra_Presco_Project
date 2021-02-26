@@ -273,10 +273,18 @@ describe('FinalComponent', () => {
     expect(component["commonAsyn"].isHide).toHaveBeenCalled();
   });
 
-  it('errorHandler method', () => {
-    spyOn(component, "errorToasty");
-    component.errorHandler("test", "finalFormSubmit");
-    expect(component.errorToasty).toHaveBeenCalled();
+  it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "finalFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
+  });
+
+  it("errorToasty method", () => {
+    spyOn(component,'errorToasty')
+    component.errorHandler(new Error(), "finalFormSubmit")
+    expect(component['errorToasty']).toHaveBeenCalled()
   });
 
   it('isSuccess method', () => {

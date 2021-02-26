@@ -45,11 +45,6 @@ describe('ReferralDoctorComponent', () => {
     let cls = ()=>{}
     component.formRef = {close:cls}
   });
-
-  afterEach(() => {
-    fixture.destroy();
-    TestBed.resetTestingModule();
-  });
   
   it('sendOpinion method',()=>{
     component.selectedOpinion=null

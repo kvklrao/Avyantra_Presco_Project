@@ -144,34 +144,6 @@ export class DashboardComponent implements OnInit {
     this.getReading();
   }
 
-  // saveReading(){
-  //   var vim = this;
-  //   if(vim.validateAllFormData()){
-  //     this.commonAsyn.showLoader();
-  //   this.readingData=this.readingDataService.getAllFormData();
-  //       const newUser = vim.common_api.create_new_reading(this.readingData);
-  //       newUser.subscribe(
-  //         response => {
-  //          if(response['status']!=200){
-  //           vim.toastr.error('',response['message']);
-  //           this.commonAsyn.isHide();
-  //          }else{
-  //            this.commonAsyn.isHide();
-  //          vim.toastr.success('',response['message']);
-  //          vim.readingDataService.clearReadingFormData();
-  //         //  vim.readingDataService.reset();
-  //         this.readingDataService.showSaveReadingButton=true;
-  //          this.selectedItem='baby-appearence';
-  //          vim.router.navigate(['dashboard/baby-appearence']);
-  //         }
-  //         },
-  //         error => {
-  //           console.error("errro", error);
-  //         }
-  //       );
-  //   }
-  // }
-
  getReading(){
     var vim = this;
     vim.dataServiceObj = vim.dataService.getOption();
@@ -179,15 +151,7 @@ export class DashboardComponent implements OnInit {
         newUser.subscribe(
           response => {
             localStorage.setItem('reading',response['response']['reading_id']);
-            // this.readingDataService.reading = localStorage.getItem('reading');
-            // this.readingDataService.setComponentFlag('baby-appear');
-            // this.readingDataService.newReadingStatusFlags();
             this.getLastReadingData();
-            //  this.selectedItem='baby-appearence';
-            // vim.router.navigate(['dashboard/baby-appearence']);
-          },
-          error => {
-            console.error("errro", error);
           }
         );
   }
@@ -243,14 +207,6 @@ export class DashboardComponent implements OnInit {
           this.messageString=formName;
       }
    }
-  // removeDataConfirmation() {
-  //   this.readingDataService.clearReadingFormData();
-  //   this.confirmationModalOpen = false;
-  // }
-
-  // confirmationCancel() {
-  //   this.confirmationModalOpen = false;
-  // }
 
   getLastReadingData(){
     this.foundEmpty = false;;

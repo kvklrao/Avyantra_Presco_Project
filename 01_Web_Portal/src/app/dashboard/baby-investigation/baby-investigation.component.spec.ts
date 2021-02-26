@@ -687,12 +687,21 @@ describe('BabyInvestigationComponent', () => {
     expect(component.isSuccess).toHaveBeenCalled();
   });
 
-  it('errorHandler method', () => {
-    spyOn(component, "errorToasty");
-    component.errorHandler("test", "investigationFormSubmit");
-    expect(component.errorToasty).toHaveBeenCalled();
+  it("errorHandler method", () => {
+
+    spyOn(component,'errorHandler')
+    component.errorHandler(new Error(), "investigationFormSubmit")
+    expect(component['errorHandler']).toHaveBeenCalled()
+
   });
 
+  it("errorToasty method", () => {
+    spyOn(component,'errorToasty')
+    component.errorHandler(new Error(), "investigationFormSubmit")
+    expect(component['errorToasty']).toHaveBeenCalled()
+  });
+
+  
   it('isSuccess method', () => {
     expect(component.isSuccess({})).toBeFalsy();
 
