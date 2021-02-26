@@ -1,6 +1,7 @@
 ### Status
 
 [![Build Status](https://travis-ci.com/kvklrao/Avyantra_Presco_Project.svg?branch=main)](https://travis-ci.com/kvklrao/Avyantra_Presco_Project)
+[![Coverage Status](https://coveralls.io/repos/github/kvklrao/Avyantra_Presco_Project/badge.svg)](https://coveralls.io/github/kvklrao/Avyantra_Presco_Project)
 
 ### What is this repository for? ###
 
