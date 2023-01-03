@@ -24,11 +24,9 @@ These instructions will get you a copy of the project up and running on your loc
 - 00_Database_Schema - Contains the schema definition
 - 01_Web_Portal - Front End code (AngularJS)
 - 02_Backend - Backend API code (NodeJS)
-- 03_Dashboard_Backend - API for the Dashboards
-- 04_Dashboard_Portal - Portal for the Dashboards
-- 05_PredictionCode - Code for doing the predictions (batch process).
-- 06_PredictionCode_Online - Code for doing the sepsis score prediction via an API.
-- 07_MobileApp - Code for the mobile application.
+- 03_PredictionCode - Code for doing the predictions (batch process).
+- 04_PredictionCode_Online - Code for doing the sepsis score prediction via an API.
+- 05_MobileApp - Code for the mobile application.
 
 ## License
 
