@@ -21,7 +21,7 @@ from itertools import *
 
 
 app = Flask(__name__)
-cors = CORS(app,resource={r'/getscore/*':{'origins': '*'}}) #Change the * with react endpoint for restricted access
+cors = CORS(app) #Change the * with react endpoint for restricted access
 
 
 
