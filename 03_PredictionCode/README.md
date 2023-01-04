@@ -1,13 +1,11 @@
 ### What is this repository for? ###
 
-This repository has python code for generating the sepsis scores.
+This repository has the python code for generating the sepsis scores. This module generates the sepsis score on a real time basis. The prediction (machine learning) model which is pre-trained is used to derive the score. 
 
 ### Files ###
 
-- end_to_end_prediction.py - For geerating the score for the full model.
-- end_to_end_prediction_asha - For generating the score for the ASHA model.
+- server.py - The main web server.
 
 ### Prep ###
 
-- Please ensure that the database tables are created, for that kindly run **Prep/Make_Tables.sql** SQL.
-- Please ensure that the database credentials are given in the python code. The varibales DB_HOST, DB_PORT, DB_PASSWORD are to be set.
+- Please install the requirements specified in **requirements.txt** file.

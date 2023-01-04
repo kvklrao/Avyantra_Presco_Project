@@ -1,1 +1,0 @@
-STR = "<< TO BE FILLED >>"

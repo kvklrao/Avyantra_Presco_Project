@@ -25,8 +25,7 @@ These instructions will get you a copy of the project up and running on your loc
 - 01_Web_Portal - Front End code (AngularJS)
 - 02_Backend - Backend API code (NodeJS)
 - 03_PredictionCode - Code for doing the predictions (batch process).
-- 04_PredictionCode_Online - Code for doing the sepsis score prediction via an API.
-- 05_MobileApp - Code for the mobile application.
+- 04_MobileApp - Code for the mobile application.
 
 ## License
 
