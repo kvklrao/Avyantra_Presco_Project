@@ -8,5 +8,5 @@ The database engine for our project is MySQL. Import the database dump to define
 
 # Getting set up
 
-You will need to run all the **.sql** files that are contained in this folder.
+You will need to run the **mysql.sql** file that is contained in this folder.
 

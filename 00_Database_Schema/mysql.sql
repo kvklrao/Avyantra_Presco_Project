@@ -1,6 +1,206 @@
-SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
-SET @@SESSION.SQL_LOG_BIN= 0;
-SET @@GLOBAL.GTID_PURGED='';
+-- MariaDB dump 10.19  Distrib 10.6.11-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: avyantra-test.csjxx6cjtity.ap-south-1.rds.amazonaws.com    Database: avyantra_dev
+-- ------------------------------------------------------
+-- Server version	5.7.38-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Admin`
+--
+
+DROP TABLE IF EXISTS `Admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Admin_name` varchar(255) DEFAULT NULL,
+  `branch` varchar(255) DEFAULT NULL,
+  `Contact` int(11) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Sample1s`
+--
+
+DROP TABLE IF EXISTS `Sample1s`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Sample1s` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `babyName` varchar(255) NOT NULL,
+  `babyMedRecNo` varchar(255) NOT NULL,
+  `babyAdmissionType` varchar(255) NOT NULL,
+  `babyPlaceofBirth` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `admins`
+--
+
+DROP TABLE IF EXISTS `admins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_name` varchar(255) DEFAULT NULL,
+  `contact` int(11) DEFAULT NULL,
+  `branch` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `data_entry_permission` tinyint(1) DEFAULT '0',
+  `score_generation_permission` tinyint(1) DEFAULT '0',
+  `deleted_flag` tinyint(1) DEFAULT '0',
+  `hospital_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `antibiotics_list`
+--
+
+DROP TABLE IF EXISTS `antibiotics_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `antibiotics_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ItemName` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dashboard_users`
+--
+
+DROP TABLE IF EXISTS `dashboard_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dashboard_users` (
+  `user_id` bigint(20) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `hospital_id` bigint(20) NOT NULL,
+  `hospital_branch_id` bigint(20) NOT NULL,
+  `is_super_user` tinyint(1) NOT NULL DEFAULT '0',
+  `is_primary_user` tinyint(1) NOT NULL DEFAULT '0',
+  `hospital_access` tinyint(1) NOT NULL,
+  `branch_access` tinyint(1) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dummies`
+--
+
+DROP TABLE IF EXISTS `dummies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dummies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `babyName` varchar(255) NOT NULL,
+  `babyMedRecNo` varchar(255) NOT NULL,
+  `babyAdmissionType` varchar(255) NOT NULL,
+  `babyPlaceofBirth` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fungi_list`
+--
+
+DROP TABLE IF EXISTS `fungi_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fungi_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ItemName` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gram_negative_bac_list`
+--
+
+DROP TABLE IF EXISTS `gram_negative_bac_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gram_negative_bac_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ItemName` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gram_positive_bac_list`
+--
+
+DROP TABLE IF EXISTS `gram_positive_bac_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gram_positive_bac_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ItemName` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hospital_wards`
+--
+
+DROP TABLE IF EXISTS `hospital_wards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hospital_wards` (
+  `ward_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ward_name` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` int(11) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `active_flag` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `hospital_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ward_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hospitals`
+--
+
+DROP TABLE IF EXISTS `hospitals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hospitals` (
@@ -18,6 +218,12 @@ CREATE TABLE `hospitals` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_hospital_branch_roles`
+--
+
+DROP TABLE IF EXISTS `m_hospital_branch_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_hospital_branch_roles` (
@@ -31,8 +237,14 @@ CREATE TABLE `m_hospital_branch_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_hospital_branch_specialities`
+--
+
+DROP TABLE IF EXISTS `m_hospital_branch_specialities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_hospital_branch_specialities` (
@@ -46,8 +258,14 @@ CREATE TABLE `m_hospital_branch_specialities` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_hospital_types`
+--
+
+DROP TABLE IF EXISTS `m_hospital_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_hospital_types` (
@@ -65,6 +283,12 @@ CREATE TABLE `m_hospital_types` (
   KEY `idx_m_user_type_active_flag` (`active_flag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_hospitals`
+--
+
+DROP TABLE IF EXISTS `m_hospitals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_hospitals` (
@@ -79,8 +303,14 @@ CREATE TABLE `m_hospitals` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`hospital_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_hospitals_branches`
+--
+
+DROP TABLE IF EXISTS `m_hospitals_branches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_hospitals_branches` (
@@ -96,9 +326,22 @@ CREATE TABLE `m_hospitals_branches` (
   `active_flag` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
+  `contace_number` varchar(255) DEFAULT NULL,
+  `email_id` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `wards` int(11) DEFAULT NULL,
   PRIMARY KEY (`hospital_branch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_permissions`
+--
+
+DROP TABLE IF EXISTS `m_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_permissions` (
@@ -113,6 +356,12 @@ CREATE TABLE `m_permissions` (
   PRIMARY KEY (`permision_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_referral_doctors`
+--
+
+DROP TABLE IF EXISTS `m_referral_doctors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_referral_doctors` (
@@ -130,9 +379,18 @@ CREATE TABLE `m_referral_doctors` (
   `updatedAt` datetime NOT NULL,
   `referral_source` int(1) NOT NULL,
   `hospital_name` varchar(255) DEFAULT NULL,
+  `contact_number` varchar(250) DEFAULT NULL,
+  `email_address` varchar(250) DEFAULT NULL,
+  `doctor_name` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`referral_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_referral_opinions`
+--
+
+DROP TABLE IF EXISTS `m_referral_opinions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_referral_opinions` (
@@ -144,9 +402,18 @@ CREATE TABLE `m_referral_opinions` (
   `prescription` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
+  `referral_doctor_id` int(11) DEFAULT NULL,
+  `study_id` int(11) DEFAULT NULL,
+  `reading` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_roles`
+--
+
+DROP TABLE IF EXISTS `m_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_roles` (
@@ -160,8 +427,14 @@ CREATE TABLE `m_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_specialities`
+--
+
+DROP TABLE IF EXISTS `m_specialities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_specialities` (
@@ -175,8 +448,14 @@ CREATE TABLE `m_specialities` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`speciality_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_staffs`
+--
+
+DROP TABLE IF EXISTS `m_staffs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_staffs` (
@@ -195,8 +474,14 @@ CREATE TABLE `m_staffs` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_states`
+--
+
+DROP TABLE IF EXISTS `m_states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_states` (
@@ -212,6 +497,12 @@ CREATE TABLE `m_states` (
   KEY `idx_m_state_active_flag` (`active_flag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_status`
+--
+
+DROP TABLE IF EXISTS `m_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_status` (
@@ -225,6 +516,34 @@ CREATE TABLE `m_status` (
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_user_coupon_infos`
+--
+
+DROP TABLE IF EXISTS `m_user_coupon_infos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_user_coupon_infos` (
+  `user_coupon_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `Coupon_code` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` tinyint(1) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `active_flag` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`user_coupon_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_user_types`
+--
+
+DROP TABLE IF EXISTS `m_user_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_user_types` (
@@ -242,6 +561,12 @@ CREATE TABLE `m_user_types` (
   KEY `idx_m_user_type_active_flag` (`active_flag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_users`
+--
+
+DROP TABLE IF EXISTS `m_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_users` (
@@ -264,9 +589,59 @@ CREATE TABLE `m_users` (
   `active_flag` tinyint(1) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
+  `profile_pic` varchar(100) DEFAULT NULL,
+  `data_entry_permission` tinyint(1) DEFAULT '0',
+  `score_generation_permission` tinyint(1) DEFAULT '0',
+  `status` varchar(100) DEFAULT NULL,
+  `verification_key` varchar(100) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=558 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_users_additional_info`
+--
+
+DROP TABLE IF EXISTS `m_users_additional_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_users_additional_info` (
+  `user_id` int(11) NOT NULL,
+  `user_type_id` int(11) DEFAULT NULL,
+  `profession` varchar(255) DEFAULT NULL,
+  `institution_name` varchar(255) DEFAULT NULL,
+  `institution_type` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_users_additional_infos`
+--
+
+DROP TABLE IF EXISTS `m_users_additional_infos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_users_additional_infos` (
+  `user_id` int(11) NOT NULL,
+  `user_type_id` int(11) DEFAULT NULL,
+  `profession` varchar(255) DEFAULT NULL,
+  `institution_name` varchar(255) DEFAULT NULL,
+  `institution_type` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `m_users_bkp`
+--
+
+DROP TABLE IF EXISTS `m_users_bkp`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_users_bkp` (
@@ -291,6 +666,12 @@ CREATE TABLE `m_users_bkp` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_referral_files`
+--
+
+DROP TABLE IF EXISTS `map_referral_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_referral_files` (
@@ -305,6 +686,12 @@ CREATE TABLE `map_referral_files` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_referral_hospitals`
+--
+
+DROP TABLE IF EXISTS `map_referral_hospitals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_referral_hospitals` (
@@ -325,8 +712,14 @@ CREATE TABLE `map_referral_hospitals` (
   `referral_source` int(3) DEFAULT NULL,
   `passcode` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`referral_hospital_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_staff_hospitals`
+--
+
+DROP TABLE IF EXISTS `map_staff_hospitals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_staff_hospitals` (
@@ -343,8 +736,14 @@ CREATE TABLE `map_staff_hospitals` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`staff_hospital_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_staff_referral_hospitals`
+--
+
+DROP TABLE IF EXISTS `map_staff_referral_hospitals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_staff_referral_hospitals` (
@@ -362,6 +761,35 @@ CREATE TABLE `map_staff_referral_hospitals` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_user_branches`
+--
+
+DROP TABLE IF EXISTS `map_user_branches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `map_user_branches` (
+  `map_user_branch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `unique_key` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` tinyint(1) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `active_flag` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`map_user_branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_user_module_permissions`
+--
+
+DROP TABLE IF EXISTS `map_user_module_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_user_module_permissions` (
@@ -379,6 +807,12 @@ CREATE TABLE `map_user_module_permissions` (
   PRIMARY KEY (`user_module_permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_user_permissions`
+--
+
+DROP TABLE IF EXISTS `map_user_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_user_permissions` (
@@ -395,6 +829,12 @@ CREATE TABLE `map_user_permissions` (
   PRIMARY KEY (`user_permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_user_roles`
+--
+
+DROP TABLE IF EXISTS `map_user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `map_user_roles` (
@@ -410,8 +850,84 @@ CREATE TABLE `map_user_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`user_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_user_uniquekeys`
+--
+
+DROP TABLE IF EXISTS `map_user_uniquekeys`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `map_user_uniquekeys` (
+  `map_user_unique_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `hospital_id` int(11) DEFAULT NULL,
+  `unique_key` varchar(255) DEFAULT NULL,
+  `key_type` varchar(250) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` tinyint(1) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `active_flag` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`map_user_unique_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `map_ward_branches`
+--
+
+DROP TABLE IF EXISTS `map_ward_branches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `map_ward_branches` (
+  `map_ward_branch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ward_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` tinyint(1) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `hospital_id` int(11) DEFAULT NULL,
+  `active_flag` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`map_ward_branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=271 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `models`
+--
+
+DROP TABLE IF EXISTS `models`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `models` (
+  `map_user_branch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `unique_key` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_flag` tinyint(1) DEFAULT NULL,
+  `deleted_date` datetime DEFAULT NULL,
+  `active_flag` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`map_user_branch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_antibiotics`
+--
+
+DROP TABLE IF EXISTS `patient_baby_antibiotics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_antibiotics` (
@@ -434,8 +950,14 @@ CREATE TABLE `patient_baby_antibiotics` (
   PRIMARY KEY (`id`),
   KEY `IX_pba_study_id` (`study_id`),
   KEY `IX_pba_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2614 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2594 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_appears_infos`
+--
+
+DROP TABLE IF EXISTS `patient_baby_appears_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_appears_infos` (
@@ -471,8 +993,14 @@ CREATE TABLE `patient_baby_appears_infos` (
   PRIMARY KEY (`id`),
   KEY `IX_pbai_study_id` (`study_id`),
   KEY `IX_pbai_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2621 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2710 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_cns_infos`
+--
+
+DROP TABLE IF EXISTS `patient_baby_cns_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_cns_infos` (
@@ -490,8 +1018,14 @@ CREATE TABLE `patient_baby_cns_infos` (
   PRIMARY KEY (`id`),
   KEY `IX_pbci_study_id` (`study_id`),
   KEY `IX_pbci_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2617 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2708 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_cv_infos`
+--
+
+DROP TABLE IF EXISTS `patient_baby_cv_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_cv_infos` (
@@ -522,8 +1056,14 @@ CREATE TABLE `patient_baby_cv_infos` (
   PRIMARY KEY (`id`),
   KEY `IX_pbcvi_study_id` (`study_id`),
   KEY `IX_pbcvi_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2618 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2653 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_finals`
+--
+
+DROP TABLE IF EXISTS `patient_baby_finals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_finals` (
@@ -576,8 +1116,14 @@ CREATE TABLE `patient_baby_finals` (
   PRIMARY KEY (`id`),
   KEY `IX_pbf_study_id` (`study_id`),
   KEY `IX_pbf_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2615 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2456 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_git_infos`
+--
+
+DROP TABLE IF EXISTS `patient_baby_git_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_git_infos` (
@@ -586,6 +1132,7 @@ CREATE TABLE `patient_baby_git_infos` (
   `abdominal_dystension` varchar(255) DEFAULT NULL,
   `frequency_of_stools` varchar(255) DEFAULT NULL,
   `diarrhea` varchar(255) DEFAULT NULL,
+  `blood_present_in_stool` varchar(250) DEFAULT NULL,
   `vomiting` varchar(255) DEFAULT NULL,
   `feeding_intolerance` varchar(255) DEFAULT NULL,
   `baby_movement` varchar(255) DEFAULT NULL,
@@ -596,8 +1143,56 @@ CREATE TABLE `patient_baby_git_infos` (
   PRIMARY KEY (`id`),
   KEY `IX_pbgi_study_id` (`study_id`),
   KEY `IX_pbgi_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2618 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2651 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_global_record`
+--
+
+DROP TABLE IF EXISTS `patient_baby_global_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient_baby_global_record` (
+  `global_record_id` int(11) NOT NULL AUTO_INCREMENT,
+  `study_id` int(11) NOT NULL,
+  `reading_id` int(11) NOT NULL,
+  `entity_type` varchar(45) DEFAULT NULL,
+  `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedate` datetime DEFAULT NULL,
+  PRIMARY KEY (`global_record_id`),
+  UNIQUE KEY `global_record_id_UNIQUE` (`study_id`,`reading_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_global_records`
+--
+
+DROP TABLE IF EXISTS `patient_baby_global_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient_baby_global_records` (
+  `global_record_id` int(11) NOT NULL AUTO_INCREMENT,
+  `study_id` int(11) DEFAULT NULL,
+  `reading_id` int(11) DEFAULT NULL,
+  `entity_type` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `record_complete_flag` varchar(25) DEFAULT NULL,
+  `active_flag` bigint(3) DEFAULT '1',
+  `deleted_flag` bigint(3) DEFAULT '0',
+  `ward_id` int(11) DEFAULT NULL,
+  `score` float DEFAULT NULL,
+  PRIMARY KEY (`global_record_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2044 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_investigations`
+--
+
+DROP TABLE IF EXISTS `patient_baby_investigations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_investigations` (
@@ -650,11 +1245,19 @@ CREATE TABLE `patient_baby_investigations` (
   `prothrombin_type` varchar(255) DEFAULT NULL,
   `activated_partial_prothrombine_type` varchar(45) DEFAULT NULL,
   `baby_c_reactive_protien_result` varchar(255) DEFAULT NULL,
+  `baby_thyroid_t3` varchar(100) DEFAULT NULL,
+  `baby_thyroid_t4` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IX_pbi_study_id` (`study_id`),
   KEY `IX_pbi_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2619 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2602 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_baby_resp_infos`
+--
+
+DROP TABLE IF EXISTS `patient_baby_resp_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_baby_resp_infos` (
@@ -682,8 +1285,14 @@ CREATE TABLE `patient_baby_resp_infos` (
   PRIMARY KEY (`id`),
   KEY `IX_pbri_study_id` (`study_id`),
   KEY `IX_pbri_reading` (`reading`)
-) ENGINE=InnoDB AUTO_INCREMENT=2619 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2741 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_basic_infos`
+--
+
+DROP TABLE IF EXISTS `patient_basic_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_basic_infos` (
@@ -702,12 +1311,40 @@ CREATE TABLE `patient_basic_infos` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IX_basic_info_hospital_type` (`hospital_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=1058 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1423 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_file_uploads`
+--
+
+DROP TABLE IF EXISTS `patient_file_uploads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient_file_uploads` (
+  `file_id` int(11) NOT NULL AUTO_INCREMENT,
+  `study_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `document_type` varchar(255) DEFAULT NULL,
+  `patient_unique_id` varchar(255) DEFAULT NULL,
+  `s3_filename` varchar(255) DEFAULT NULL,
+  `uploaded_time_in_s3` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_general_infos`
+--
+
+DROP TABLE IF EXISTS `patient_general_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_general_infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `baby_ward` varchar(25) DEFAULT NULL,
   `record_type` varchar(255) DEFAULT NULL,
   `baby_admission_type` varchar(255) DEFAULT NULL,
   `baby_birth_date` varchar(255) DEFAULT NULL,
@@ -758,6 +1395,7 @@ CREATE TABLE `patient_general_infos` (
   `meningitis` varchar(255) DEFAULT NULL,
   `umblical_sepsis` varchar(255) DEFAULT NULL,
   `skin_pustules` varchar(255) DEFAULT NULL,
+  `diagMRDS` varchar(25) DEFAULT NULL,
   `seizures` varchar(255) DEFAULT NULL,
   `bleeding_manifestation` varchar(255) DEFAULT NULL,
   `central_peripheral` varchar(255) DEFAULT NULL,
@@ -775,10 +1413,17 @@ CREATE TABLE `patient_general_infos` (
   `metabolic_acidosis` varchar(45) DEFAULT NULL,
   `rupture_time` varchar(45) DEFAULT NULL,
   `baby_lga_sga_aga_suspect` varchar(45) DEFAULT NULL,
+  `diagCongenitalHeartDisease` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IX_pgi_study_id` (`study_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1040 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1683 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_infos`
+--
+
+DROP TABLE IF EXISTS `patient_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_infos` (
@@ -793,6 +1438,7 @@ CREATE TABLE `patient_infos` (
   `email_id` varchar(255) DEFAULT NULL,
   `primary_contact_no` varchar(255) DEFAULT NULL,
   `secondary_contact_no` varchar(255) DEFAULT NULL,
+  `Identification_marks` tinytext,
   `pincode` bigint(20) DEFAULT NULL,
   `study_id` bigint(20) DEFAULT NULL,
   `active_flag` int(11) DEFAULT NULL,
@@ -801,10 +1447,19 @@ CREATE TABLE `patient_infos` (
   `updated_by` float DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
+  `mothers_img` varchar(45) DEFAULT NULL,
+  `educational_level` varchar(45) DEFAULT NULL,
+  `medico_legal_case` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`patient_id`),
   KEY `IX_pi_study_id` (`study_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1086 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1423 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_levels`
+--
+
+DROP TABLE IF EXISTS `patient_levels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_levels` (
@@ -818,6 +1473,12 @@ CREATE TABLE `patient_levels` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patient_maternal_infos`
+--
+
+DROP TABLE IF EXISTS `patient_maternal_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_maternal_infos` (
@@ -863,10 +1524,18 @@ CREATE TABLE `patient_maternal_infos` (
   `vaginal_swab_culture` varchar(255) DEFAULT NULL,
   `maternal_fever_duration` varchar(45) DEFAULT NULL,
   `pih` varchar(45) DEFAULT NULL,
+  `maternal_thyroid_t3` varchar(100) DEFAULT NULL,
+  `maternal_thyroid_t4` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IX_pmi_study_id` (`study_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1388 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `patients`
+--
+
+DROP TABLE IF EXISTS `patients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patients` (
@@ -881,6 +1550,48 @@ CREATE TABLE `patients` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `reports`
+--
+
+DROP TABLE IF EXISTS `reports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `study_id` int(11) DEFAULT NULL,
+  `report_type` int(11) DEFAULT NULL,
+  `report_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_report_name` (`report_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sample1s`
+--
+
+DROP TABLE IF EXISTS `sample1s`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sample1s` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `babyName` varchar(255) NOT NULL,
+  `babyMedRecNo` varchar(255) NOT NULL,
+  `babyAdmissionType` varchar(255) NOT NULL,
+  `babyPlaceofBirth` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_asha`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_asha`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_asha` (
@@ -889,6 +1600,12 @@ CREATE TABLE `sepsis_score_asha` (
   UNIQUE KEY `idx_baby_study` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_full_params`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_full_params`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_full_params` (
@@ -899,6 +1616,12 @@ CREATE TABLE `sepsis_score_full_params` (
   UNIQUE KEY `idx_study` (`hospital_type`,`id`,`reading`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics` (
@@ -908,6 +1631,12 @@ CREATE TABLE `sepsis_score_metrics` (
   KEY `ix_sepsis_score_metrics_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_ADB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_ADB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_ADB` (
@@ -917,6 +1646,12 @@ CREATE TABLE `sepsis_score_metrics_ADB` (
   KEY `ix_sepsis_score_metrics_ADB_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_Asha`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_Asha`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_Asha` (
@@ -926,6 +1661,12 @@ CREATE TABLE `sepsis_score_metrics_Asha` (
   KEY `ix_sepsis_score_metrics_Asha_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_LR`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_LR`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_LR` (
@@ -935,6 +1676,12 @@ CREATE TABLE `sepsis_score_metrics_LR` (
   KEY `ix_sepsis_score_metrics_LR_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_NB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_NB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_NB` (
@@ -944,6 +1691,12 @@ CREATE TABLE `sepsis_score_metrics_NB` (
   KEY `ix_sepsis_score_metrics_NB_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_RF`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_RF`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_RF` (
@@ -953,6 +1706,12 @@ CREATE TABLE `sepsis_score_metrics_RF` (
   KEY `ix_sepsis_score_metrics_RF_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_SVM_L`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_SVM_L`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_SVM_L` (
@@ -962,6 +1721,12 @@ CREATE TABLE `sepsis_score_metrics_SVM_L` (
   KEY `ix_sepsis_score_metrics_SVM_L_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_SVM_P`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_SVM_P`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_SVM_P` (
@@ -971,6 +1736,12 @@ CREATE TABLE `sepsis_score_metrics_SVM_P` (
   KEY `ix_sepsis_score_metrics_SVM_P_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_SVM_R`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_SVM_R`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_SVM_R` (
@@ -980,6 +1751,12 @@ CREATE TABLE `sepsis_score_metrics_SVM_R` (
   KEY `ix_sepsis_score_metrics_SVM_R_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_metrics_ritesh`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_metrics_ritesh`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_metrics_ritesh` (
@@ -989,6 +1766,12 @@ CREATE TABLE `sepsis_score_metrics_ritesh` (
   KEY `ix_sepsis_score_metrics_ritesh_SNO` (`SNO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records` (
@@ -1131,6 +1914,12 @@ CREATE TABLE `sepsis_score_new_records` (
   KEY `ix_sepsis_score_new_records_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_ADB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_ADB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_ADB` (
@@ -1273,6 +2062,12 @@ CREATE TABLE `sepsis_score_new_records_ADB` (
   KEY `ix_sepsis_score_new_records_ADB_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_Asha`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_Asha`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_Asha` (
@@ -1326,6 +2121,12 @@ CREATE TABLE `sepsis_score_new_records_Asha` (
   KEY `ix_sepsis_score_new_records_Asha_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_LR`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_LR`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_LR` (
@@ -1468,6 +2269,12 @@ CREATE TABLE `sepsis_score_new_records_LR` (
   KEY `ix_sepsis_score_new_records_LR_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_NB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_NB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_NB` (
@@ -1610,6 +2417,12 @@ CREATE TABLE `sepsis_score_new_records_NB` (
   KEY `ix_sepsis_score_new_records_NB_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_RF`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_RF`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_RF` (
@@ -1752,6 +2565,12 @@ CREATE TABLE `sepsis_score_new_records_RF` (
   KEY `ix_sepsis_score_new_records_RF_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_SVM_L`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_SVM_L`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_SVM_L` (
@@ -1894,6 +2713,12 @@ CREATE TABLE `sepsis_score_new_records_SVM_L` (
   KEY `ix_sepsis_score_new_records_SVM_L_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_SVM_P`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_SVM_P`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_SVM_P` (
@@ -2036,6 +2861,12 @@ CREATE TABLE `sepsis_score_new_records_SVM_P` (
   KEY `ix_sepsis_score_new_records_SVM_P_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_SVM_R`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_SVM_R`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_SVM_R` (
@@ -2089,6 +2920,12 @@ CREATE TABLE `sepsis_score_new_records_SVM_R` (
   KEY `ix_sepsis_score_new_records_SVM_R_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_new_records_stage`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_new_records_stage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_new_records_stage` (
@@ -2225,6 +3062,12 @@ CREATE TABLE `sepsis_score_new_records_stage` (
   KEY `ix_sepsis_score_new_records_stage_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records` (
@@ -2367,6 +3210,12 @@ CREATE TABLE `sepsis_score_old_records` (
   KEY `ix_sepsis_score_old_records_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_ADB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_ADB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_ADB` (
@@ -2509,6 +3358,12 @@ CREATE TABLE `sepsis_score_old_records_ADB` (
   KEY `ix_sepsis_score_old_records_ADB_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_Asha`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_Asha`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_Asha` (
@@ -2562,6 +3417,12 @@ CREATE TABLE `sepsis_score_old_records_Asha` (
   KEY `ix_sepsis_score_old_records_Asha_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_LR`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_LR`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_LR` (
@@ -2704,6 +3565,12 @@ CREATE TABLE `sepsis_score_old_records_LR` (
   KEY `ix_sepsis_score_old_records_LR_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_NB`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_NB`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_NB` (
@@ -2846,6 +3713,12 @@ CREATE TABLE `sepsis_score_old_records_NB` (
   KEY `ix_sepsis_score_old_records_NB_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_RF`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_RF`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_RF` (
@@ -2988,6 +3861,12 @@ CREATE TABLE `sepsis_score_old_records_RF` (
   KEY `ix_sepsis_score_old_records_RF_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_SVM_L`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_SVM_L`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_SVM_L` (
@@ -3130,6 +4009,12 @@ CREATE TABLE `sepsis_score_old_records_SVM_L` (
   KEY `ix_sepsis_score_old_records_SVM_L_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_SVM_P`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_SVM_P`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_SVM_P` (
@@ -3272,6 +4157,12 @@ CREATE TABLE `sepsis_score_old_records_SVM_P` (
   KEY `ix_sepsis_score_old_records_SVM_P_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_SVM_R`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_SVM_R`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_SVM_R` (
@@ -3414,6 +4305,12 @@ CREATE TABLE `sepsis_score_old_records_SVM_R` (
   KEY `ix_sepsis_score_old_records_SVM_R_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_ritesh`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_ritesh`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_ritesh` (
@@ -3556,6 +4453,12 @@ CREATE TABLE `sepsis_score_old_records_ritesh` (
   KEY `ix_sepsis_score_old_records_ritesh_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sepsis_score_old_records_stage`
+--
+
+DROP TABLE IF EXISTS `sepsis_score_old_records_stage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sepsis_score_old_records_stage` (
@@ -3697,6 +4600,12 @@ CREATE TABLE `sepsis_score_old_records_stage` (
   KEY `ix_sepsis_score_old_records_stage_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_message_logs`
+--
+
+DROP TABLE IF EXISTS `t_message_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_message_logs` (
@@ -3715,6 +4624,29 @@ CREATE TABLE `t_message_logs` (
   PRIMARY KEY (`message_log_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `temp_sepsis_predictions`
+--
+
+DROP TABLE IF EXISTS `temp_sepsis_predictions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `temp_sepsis_predictions` (
+  `index` bigint(20) DEFAULT NULL,
+  `study_id` bigint(20) DEFAULT NULL,
+  `blood_culture_report` text,
+  `predictions` double DEFAULT NULL,
+  `accuracy_score` double DEFAULT NULL,
+  KEY `ix_temp_sepsis_predictions_index` (`index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmp_asha_sepsis`
+--
+
+DROP TABLE IF EXISTS `tmp_asha_sepsis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tmp_asha_sepsis` (
@@ -3724,6 +4656,12 @@ CREATE TABLE `tmp_asha_sepsis` (
   UNIQUE KEY `idx_study_id` (`study_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmp_full_sepsis`
+--
+
+DROP TABLE IF EXISTS `tmp_full_sepsis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tmp_full_sepsis` (
@@ -3733,1078 +4671,1164 @@ CREATE TABLE `tmp_full_sepsis` (
   UNIQUE KEY `idx_study_id` (`hospital_type`,`study_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tutorials`
+--
+
+DROP TABLE IF EXISTS `tutorials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tutorials` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `published` tinyint(1) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `vw_get_all_aasha_data`
+--
+
+DROP TABLE IF EXISTS `vw_get_all_aasha_data`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_all_aasha_data`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_all_aasha_data` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_all_aasha_data` AS SELECT
  1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `baby_mother_medical_record_number`,
- 1 AS `baby_admission_type`,
- 1 AS `baby_place_of_birth_name`,
- 1 AS `baby_birth_date`,
- 1 AS `baby_birth_time_hours`,
- 1 AS `baby_birth_time_minit`,
- 1 AS `baby_age_of_admission`,
- 1 AS `place_of_delivery`,
- 1 AS `birth_facility`,
- 1 AS `baby_gestational_age`,
- 1 AS `baby_weight_at_admission`,
- 1 AS `baby_weight_at_birth`,
- 1 AS `baby_preterm`,
- 1 AS `baby_date_of_admission`,
- 1 AS `mother_weight`,
- 1 AS `mother_height`,
- 1 AS `mother_age`,
- 1 AS `mother_bmi`,
- 1 AS `maternal_blood_pressure`,
- 1 AS `maternal_blood_pressure_diastolic`,
- 1 AS `maternal_diabetes`,
- 1 AS `rupture_of_membranes_rom`,
- 1 AS `rupture_of_membranes_rom_one`,
- 1 AS `rupture_of_membranes_rom_two`,
- 1 AS `type_of_delivery`,
- 1 AS `delayed_cord_clamping`,
- 1 AS `baby_appearance`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `urine_output`,
- 1 AS `frequency_of_stools`,
- 1 AS `vomiting`,
- 1 AS `abdominal_dystension`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `baby_movement`,
- 1 AS `baby_name`,
- 1 AS `mother_name`,
- 1 AS `blood_culture_report`*/;
+  1 AS `baby_medical_record_number`,
+  1 AS `baby_mother_medical_record_number`,
+  1 AS `baby_admission_type`,
+  1 AS `baby_place_of_birth_name`,
+  1 AS `baby_birth_date`,
+  1 AS `baby_birth_time_hours`,
+  1 AS `baby_birth_time_minit`,
+  1 AS `baby_age_of_admission`,
+  1 AS `place_of_delivery`,
+  1 AS `birth_facility`,
+  1 AS `baby_gestational_age`,
+  1 AS `baby_weight_at_admission`,
+  1 AS `baby_weight_at_birth`,
+  1 AS `baby_preterm`,
+  1 AS `baby_date_of_admission`,
+  1 AS `mother_weight`,
+  1 AS `mother_height`,
+  1 AS `mother_age`,
+  1 AS `mother_bmi`,
+  1 AS `maternal_blood_pressure`,
+  1 AS `maternal_blood_pressure_diastolic`,
+  1 AS `maternal_diabetes`,
+  1 AS `rupture_of_membranes_rom`,
+  1 AS `rupture_of_membranes_rom_one`,
+  1 AS `rupture_of_membranes_rom_two`,
+  1 AS `type_of_delivery`,
+  1 AS `delayed_cord_clamping`,
+  1 AS `baby_appearance`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `urine_output`,
+  1 AS `frequency_of_stools`,
+  1 AS `vomiting`,
+  1 AS `abdominal_dystension`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `baby_movement`,
+  1 AS `baby_name`,
+  1 AS `mother_name`,
+  1 AS `blood_culture_report` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_all_data`
+--
+
+DROP TABLE IF EXISTS `vw_get_all_data`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_all_data`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_all_data` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_all_data` AS SELECT
  1 AS `id`,
- 1 AS `hospital_name`,
- 1 AS `hospital_branch_name`,
- 1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `baby_mother_medical_record_number`,
- 1 AS `record_type`,
- 1 AS `baby_admission_type`,
- 1 AS `baby_birth_date`,
- 1 AS `baby_place_of_birth_pin_code`,
- 1 AS `baby_place_of_birth_name`,
- 1 AS `baby_birth_time_hours`,
- 1 AS `baby_birth_time_minit`,
- 1 AS `baby_age_of_admission`,
- 1 AS `baby_apgar_score_one_min`,
- 1 AS `baby_apgar_score_five_min`,
- 1 AS `baby_apgar_score_ten_min`,
- 1 AS `baby_preterm`,
- 1 AS `baby_condition_yes_eos_los`,
- 1 AS `baby_condition_rds_yes_no`,
- 1 AS `baby_gender`,
- 1 AS `baby_condition_jaundice_suspect`,
- 1 AS `baby_condition_ttnb_suspect`,
- 1 AS `baby_condition_lga_suspect`,
- 1 AS `baby_condition_aga_suspect`,
- 1 AS `baby_condition_sga_suspect`,
- 1 AS `baby_shock_aga_suspect`,
- 1 AS `baby_condition_dextrocordia_suspect`,
- 1 AS `baby_condition_anemia_suspect`,
- 1 AS `baby_condition_lbw_suspect`,
- 1 AS `place_of_delivery`,
- 1 AS `birth_facility`,
- 1 AS `baby_gestational_age`,
- 1 AS `baby_gestational_age_unit`,
- 1 AS `baby_weight_at_birth`,
- 1 AS `baby_condition_suspect`,
- 1 AS `baby_day_of_event`,
- 1 AS `baby_weight_at_admission`,
- 1 AS `baby_condition_other_if_suspect`,
- 1 AS `prelim_diagnosis_perinatal`,
- 1 AS `prelim_diagnosis_hypoglycemia`,
- 1 AS `prelim_diagnosis_hypocalcemia`,
- 1 AS `prelim_diagnosis_feeding_intolerence`,
- 1 AS `prelim_diagnosis_gastroenteritis`,
- 1 AS `baby_weight_at_birth_unit`,
- 1 AS `baby_weight_at_admission_unit`,
- 1 AS `baby_date_of_admission`,
- 1 AS `mother_weight_unit`,
- 1 AS `mother_weight`,
- 1 AS `mother_height`,
- 1 AS `mother_height_unit`,
- 1 AS `mother_haemoglobin`,
- 1 AS `mother_bmi`,
- 1 AS `maternal_blood_pressure`,
- 1 AS `maternal_blood_pressure_diastolic`,
- 1 AS `maternal_diabetes`,
- 1 AS `maternal_fever`,
- 1 AS `maternal_fever_unit`,
- 1 AS `maternal_fever_basic`,
- 1 AS `maternal_thyroid_function`,
- 1 AS `maternal_thyroid_function_basic`,
- 1 AS `maternal_thyroid_function_unit_basic`,
- 1 AS `maternal_thyroid_function_unit_basic_unit`,
- 1 AS `more_than_3_vaginal_examinations_during_labor`,
- 1 AS `rupture_of_membranes_rom_one`,
- 1 AS `leaking_pv`,
- 1 AS `rupture_of_membranes_rom`,
- 1 AS `smelly_amniotic_fluid`,
- 1 AS `chorioamnionitis`,
- 1 AS `gbs_infection`,
- 1 AS `colonisation_or_urinary_tract_infection`,
- 1 AS `torch_infections`,
- 1 AS `type_of_delivery`,
- 1 AS `delayed_cord_clamping`,
- 1 AS `vaginal_swab_culture_two`,
- 1 AS `vaginal_swab_culture_three`,
- 1 AS `amniotic_fluid_culture`,
- 1 AS `amniotic_fluid_culture_three`,
- 1 AS `amniotic_fluid_culture_two`,
- 1 AS `rupture_of_membranes_rom_two`,
- 1 AS `vaginal_swab_culture`,
- 1 AS `mother_age`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `baby_weight_at_birth_baby_appearance`,
- 1 AS `baby_weight_at_birth_unit_baby_appearance`,
- 1 AS `umbilical_discharge`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`,
- 1 AS `reading`,
- 1 AS `reading_date`,
- 1 AS `createdAt`,
- 1 AS `time_of_reading_hours`,
- 1 AS `time_of_reading_minute`*/;
+  1 AS `hospital_name`,
+  1 AS `hospital_branch_name`,
+  1 AS `study_id`,
+  1 AS `baby_medical_record_number`,
+  1 AS `baby_mother_medical_record_number`,
+  1 AS `record_type`,
+  1 AS `baby_admission_type`,
+  1 AS `baby_birth_date`,
+  1 AS `baby_place_of_birth_pin_code`,
+  1 AS `baby_place_of_birth_name`,
+  1 AS `baby_birth_time_hours`,
+  1 AS `baby_birth_time_minit`,
+  1 AS `baby_age_of_admission`,
+  1 AS `baby_apgar_score_one_min`,
+  1 AS `baby_apgar_score_five_min`,
+  1 AS `baby_apgar_score_ten_min`,
+  1 AS `baby_preterm`,
+  1 AS `baby_condition_yes_eos_los`,
+  1 AS `baby_condition_rds_yes_no`,
+  1 AS `baby_gender`,
+  1 AS `baby_condition_jaundice_suspect`,
+  1 AS `baby_condition_ttnb_suspect`,
+  1 AS `baby_condition_lga_suspect`,
+  1 AS `baby_condition_aga_suspect`,
+  1 AS `baby_condition_sga_suspect`,
+  1 AS `baby_shock_aga_suspect`,
+  1 AS `baby_condition_dextrocordia_suspect`,
+  1 AS `baby_condition_anemia_suspect`,
+  1 AS `baby_condition_lbw_suspect`,
+  1 AS `place_of_delivery`,
+  1 AS `birth_facility`,
+  1 AS `baby_gestational_age`,
+  1 AS `baby_gestational_age_unit`,
+  1 AS `baby_weight_at_birth`,
+  1 AS `baby_condition_suspect`,
+  1 AS `baby_day_of_event`,
+  1 AS `baby_weight_at_admission`,
+  1 AS `baby_condition_other_if_suspect`,
+  1 AS `prelim_diagnosis_perinatal`,
+  1 AS `prelim_diagnosis_hypoglycemia`,
+  1 AS `prelim_diagnosis_hypocalcemia`,
+  1 AS `prelim_diagnosis_feeding_intolerence`,
+  1 AS `prelim_diagnosis_gastroenteritis`,
+  1 AS `baby_weight_at_birth_unit`,
+  1 AS `baby_weight_at_admission_unit`,
+  1 AS `baby_date_of_admission`,
+  1 AS `mother_weight_unit`,
+  1 AS `mother_weight`,
+  1 AS `mother_height`,
+  1 AS `mother_height_unit`,
+  1 AS `mother_haemoglobin`,
+  1 AS `mother_bmi`,
+  1 AS `maternal_blood_pressure`,
+  1 AS `maternal_blood_pressure_diastolic`,
+  1 AS `maternal_diabetes`,
+  1 AS `maternal_fever`,
+  1 AS `maternal_fever_unit`,
+  1 AS `maternal_fever_basic`,
+  1 AS `maternal_thyroid_function`,
+  1 AS `maternal_thyroid_function_basic`,
+  1 AS `maternal_thyroid_function_unit_basic`,
+  1 AS `maternal_thyroid_function_unit_basic_unit`,
+  1 AS `more_than_3_vaginal_examinations_during_labor`,
+  1 AS `rupture_of_membranes_rom_one`,
+  1 AS `leaking_pv`,
+  1 AS `rupture_of_membranes_rom`,
+  1 AS `smelly_amniotic_fluid`,
+  1 AS `chorioamnionitis`,
+  1 AS `gbs_infection`,
+  1 AS `colonisation_or_urinary_tract_infection`,
+  1 AS `torch_infections`,
+  1 AS `type_of_delivery`,
+  1 AS `delayed_cord_clamping`,
+  1 AS `vaginal_swab_culture_two`,
+  1 AS `vaginal_swab_culture_three`,
+  1 AS `amniotic_fluid_culture`,
+  1 AS `amniotic_fluid_culture_three`,
+  1 AS `amniotic_fluid_culture_two`,
+  1 AS `rupture_of_membranes_rom_two`,
+  1 AS `vaginal_swab_culture`,
+  1 AS `mother_age`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `baby_weight_at_birth_baby_appearance`,
+  1 AS `baby_weight_at_birth_unit_baby_appearance`,
+  1 AS `umbilical_discharge`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other`,
+  1 AS `reading`,
+  1 AS `reading_date`,
+  1 AS `createdAt`,
+  1 AS `time_of_reading_hours`,
+  1 AS `time_of_reading_minute` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_all_data_1`
+--
+
+DROP TABLE IF EXISTS `vw_get_all_data_1`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_all_data_1`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_all_data_1` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_all_data_1` AS SELECT
  1 AS `id`,
- 1 AS `hospital_name`,
- 1 AS `hospital_branch_name`,
- 1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `baby_mother_medical_record_number`,
- 1 AS `record_type`,
- 1 AS `baby_admission_type`,
- 1 AS `baby_birth_date`,
- 1 AS `baby_place_of_birth_pin_code`,
- 1 AS `baby_place_of_birth_name`,
- 1 AS `baby_birth_time_hours`,
- 1 AS `baby_birth_time_minit`,
- 1 AS `baby_age_of_admission`,
- 1 AS `baby_apgar_score_one_min`,
- 1 AS `baby_apgar_score_five_min`,
- 1 AS `baby_apgar_score_ten_min`,
- 1 AS `baby_preterm`,
- 1 AS `baby_condition_yes_eos_los`,
- 1 AS `baby_condition_rds_yes_no`,
- 1 AS `baby_gender`,
- 1 AS `baby_condition_jaundice_suspect`,
- 1 AS `baby_condition_ttnb_suspect`,
- 1 AS `baby_condition_lga_suspect`,
- 1 AS `baby_condition_aga_suspect`,
- 1 AS `baby_condition_sga_suspect`,
- 1 AS `baby_shock_aga_suspect`,
- 1 AS `baby_condition_dextrocordia_suspect`,
- 1 AS `baby_condition_anemia_suspect`,
- 1 AS `baby_condition_lbw_suspect`,
- 1 AS `place_of_delivery`,
- 1 AS `birth_facility`,
- 1 AS `baby_gestational_age`,
- 1 AS `baby_gestational_age_unit`,
- 1 AS `baby_weight_at_birth`,
- 1 AS `baby_condition_suspect`,
- 1 AS `baby_day_of_event`,
- 1 AS `baby_weight_at_admission`,
- 1 AS `baby_condition_other_if_suspect`,
- 1 AS `prelim_diagnosis_perinatal`,
- 1 AS `prelim_diagnosis_hypoglycemia`,
- 1 AS `prelim_diagnosis_hypocalcemia`,
- 1 AS `prelim_diagnosis_feeding_intolerence`,
- 1 AS `prelim_diagnosis_gastroenteritis`,
- 1 AS `baby_weight_at_birth_unit`,
- 1 AS `baby_weight_at_admission_unit`,
- 1 AS `baby_date_of_admission`,
- 1 AS `mother_weight_unit`,
- 1 AS `mother_weight`,
- 1 AS `mother_height`,
- 1 AS `mother_height_unit`,
- 1 AS `mother_haemoglobin`,
- 1 AS `mother_bmi`,
- 1 AS `maternal_blood_pressure`,
- 1 AS `maternal_blood_pressure_diastolic`,
- 1 AS `maternal_diabetes`,
- 1 AS `maternal_fever`,
- 1 AS `maternal_fever_unit`,
- 1 AS `maternal_fever_basic`,
- 1 AS `maternal_thyroid_function`,
- 1 AS `maternal_thyroid_function_basic`,
- 1 AS `maternal_thyroid_function_unit_basic`,
- 1 AS `maternal_thyroid_function_unit_basic_unit`,
- 1 AS `more_than_3_vaginal_examinations_during_labor`,
- 1 AS `rupture_of_membranes_rom_one`,
- 1 AS `leaking_pv`,
- 1 AS `rupture_of_membranes_rom`,
- 1 AS `smelly_amniotic_fluid`,
- 1 AS `chorioamnionitis`,
- 1 AS `gbs_infection`,
- 1 AS `colonisation_or_urinary_tract_infection`,
- 1 AS `torch_infections`,
- 1 AS `type_of_delivery`,
- 1 AS `delayed_cord_clamping`,
- 1 AS `vaginal_swab_culture_two`,
- 1 AS `vaginal_swab_culture_three`,
- 1 AS `amniotic_fluid_culture`,
- 1 AS `amniotic_fluid_culture_three`,
- 1 AS `amniotic_fluid_culture_two`,
- 1 AS `rupture_of_membranes_rom_two`,
- 1 AS `vaginal_swab_culture`,
- 1 AS `mother_age`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `baby_weight_at_birth_baby_appearance`,
- 1 AS `baby_weight_at_birth_unit_baby_appearance`,
- 1 AS `umbilical_discharge`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`,
- 1 AS `reading`,
- 1 AS `reading_date`,
- 1 AS `createdAt`,
- 1 AS `time_of_reading_hours`,
- 1 AS `time_of_reading_minute`*/;
+  1 AS `hospital_name`,
+  1 AS `hospital_branch_name`,
+  1 AS `study_id`,
+  1 AS `baby_medical_record_number`,
+  1 AS `baby_mother_medical_record_number`,
+  1 AS `record_type`,
+  1 AS `baby_admission_type`,
+  1 AS `baby_birth_date`,
+  1 AS `baby_place_of_birth_pin_code`,
+  1 AS `baby_place_of_birth_name`,
+  1 AS `baby_birth_time_hours`,
+  1 AS `baby_birth_time_minit`,
+  1 AS `baby_age_of_admission`,
+  1 AS `baby_apgar_score_one_min`,
+  1 AS `baby_apgar_score_five_min`,
+  1 AS `baby_apgar_score_ten_min`,
+  1 AS `baby_preterm`,
+  1 AS `baby_condition_yes_eos_los`,
+  1 AS `baby_condition_rds_yes_no`,
+  1 AS `baby_gender`,
+  1 AS `baby_condition_jaundice_suspect`,
+  1 AS `baby_condition_ttnb_suspect`,
+  1 AS `baby_condition_lga_suspect`,
+  1 AS `baby_condition_aga_suspect`,
+  1 AS `baby_condition_sga_suspect`,
+  1 AS `baby_shock_aga_suspect`,
+  1 AS `baby_condition_dextrocordia_suspect`,
+  1 AS `baby_condition_anemia_suspect`,
+  1 AS `baby_condition_lbw_suspect`,
+  1 AS `place_of_delivery`,
+  1 AS `birth_facility`,
+  1 AS `baby_gestational_age`,
+  1 AS `baby_gestational_age_unit`,
+  1 AS `baby_weight_at_birth`,
+  1 AS `baby_condition_suspect`,
+  1 AS `baby_day_of_event`,
+  1 AS `baby_weight_at_admission`,
+  1 AS `baby_condition_other_if_suspect`,
+  1 AS `prelim_diagnosis_perinatal`,
+  1 AS `prelim_diagnosis_hypoglycemia`,
+  1 AS `prelim_diagnosis_hypocalcemia`,
+  1 AS `prelim_diagnosis_feeding_intolerence`,
+  1 AS `prelim_diagnosis_gastroenteritis`,
+  1 AS `baby_weight_at_birth_unit`,
+  1 AS `baby_weight_at_admission_unit`,
+  1 AS `baby_date_of_admission`,
+  1 AS `mother_weight_unit`,
+  1 AS `mother_weight`,
+  1 AS `mother_height`,
+  1 AS `mother_height_unit`,
+  1 AS `mother_haemoglobin`,
+  1 AS `mother_bmi`,
+  1 AS `maternal_blood_pressure`,
+  1 AS `maternal_blood_pressure_diastolic`,
+  1 AS `maternal_diabetes`,
+  1 AS `maternal_fever`,
+  1 AS `maternal_fever_unit`,
+  1 AS `maternal_fever_basic`,
+  1 AS `maternal_thyroid_function`,
+  1 AS `maternal_thyroid_function_basic`,
+  1 AS `maternal_thyroid_function_unit_basic`,
+  1 AS `maternal_thyroid_function_unit_basic_unit`,
+  1 AS `more_than_3_vaginal_examinations_during_labor`,
+  1 AS `rupture_of_membranes_rom_one`,
+  1 AS `leaking_pv`,
+  1 AS `rupture_of_membranes_rom`,
+  1 AS `smelly_amniotic_fluid`,
+  1 AS `chorioamnionitis`,
+  1 AS `gbs_infection`,
+  1 AS `colonisation_or_urinary_tract_infection`,
+  1 AS `torch_infections`,
+  1 AS `type_of_delivery`,
+  1 AS `delayed_cord_clamping`,
+  1 AS `vaginal_swab_culture_two`,
+  1 AS `vaginal_swab_culture_three`,
+  1 AS `amniotic_fluid_culture`,
+  1 AS `amniotic_fluid_culture_three`,
+  1 AS `amniotic_fluid_culture_two`,
+  1 AS `rupture_of_membranes_rom_two`,
+  1 AS `vaginal_swab_culture`,
+  1 AS `mother_age`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `baby_weight_at_birth_baby_appearance`,
+  1 AS `baby_weight_at_birth_unit_baby_appearance`,
+  1 AS `umbilical_discharge`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other`,
+  1 AS `reading`,
+  1 AS `reading_date`,
+  1 AS `createdAt`,
+  1 AS `time_of_reading_hours`,
+  1 AS `time_of_reading_minute` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_generated_score`
+--
+
+DROP TABLE IF EXISTS `vw_get_generated_score`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_generated_score`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_generated_score` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_generated_score` AS SELECT
  1 AS `study_id`,
- 1 AS `reading`,
- 1 AS `sepsis_score`,
- 1 AS `record_flag`*/;
+  1 AS `reading`,
+  1 AS `sepsis_score`,
+  1 AS `record_flag` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_ml_data`
+--
+
+DROP TABLE IF EXISTS `vw_get_ml_data`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_ml_data`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_ml_data` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_ml_data` AS SELECT
  1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `reading`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `patient_id`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_pulmonary_hemerrage`,
- 1 AS `final_diagnosis_thrombocytopenia`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`*/;
+  1 AS `baby_medical_record_number`,
+  1 AS `reading`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `patient_id`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_pulmonary_hemerrage`,
+  1 AS `final_diagnosis_thrombocytopenia`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_ml_data_old`
+--
+
+DROP TABLE IF EXISTS `vw_get_ml_data_old`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_ml_data_old`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_ml_data_old` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_ml_data_old` AS SELECT
  1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `reading`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `patient_id`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_pulmonary_hemerrage`,
- 1 AS `final_diagnosis_thrombocytopenia`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`*/;
+  1 AS `baby_medical_record_number`,
+  1 AS `reading`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `patient_id`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_pulmonary_hemerrage`,
+  1 AS `final_diagnosis_thrombocytopenia`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_ml_data_ritesh`
+--
+
+DROP TABLE IF EXISTS `vw_get_ml_data_ritesh`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_ml_data_ritesh`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_ml_data_ritesh` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_ml_data_ritesh` AS SELECT
  1 AS `study_id`,
- 1 AS `baby_medical_record_number`,
- 1 AS `reading`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `patient_id`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_pulmonary_hemerrage`,
- 1 AS `final_diagnosis_thrombocytopenia`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`*/;
+  1 AS `baby_medical_record_number`,
+  1 AS `reading`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `patient_id`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_pulmonary_hemerrage`,
+  1 AS `final_diagnosis_thrombocytopenia`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_get_staffs`
+--
+
+DROP TABLE IF EXISTS `vw_get_staffs`;
+/*!50001 DROP VIEW IF EXISTS `vw_get_staffs`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_get_staffs` AS SELECT 
+/*!50001 CREATE VIEW `vw_get_staffs` AS SELECT
  1 AS `hospital_id`,
- 1 AS `hospital_branch_id`,
- 1 AS `staff_id`,
- 1 AS `first_name`,
- 1 AS `last_name`,
- 1 AS `hospital_branch_speciality_id`,
- 1 AS `user_id`,
- 1 AS `hospital_branch_role_id`,
- 1 AS `contact_number`,
- 1 AS `email_address`,
- 1 AS `speciality_id`,
- 1 AS `speciality`,
- 1 AS `role_id`,
- 1 AS `role`,
- 1 AS `status`,
- 1 AS `user_name`,
- 1 AS `reporting_user_id`,
- 1 AS `password`,
- 1 AS `deleted_flag`,
- 1 AS `branch_name`*/;
+  1 AS `hospital_branch_id`,
+  1 AS `staff_id`,
+  1 AS `first_name`,
+  1 AS `last_name`,
+  1 AS `hospital_branch_speciality_id`,
+  1 AS `user_id`,
+  1 AS `hospital_branch_role_id`,
+  1 AS `contact_number`,
+  1 AS `email_address`,
+  1 AS `speciality_id`,
+  1 AS `speciality`,
+  1 AS `role_id`,
+  1 AS `role`,
+  1 AS `status`,
+  1 AS `user_name`,
+  1 AS `reporting_user_id`,
+  1 AS `password`,
+  1 AS `deleted_flag`,
+  1 AS `branch_name` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `vw_ml`
+--
+
+DROP TABLE IF EXISTS `vw_ml`;
+/*!50001 DROP VIEW IF EXISTS `vw_ml`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_ml` AS SELECT 
+/*!50001 CREATE VIEW `vw_ml` AS SELECT
  1 AS `baby_medical_record_number`,
- 1 AS `reading`,
- 1 AS `baby_appearance`,
- 1 AS `baby_skin_colour`,
- 1 AS `baby_cry_sound`,
- 1 AS `baby_cry_sound_status`,
- 1 AS `hypotonia_muscular_response_one_min_after_birth`,
- 1 AS `hypotonia_muscular_response_five_min_after_birth`,
- 1 AS `excessive_sleeping`,
- 1 AS `hypothermia`,
- 1 AS `hypothermia_status_value`,
- 1 AS `baby_feeding_status`,
- 1 AS `baby_presence_of_convulsions`,
- 1 AS `baby_jaundice`,
- 1 AS `breast_feeding_initiation`,
- 1 AS `kangaroo_mother_care`,
- 1 AS `hypothermia_status`,
- 1 AS `groaning`,
- 1 AS `grunting`,
- 1 AS `stridor`,
- 1 AS `retraction`,
- 1 AS `fast_breathing`,
- 1 AS `oxygen_saturation`,
- 1 AS `breathing_rate`,
- 1 AS `baby_chest_indrawing`,
- 1 AS `x_ray_status_done`,
- 1 AS `x_ray_result`,
- 1 AS `x_ray_diagnosis_any_other`,
- 1 AS `x_ray_status`,
- 1 AS `apnea_status`,
- 1 AS `apnea_diagnosis`,
- 1 AS `baby_respiratory_support`,
- 1 AS `baby_respiratory_support_if_yes`,
- 1 AS `heart_rate`,
- 1 AS `urine_output`,
- 1 AS `baby_blood_pressure_mean_arterial_bp`,
- 1 AS `baby_blood_pressure_upper_limb`,
- 1 AS `baby_blood_pressure_lower_limb`,
- 1 AS `capillary_refill`,
- 1 AS `capillary_refill_unit`,
- 1 AS `low_peripheral_pulse_volume`,
- 1 AS `cool_peripheries`,
- 1 AS `two_d_echo_done`,
- 1 AS `two_d_echo_done_if_yes`,
- 1 AS `baby_on_ionotropes`,
- 1 AS `central_line`,
- 1 AS `skin_pustules`,
- 1 AS `infusion_of_blood_products`,
- 1 AS `features_of_encephalopathy`,
- 1 AS `seizures`,
- 1 AS `abnormal_movements_like_tonic_posturing`,
- 1 AS `af_bulge`,
- 1 AS `patient_id`,
- 1 AS `abdominal_dystension`,
- 1 AS `frequency_of_stools`,
- 1 AS `diarrhea`,
- 1 AS `vomiting`,
- 1 AS `feeding_intolerance`,
- 1 AS `baby_movement`,
- 1 AS `baby_thyroid_status`,
- 1 AS `baby_thyroid_result`,
- 1 AS `baby_blood_glucose`,
- 1 AS `baby_haemoglobin_levels`,
- 1 AS `baby_c_reactive_protien_levels`,
- 1 AS `micro_esr`,
- 1 AS `baby_procalcitonin_levels`,
- 1 AS `total_leucocute_count_unit`,
- 1 AS `total_leucocute_count`,
- 1 AS `absolute_neutrophil_count`,
- 1 AS `absolute_neutrophil_count_unit`,
- 1 AS `immature_to_mature_neutrophil_ratios`,
- 1 AS `thrombocytopenia_unit`,
- 1 AS `thrombocytopenia`,
- 1 AS `urine_rest_for_pus_cells`,
- 1 AS `urine_culture_test`,
- 1 AS `blood_culture_report`,
- 1 AS `gram_positive_bacteria`,
- 1 AS `gram_positive_bacteria_if_other`,
- 1 AS `gram_negative_bacteria`,
- 1 AS `gram_negative_bacteria_if_other`,
- 1 AS `fungi`,
- 1 AS `other_organism`,
- 1 AS `antibiotic_status`,
- 1 AS `antibiotic_status_resisitant`,
- 1 AS `antibiotic_status_intermediate`,
- 1 AS `sodium`,
- 1 AS `potassium`,
- 1 AS `chlorine`,
- 1 AS `calcium`,
- 1 AS `phosphate`,
- 1 AS `magnesium`,
- 1 AS `urea`,
- 1 AS `creatinine`,
- 1 AS `lactate_levels`,
- 1 AS `bilirubin_levels`,
- 1 AS `cord_ph`,
- 1 AS `arrhythmia`,
- 1 AS `csf_culture`,
- 1 AS `csf_culture_tsb_value`,
- 1 AS `antibiotic_status_value`,
- 1 AS `antibiotic_given`,
- 1 AS `date_of_administration_of_antiobiotic`,
- 1 AS `time_of_administration_of_antiobiotic_hours`,
- 1 AS `time_of_administration_of_antiobiotic_minute`,
- 1 AS `antibiotic_name`,
- 1 AS `antibiotic_name_if_other`,
- 1 AS `grade_of_antibiotic`,
- 1 AS `date_of_blood_samples_sent_for_culture_test`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
- 1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
- 1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
- 1 AS `days_of_stay_in_hospital`,
- 1 AS `final_diagnosis_sepsis`,
- 1 AS `final_diagnosis_rds`,
- 1 AS `final_diagnosis_ttnb`,
- 1 AS `final_diagnosis_jaundice`,
- 1 AS `final_diagnosis_lbw`,
- 1 AS `final_diagnosis_lga`,
- 1 AS `final_diagnosis_aga`,
- 1 AS `final_diagnosis_sga`,
- 1 AS `final_diagnosis_anemia`,
- 1 AS `final_diagnosis_dextochordia`,
- 1 AS `final_diagnosis_hypoglycemia`,
- 1 AS `final_diagnosis_hypocalcemia`,
- 1 AS `final_diagnosis_gastroenteritis`,
- 1 AS `final_diagnosis_perinatal_respiratory_depression`,
- 1 AS `final_diagnosis_shock`,
- 1 AS `final_diagnosis_feeding_intolerence`,
- 1 AS `baby_discharge_date`,
- 1 AS `final_diagnosis_pulmonary_hemerrage`,
- 1 AS `final_diagnosis_thrombocytopenia`,
- 1 AS `final_diagnosis_eos_los`,
- 1 AS `final_diagnosis_other`*/;
+  1 AS `reading`,
+  1 AS `baby_appearance`,
+  1 AS `baby_skin_colour`,
+  1 AS `baby_cry_sound`,
+  1 AS `baby_cry_sound_status`,
+  1 AS `hypotonia_muscular_response_one_min_after_birth`,
+  1 AS `hypotonia_muscular_response_five_min_after_birth`,
+  1 AS `excessive_sleeping`,
+  1 AS `hypothermia`,
+  1 AS `hypothermia_status_value`,
+  1 AS `baby_feeding_status`,
+  1 AS `baby_presence_of_convulsions`,
+  1 AS `baby_jaundice`,
+  1 AS `breast_feeding_initiation`,
+  1 AS `kangaroo_mother_care`,
+  1 AS `hypothermia_status`,
+  1 AS `groaning`,
+  1 AS `grunting`,
+  1 AS `stridor`,
+  1 AS `retraction`,
+  1 AS `fast_breathing`,
+  1 AS `oxygen_saturation`,
+  1 AS `breathing_rate`,
+  1 AS `baby_chest_indrawing`,
+  1 AS `x_ray_status_done`,
+  1 AS `x_ray_result`,
+  1 AS `x_ray_diagnosis_any_other`,
+  1 AS `x_ray_status`,
+  1 AS `apnea_status`,
+  1 AS `apnea_diagnosis`,
+  1 AS `baby_respiratory_support`,
+  1 AS `baby_respiratory_support_if_yes`,
+  1 AS `heart_rate`,
+  1 AS `urine_output`,
+  1 AS `baby_blood_pressure_mean_arterial_bp`,
+  1 AS `baby_blood_pressure_upper_limb`,
+  1 AS `baby_blood_pressure_lower_limb`,
+  1 AS `capillary_refill`,
+  1 AS `capillary_refill_unit`,
+  1 AS `low_peripheral_pulse_volume`,
+  1 AS `cool_peripheries`,
+  1 AS `two_d_echo_done`,
+  1 AS `two_d_echo_done_if_yes`,
+  1 AS `baby_on_ionotropes`,
+  1 AS `central_line`,
+  1 AS `skin_pustules`,
+  1 AS `infusion_of_blood_products`,
+  1 AS `features_of_encephalopathy`,
+  1 AS `seizures`,
+  1 AS `abnormal_movements_like_tonic_posturing`,
+  1 AS `af_bulge`,
+  1 AS `patient_id`,
+  1 AS `abdominal_dystension`,
+  1 AS `frequency_of_stools`,
+  1 AS `diarrhea`,
+  1 AS `vomiting`,
+  1 AS `feeding_intolerance`,
+  1 AS `baby_movement`,
+  1 AS `baby_thyroid_status`,
+  1 AS `baby_thyroid_result`,
+  1 AS `baby_blood_glucose`,
+  1 AS `baby_haemoglobin_levels`,
+  1 AS `baby_c_reactive_protien_levels`,
+  1 AS `micro_esr`,
+  1 AS `baby_procalcitonin_levels`,
+  1 AS `total_leucocute_count_unit`,
+  1 AS `total_leucocute_count`,
+  1 AS `absolute_neutrophil_count`,
+  1 AS `absolute_neutrophil_count_unit`,
+  1 AS `immature_to_mature_neutrophil_ratios`,
+  1 AS `thrombocytopenia_unit`,
+  1 AS `thrombocytopenia`,
+  1 AS `urine_rest_for_pus_cells`,
+  1 AS `urine_culture_test`,
+  1 AS `blood_culture_report`,
+  1 AS `gram_positive_bacteria`,
+  1 AS `gram_positive_bacteria_if_other`,
+  1 AS `gram_negative_bacteria`,
+  1 AS `gram_negative_bacteria_if_other`,
+  1 AS `fungi`,
+  1 AS `other_organism`,
+  1 AS `antibiotic_status`,
+  1 AS `antibiotic_status_resisitant`,
+  1 AS `antibiotic_status_intermediate`,
+  1 AS `sodium`,
+  1 AS `potassium`,
+  1 AS `chlorine`,
+  1 AS `calcium`,
+  1 AS `phosphate`,
+  1 AS `magnesium`,
+  1 AS `urea`,
+  1 AS `creatinine`,
+  1 AS `lactate_levels`,
+  1 AS `bilirubin_levels`,
+  1 AS `cord_ph`,
+  1 AS `arrhythmia`,
+  1 AS `csf_culture`,
+  1 AS `csf_culture_tsb_value`,
+  1 AS `antibiotic_status_value`,
+  1 AS `antibiotic_given`,
+  1 AS `date_of_administration_of_antiobiotic`,
+  1 AS `time_of_administration_of_antiobiotic_hours`,
+  1 AS `time_of_administration_of_antiobiotic_minute`,
+  1 AS `antibiotic_name`,
+  1 AS `antibiotic_name_if_other`,
+  1 AS `grade_of_antibiotic`,
+  1 AS `date_of_blood_samples_sent_for_culture_test`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_hours`,
+  1 AS `time_of_blood_samples_sent_for_culture_test_minute`,
+  1 AS `blood_sample_taken_prior_to_antiobiotic_administration`,
+  1 AS `days_of_stay_in_hospital`,
+  1 AS `final_diagnosis_sepsis`,
+  1 AS `final_diagnosis_rds`,
+  1 AS `final_diagnosis_ttnb`,
+  1 AS `final_diagnosis_jaundice`,
+  1 AS `final_diagnosis_lbw`,
+  1 AS `final_diagnosis_lga`,
+  1 AS `final_diagnosis_aga`,
+  1 AS `final_diagnosis_sga`,
+  1 AS `final_diagnosis_anemia`,
+  1 AS `final_diagnosis_dextochordia`,
+  1 AS `final_diagnosis_hypoglycemia`,
+  1 AS `final_diagnosis_hypocalcemia`,
+  1 AS `final_diagnosis_gastroenteritis`,
+  1 AS `final_diagnosis_perinatal_respiratory_depression`,
+  1 AS `final_diagnosis_shock`,
+  1 AS `final_diagnosis_feeding_intolerence`,
+  1 AS `baby_discharge_date`,
+  1 AS `final_diagnosis_pulmonary_hemerrage`,
+  1 AS `final_diagnosis_thrombocytopenia`,
+  1 AS `final_diagnosis_eos_los`,
+  1 AS `final_diagnosis_other` */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `vw_get_all_aasha_data`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_all_aasha_data`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4818,19 +5842,29 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_all_data`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_all_data`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`avyantradb`@`%` SQL SECURITY DEFINER */
 /*!50001 VIEW `vw_get_all_data` AS select `a`.`id` AS `id`,`a`.`hospital_name` AS `hospital_name`,`a`.`hospital_branch_name` AS `hospital_branch_name`,`a`.`id` AS `study_id`,`a`.`baby_medical_record_number` AS `baby_medical_record_number`,`a`.`baby_mother_medical_record_number` AS `baby_mother_medical_record_number`,`b`.`record_type` AS `record_type`,`b`.`baby_admission_type` AS `baby_admission_type`,`b`.`baby_birth_date` AS `baby_birth_date`,`b`.`baby_place_of_birth_pin_code` AS `baby_place_of_birth_pin_code`,`b`.`baby_place_of_birth_name` AS `baby_place_of_birth_name`,`b`.`baby_birth_time_hours` AS `baby_birth_time_hours`,`b`.`baby_birth_time_minit` AS `baby_birth_time_minit`,`b`.`baby_age_of_admission` AS `baby_age_of_admission`,`b`.`baby_apgar_score_one_min` AS `baby_apgar_score_one_min`,`b`.`baby_apgar_score_five_min` AS `baby_apgar_score_five_min`,`b`.`baby_apgar_score_ten_min` AS `baby_apgar_score_ten_min`,`b`.`baby_preterm` AS `baby_preterm`,`b`.`baby_condition_yes_eos_los` AS `baby_condition_yes_eos_los`,`b`.`baby_condition_rds_yes_no` AS `baby_condition_rds_yes_no`,`b`.`baby_gender` AS `baby_gender`,`b`.`baby_condition_jaundice_suspect` AS `baby_condition_jaundice_suspect`,`b`.`baby_condition_ttnb_suspect` AS `baby_condition_ttnb_suspect`,`b`.`baby_condition_lga_suspect` AS `baby_condition_lga_suspect`,`b`.`baby_condition_aga_suspect` AS `baby_condition_aga_suspect`,`b`.`baby_condition_sga_suspect` AS `baby_condition_sga_suspect`,`b`.`baby_shock_aga_suspect` AS `baby_shock_aga_suspect`,`b`.`baby_condition_dextrocordia_suspect` AS `baby_condition_dextrocordia_suspect`,`b`.`baby_condition_anemia_suspect` AS `baby_condition_anemia_suspect`,`b`.`baby_condition_lbw_suspect` AS `baby_condition_lbw_suspect`,`b`.`place_of_delivery` AS `place_of_delivery`,`b`.`birth_facility` AS `birth_facility`,`b`.`baby_gestational_age` AS `baby_gestational_age`,`b`.`baby_gestational_age_unit` AS `baby_gestational_age_unit`,`b`.`baby_weight_at_birth` AS `baby_weight_at_birth`,`b`.`baby_condition_suspect` AS `baby_condition_suspect`,`b`.`baby_day_of_event` AS `baby_day_of_event`,`b`.`baby_weight_at_admission` AS `baby_weight_at_admission`,`b`.`baby_condition_other_if_suspect` AS `baby_condition_other_if_suspect`,`b`.`prelim_diagnosis_perinatal` AS `prelim_diagnosis_perinatal`,`b`.`prelim_diagnosis_hypoglycemia` AS `prelim_diagnosis_hypoglycemia`,`b`.`prelim_diagnosis_hypocalcemia` AS `prelim_diagnosis_hypocalcemia`,`b`.`prelim_diagnosis_feeding_intolerence` AS `prelim_diagnosis_feeding_intolerence`,`b`.`prelim_diagnosis_gastroenteritis` AS `prelim_diagnosis_gastroenteritis`,`b`.`baby_weight_at_birth_unit` AS `baby_weight_at_birth_unit`,`b`.`baby_weight_at_admission_unit` AS `baby_weight_at_admission_unit`,`b`.`baby_date_of_admission` AS `baby_date_of_admission`,`c`.`mother_weight_unit` AS `mother_weight_unit`,`c`.`mother_weight` AS `mother_weight`,`c`.`mother_height` AS `mother_height`,`c`.`mother_height_unit` AS `mother_height_unit`,`c`.`mother_haemoglobin` AS `mother_haemoglobin`,`c`.`mother_bmi` AS `mother_bmi`,`c`.`maternal_blood_pressure` AS `maternal_blood_pressure`,`c`.`maternal_blood_pressure_diastolic` AS `maternal_blood_pressure_diastolic`,`c`.`maternal_diabetes` AS `maternal_diabetes`,`c`.`maternal_fever` AS `maternal_fever`,`c`.`maternal_fever_unit` AS `maternal_fever_unit`,`c`.`maternal_fever_basic` AS `maternal_fever_basic`,`c`.`maternal_thyroid_function` AS `maternal_thyroid_function`,`c`.`maternal_thyroid_function_basic` AS `maternal_thyroid_function_basic`,`c`.`maternal_thyroid_function_unit_basic` AS `maternal_thyroid_function_unit_basic`,`c`.`maternal_thyroid_function_unit_basic_unit` AS `maternal_thyroid_function_unit_basic_unit`,`c`.`more_than_3_vaginal_examinations_during_labor` AS `more_than_3_vaginal_examinations_during_labor`,`c`.`rupture_of_membranes_rom_one` AS `rupture_of_membranes_rom_one`,`c`.`leaking_pv` AS `leaking_pv`,`c`.`rupture_of_membranes_rom` AS `rupture_of_membranes_rom`,`c`.`smelly_amniotic_fluid` AS `smelly_amniotic_fluid`,`c`.`chorioamnionitis` AS `chorioamnionitis`,`c`.`gbs_infection` AS `gbs_infection`,`c`.`colonisation_or_urinary_tract_infection` AS `colonisation_or_urinary_tract_infection`,`c`.`torch_infections` AS `torch_infections`,`c`.`type_of_delivery` AS `type_of_delivery`,`c`.`delayed_cord_clamping` AS `delayed_cord_clamping`,`c`.`vaginal_swab_culture_two` AS `vaginal_swab_culture_two`,`c`.`vaginal_swab_culture_three` AS `vaginal_swab_culture_three`,`c`.`amniotic_fluid_culture` AS `amniotic_fluid_culture`,`c`.`amniotic_fluid_culture_three` AS `amniotic_fluid_culture_three`,`c`.`amniotic_fluid_culture_two` AS `amniotic_fluid_culture_two`,`c`.`rupture_of_membranes_rom_two` AS `rupture_of_membranes_rom_two`,`c`.`vaginal_swab_culture` AS `vaginal_swab_culture`,`c`.`mother_age` AS `mother_age`,`d`.`baby_appearance` AS `baby_appearance`,`d`.`baby_skin_colour` AS `baby_skin_colour`,`d`.`baby_cry_sound` AS `baby_cry_sound`,`d`.`baby_cry_sound_status` AS `baby_cry_sound_status`,`d`.`hypotonia_muscular_response_one_min_after_birth` AS `hypotonia_muscular_response_one_min_after_birth`,`d`.`hypotonia_muscular_response_five_min_after_birth` AS `hypotonia_muscular_response_five_min_after_birth`,`d`.`excessive_sleeping` AS `excessive_sleeping`,`d`.`hypothermia` AS `hypothermia`,`d`.`hypothermia_status_value` AS `hypothermia_status_value`,`d`.`baby_feeding_status` AS `baby_feeding_status`,`d`.`baby_presence_of_convulsions` AS `baby_presence_of_convulsions`,`d`.`baby_jaundice` AS `baby_jaundice`,`d`.`breast_feeding_initiation` AS `breast_feeding_initiation`,`d`.`kangaroo_mother_care` AS `kangaroo_mother_care`,`d`.`hypothermia_status` AS `hypothermia_status`,`d`.`baby_weight_at_birth` AS `baby_weight_at_birth_baby_appearance`,`d`.`baby_weight_at_birth_unit` AS `baby_weight_at_birth_unit_baby_appearance`,`d`.`umbilical_discharge` AS `umbilical_discharge`,`e`.`groaning` AS `groaning`,`e`.`grunting` AS `grunting`,`e`.`stridor` AS `stridor`,`e`.`retraction` AS `retraction`,`e`.`fast_breathing` AS `fast_breathing`,`e`.`oxygen_saturation` AS `oxygen_saturation`,`e`.`breathing_rate` AS `breathing_rate`,`e`.`baby_chest_indrawing` AS `baby_chest_indrawing`,`e`.`x_ray_status_done` AS `x_ray_status_done`,`e`.`x_ray_result` AS `x_ray_result`,`e`.`x_ray_diagnosis_any_other` AS `x_ray_diagnosis_any_other`,`e`.`x_ray_status` AS `x_ray_status`,`e`.`apnea_status` AS `apnea_status`,`e`.`apnea_diagnosis` AS `apnea_diagnosis`,`e`.`baby_respiratory_support` AS `baby_respiratory_support`,`e`.`baby_respiratory_support_if_yes` AS `baby_respiratory_support_if_yes`,`f`.`heart_rate` AS `heart_rate`,`f`.`urine_output` AS `urine_output`,`f`.`baby_blood_pressure_mean_arterial_bp` AS `baby_blood_pressure_mean_arterial_bp`,`f`.`baby_blood_pressure_upper_limb` AS `baby_blood_pressure_upper_limb`,`f`.`baby_blood_pressure_lower_limb` AS `baby_blood_pressure_lower_limb`,`f`.`capillary_refill_unit` AS `capillary_refill_unit`,`f`.`low_peripheral_pulse_volume` AS `low_peripheral_pulse_volume`,`f`.`cool_peripheries` AS `cool_peripheries`,`f`.`two_d_echo_done` AS `two_d_echo_done`,`f`.`two_d_echo_done_if_yes` AS `two_d_echo_done_if_yes`,`f`.`baby_on_ionotropes` AS `baby_on_ionotropes`,`f`.`central_line` AS `central_line`,`f`.`skin_pustules` AS `skin_pustules`,`f`.`infusion_of_blood_products` AS `infusion_of_blood_products`,`g`.`features_of_encephalopathy` AS `features_of_encephalopathy`,`g`.`seizures` AS `seizures`,`g`.`abnormal_movements_like_tonic_posturing` AS `abnormal_movements_like_tonic_posturing`,`g`.`af_bulge` AS `af_bulge`,`h`.`abdominal_dystension` AS `abdominal_dystension`,`h`.`frequency_of_stools` AS `frequency_of_stools`,`h`.`diarrhea` AS `diarrhea`,`h`.`vomiting` AS `vomiting`,`h`.`feeding_intolerance` AS `feeding_intolerance`,`h`.`baby_movement` AS `baby_movement`,`i`.`baby_thyroid_status` AS `baby_thyroid_status`,`i`.`baby_thyroid_result` AS `baby_thyroid_result`,`i`.`baby_blood_glucose` AS `baby_blood_glucose`,`i`.`baby_haemoglobin_levels` AS `baby_haemoglobin_levels`,`i`.`baby_c_reactive_protien_levels` AS `baby_c_reactive_protien_levels`,`i`.`micro_esr` AS `micro_esr`,`i`.`baby_procalcitonin_levels` AS `baby_procalcitonin_levels`,`i`.`total_leucocute_count_unit` AS `total_leucocute_count_unit`,`i`.`total_leucocute_count` AS `total_leucocute_count`,`i`.`absolute_neutrophil_count` AS `absolute_neutrophil_count`,`i`.`absolute_neutrophil_count_unit` AS `absolute_neutrophil_count_unit`,`i`.`immature_to_mature_neutrophil_ratios` AS `immature_to_mature_neutrophil_ratios`,`i`.`thrombocytopenia_unit` AS `thrombocytopenia_unit`,`i`.`thrombocytopenia` AS `thrombocytopenia`,`i`.`urine_rest_for_pus_cells` AS `urine_rest_for_pus_cells`,`i`.`urine_culture_test` AS `urine_culture_test`,`i`.`blood_culture_report` AS `blood_culture_report`,`i`.`gram_positive_bacteria` AS `gram_positive_bacteria`,`i`.`gram_positive_bacteria_if_other` AS `gram_positive_bacteria_if_other`,`i`.`gram_negative_bacteria` AS `gram_negative_bacteria`,`i`.`gram_negative_bacteria_if_other` AS `gram_negative_bacteria_if_other`,`i`.`fungi` AS `fungi`,`i`.`other_organism` AS `other_organism`,`i`.`antibiotic_status_resisitant` AS `antibiotic_status_resisitant`,`i`.`antibiotic_status_intermediate` AS `antibiotic_status_intermediate`,`i`.`sodium` AS `sodium`,`i`.`potassium` AS `potassium`,`i`.`chlorine` AS `chlorine`,`i`.`calcium` AS `calcium`,`i`.`phosphate` AS `phosphate`,`i`.`magnesium` AS `magnesium`,`i`.`urea` AS `urea`,`i`.`creatinine` AS `creatinine`,`i`.`lactate_levels` AS `lactate_levels`,`i`.`bilirubin_levels` AS `bilirubin_levels`,`i`.`cord_ph` AS `cord_ph`,`i`.`arrhythmia` AS `arrhythmia`,`i`.`csf_culture` AS `csf_culture`,`i`.`csf_culture_tsb_value` AS `csf_culture_tsb_value`,`i`.`antibiotic_status_value` AS `antibiotic_status_value`,`j`.`antibiotic_given` AS `antibiotic_given`,`j`.`date_of_administration_of_antiobiotic` AS `date_of_administration_of_antiobiotic`,`j`.`time_of_administration_of_antiobiotic_hours` AS `time_of_administration_of_antiobiotic_hours`,`j`.`time_of_administration_of_antiobiotic_minute` AS `time_of_administration_of_antiobiotic_minute`,`j`.`antibiotic_name` AS `antibiotic_name`,`j`.`antibiotic_name_if_other` AS `antibiotic_name_if_other`,`j`.`grade_of_antibiotic` AS `grade_of_antibiotic`,`j`.`date_of_blood_samples_sent_for_culture_test` AS `date_of_blood_samples_sent_for_culture_test`,`j`.`time_of_blood_samples_sent_for_culture_test_hours` AS `time_of_blood_samples_sent_for_culture_test_hours`,`j`.`time_of_blood_samples_sent_for_culture_test_minute` AS `time_of_blood_samples_sent_for_culture_test_minute`,`j`.`blood_sample_taken_prior_to_antiobiotic_administration` AS `blood_sample_taken_prior_to_antiobiotic_administration`,`k`.`days_of_stay_in_hospital` AS `days_of_stay_in_hospital`,`k`.`final_diagnosis_sepsis` AS `final_diagnosis_sepsis`,`k`.`final_diagnosis_rds` AS `final_diagnosis_rds`,`k`.`final_diagnosis_ttnb` AS `final_diagnosis_ttnb`,`k`.`final_diagnosis_jaundice` AS `final_diagnosis_jaundice`,`k`.`final_diagnosis_lbw` AS `final_diagnosis_lbw`,`k`.`final_diagnosis_lga` AS `final_diagnosis_lga`,`k`.`final_diagnosis_aga` AS `final_diagnosis_aga`,`k`.`final_diagnosis_sga` AS `final_diagnosis_sga`,`k`.`final_diagnosis_anemia` AS `final_diagnosis_anemia`,`k`.`final_diagnosis_dextochordia` AS `final_diagnosis_dextochordia`,`k`.`final_diagnosis_hypoglycemia` AS `final_diagnosis_hypoglycemia`,`k`.`final_diagnosis_hypocalcemia` AS `final_diagnosis_hypocalcemia`,`k`.`final_diagnosis_gastroenteritis` AS `final_diagnosis_gastroenteritis`,`k`.`final_diagnosis_perinatal_respiratory_depression` AS `final_diagnosis_perinatal_respiratory_depression`,`k`.`final_diagnosis_shock` AS `final_diagnosis_shock`,`k`.`final_diagnosis_feeding_intolerence` AS `final_diagnosis_feeding_intolerence`,`k`.`baby_discharge_date` AS `baby_discharge_date`,`k`.`final_diagnosis_eos_los` AS `final_diagnosis_eos_los`,`k`.`final_diagnosis_other` AS `final_diagnosis_other`,`d`.`reading` AS `reading`,`d`.`reading_date` AS `reading_date`,`d`.`createdAt` AS `createdAt`,`d`.`time_of_reading_hours` AS `time_of_reading_hours`,`d`.`time_of_reading_minute` AS `time_of_reading_minute` from ((((((((((`patient_basic_infos` `a` join `patient_general_infos` `b` on((`a`.`id` = `b`.`study_id`))) join `patient_maternal_infos` `c` on((`a`.`id` = `c`.`study_id`))) join `patient_baby_appears_infos` `d` on((`a`.`id` = `d`.`study_id`))) join `patient_baby_resp_infos` `e` on(((`a`.`id` = `e`.`study_id`) and (`d`.`reading` = `e`.`reading`)))) join `patient_baby_cv_infos` `f` on(((`a`.`id` = `f`.`study_id`) and (`d`.`reading` = `f`.`reading`)))) join `patient_baby_cns_infos` `g` on(((`a`.`id` = `g`.`study_id`) and (`d`.`reading` = `g`.`reading`)))) join `patient_baby_git_infos` `h` on(((`a`.`id` = `h`.`study_id`) and (`d`.`reading` = `h`.`reading`)))) join `patient_baby_investigations` `i` on(((`a`.`id` = `i`.`study_id`) and (`d`.`reading` = `i`.`reading`)))) join `patient_baby_antibiotics` `j` on(((`a`.`id` = `j`.`study_id`) and (`d`.`reading` = `j`.`reading`)))) join `patient_baby_finals` `k` on(((`a`.`id` = `k`.`study_id`) and (`d`.`reading` = `k`.`reading`)))) order by `a`.`hospital_name`,`a`.`hospital_branch_name`,`a`.`baby_medical_record_number`,`d`.`createdAt` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_all_data_1`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_all_data_1`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4844,6 +5878,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_generated_score`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_generated_score`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4857,6 +5896,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_ml_data`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_ml_data`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4870,6 +5914,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_ml_data_old`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_ml_data_old`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4883,6 +5932,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_ml_data_ritesh`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_ml_data_ritesh`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4896,6 +5950,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_get_staffs`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_get_staffs`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4909,6 +5968,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_ml`
+--
+
 /*!50001 DROP VIEW IF EXISTS `vw_ml`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -4922,4 +5986,14 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-01-12 10:19:41
