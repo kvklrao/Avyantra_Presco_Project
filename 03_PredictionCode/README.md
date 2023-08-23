@@ -2,7 +2,7 @@
 
 This repository has the python code for generating the sepsis scores. This module generates the sepsis score on a real time basis. The prediction (machine learning) model which is pre-trained is used to derive the score. 
 
-### Files ###
+### Folders ###
 
 - noninvasive - ML model for the non-invasive parameters.
 - invasive - ML model for the invasive parameters.
