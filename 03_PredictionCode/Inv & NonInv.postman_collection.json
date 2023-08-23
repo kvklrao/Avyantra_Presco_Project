@@ -1,0 +1,1781 @@
+{
+	"info": {
+		"_postman_id": "fbbbe985-ea43-4565-a097-b047be9d614c",
+		"name": "Inv & NonInv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24688505"
+	},
+	"item": [
+		{
+			"name": "Invasive Test1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "2234",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "8",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "ICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "28",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "mother_height",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "110",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "88",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "98",
+							"type": "text"
+						},
+						{
+							"key": "maternal_thyroid_function",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "vaginal_swab_culture_three",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_feeding_status",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breast_feeding_initiation",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "groaning",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "fast_breathing",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "x_ray_result",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"description": "NA,2",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "capillary_refill_unit",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "features_of_encephalopathy",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "feeding_intolerance",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_thyroid_result",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "absolute_neutrophil_count",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "thrombocytopenia",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "lactate_levels",
+							"value": "NA",
+							"description": "NA,103",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture",
+							"value": "NA",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture_tsb_value",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_gestational_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_birth",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_two",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_glucose",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_haemoglobin_levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_c_reactive_protien_levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "total_leucocute_count",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "sodium",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "potassium",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "chlorine",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "phosphate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "urea",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "bilirubin levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "cord_ph",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invasive Test2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "2234",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "mother_height",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "37.0",
+							"type": "text"
+						},
+						{
+							"key": "maternal_thyroid_function",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "Cesarean",
+							"type": "text"
+						},
+						{
+							"key": "vaginal_swab_culture_three",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "Pink",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_feeding_status",
+							"value": "Normal",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breast_feeding_initiation",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "groaning",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "fast_breathing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "x_ray_result",
+							"value": "Abnormal",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "[{\"id\":2,\"itemName\":\"CPAP\"}]",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "132.0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"description": "NA,2",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "capillary_refill_unit",
+							"value": "< 3 Sec",
+							"type": "text"
+						},
+						{
+							"key": "features_of_encephalopathy",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "2.0",
+							"type": "text"
+						},
+						{
+							"key": "feeding_intolerance",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_thyroid_result",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "absolute_neutrophil_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "thrombocytopenia",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "lactate_levels",
+							"value": "NA",
+							"description": "NA,103",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture",
+							"value": "Normal",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture_tsb_value",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_gestational_age",
+							"value": "34.0",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_two",
+							"value": "<18 hours",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "71.0",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_glucose",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_haemoglobin_levels",
+							"value": "0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_c_reactive_protien_levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "total_leucocute_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "sodium",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "potassium",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "chlorine",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "phosphate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "urea",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "bilirubin levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "cord_ph",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invasive Test3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "2234",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "mother_height",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "37.0",
+							"type": "text"
+						},
+						{
+							"key": "maternal_thyroid_function",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "Cesarean",
+							"type": "text"
+						},
+						{
+							"key": "vaginal_swab_culture_three",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "Pink",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_feeding_status",
+							"value": "Normal",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breast_feeding_initiation",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "groaning",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "fast_breathing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "x_ray_result",
+							"value": "Abnormal",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "[{\"id\":2,\"itemName\":\"CPAP\"}]",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "132.0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"description": "NA,2",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "capillary_refill_unit",
+							"value": "< 3 Sec",
+							"type": "text"
+						},
+						{
+							"key": "features_of_encephalopathy",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "2.0",
+							"type": "text"
+						},
+						{
+							"key": "feeding_intolerance",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_thyroid_result",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "absolute_neutrophil_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "thrombocytopenia",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "lactate_levels",
+							"value": "NA",
+							"description": "NA,103",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture",
+							"value": "Normal",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture_tsb_value",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_gestational_age",
+							"value": "34.0",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_two",
+							"value": "<18 hours",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "71.0",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_glucose",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_haemoglobin_levels",
+							"value": "0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_c_reactive_protien_levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "total_leucocute_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "sodium",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "potassium",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "chlorine",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "phosphate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "urea",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "bilirubin levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "cord_ph",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invasive Test4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "2234",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "2.4",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "mother_height",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "37.0",
+							"type": "text"
+						},
+						{
+							"key": "maternal_thyroid_function",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "Cesarean",
+							"type": "text"
+						},
+						{
+							"key": "vaginal_swab_culture_three",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "Pink",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_feeding_status",
+							"value": "Normal",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breast_feeding_initiation",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "groaning",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "fast_breathing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "Yes",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "x_ray_result",
+							"value": "Abnormal",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "[{\"id\":2,\"itemName\":\"CPAP\"}]",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "132.0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"description": "NA,2",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "capillary_refill_unit",
+							"value": "< 3 Sec",
+							"type": "text"
+						},
+						{
+							"key": "features_of_encephalopathy",
+							"value": "Normal",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "2.0",
+							"type": "text"
+						},
+						{
+							"key": "feeding_intolerance",
+							"value": "No",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_thyroid_result",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "absolute_neutrophil_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "thrombocytopenia",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "lactate_levels",
+							"value": "NA",
+							"description": "NA,103",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture",
+							"value": "Normal",
+							"description": "NA,105.9",
+							"type": "text"
+						},
+						{
+							"key": "csf_culture_tsb_value",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_gestational_age",
+							"value": "34.0",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_two",
+							"value": "<18 hours",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "71.0",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_glucose",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_haemoglobin_levels",
+							"value": "0",
+							"description": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_c_reactive_protien_levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "total_leucocute_count",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "sodium",
+							"value": "0.0",
+							"type": "text"
+						},
+						{
+							"key": "potassium",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "chlorine",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "phosphate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "urea",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "bilirubin levels",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "cord_ph",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "noninvasive Test1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "435543",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "Yes",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "Yes",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/noninvasive/getniscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"noninvasive",
+						"getniscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "noninvasive Test2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "435543",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/noninvasive/getniscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"noninvasive",
+						"getniscore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "noninvasive Test3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "study_id",
+							"value": "435543",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_one_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_five_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_apgar_score_ten_min",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "birth_facility",
+							"value": "NICU",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_birth",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_weight_at_admission",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_age",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_weight",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "mother_bmi",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_blood_pressure_diastolic",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "maternal_fever",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "rupture_of_membranes_rom_one",
+							"value": "PROM",
+							"type": "text"
+						},
+						{
+							"key": "type_of_delivery",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_skin_colour",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_cry_sound_status",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "breathing_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_chest_indrawing",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_respiratory_support",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "heart_rate",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_mean_arterial_bp",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_upper_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_blood_pressure_lower_limb",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "frequency_of_stools",
+							"value": "NA",
+							"type": "text"
+						},
+						{
+							"key": "baby_movement",
+							"value": "NA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/noninvasive/getniscore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"noninvasive",
+						"getniscore"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

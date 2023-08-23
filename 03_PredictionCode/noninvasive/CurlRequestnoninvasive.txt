@@ -1,0 +1,39 @@
+study_id:435543
+birth_facility:NICU
+maternal_blood_pressure:114.0
+maternal_blood_pressure_diastolic:66.0
+rupture_of_membranes_rom_one:NA
+leaking_pv:NA
+smelly_amniotic_fluid:No
+chorioamnionitis:No
+delayed_cord_clamping:No
+rupture_of_membranes_rom_two:NA
+baby_skin_colour:Pink
+hypotonia_muscular_response_one_min_after_birth:No
+hypotonia_muscular_response_five_min_after_birth:No
+baby_feeding_status:No Feeding
+baby_jaundice:Yes
+umbilical_discharge:No
+hypothermia_status_value:NA
+groaning:No
+grunting:No
+stridor:No
+fast_breathing:No
+oxygen_saturation:91.0
+breathing_rate:NA
+baby_chest_indrawing:NA
+apnea_status:Yes
+apnea_diagnosis:Mixed Apnea
+baby_respiratory_support_if_yes:Yes
+heart_rate:142.0
+baby_blood_pressure_mean_arterial_bp:56.0
+capillary_refill_unit:< 3 Sec
+low_peripheral_pulse_volume:No
+cool_peripheries:No
+skin_pustules:No
+infusion_of_blood_products:Yes
+seizures:No
+af_bulge:No
+abdominal_dystension:Yes
+diarrhea:No
+baby_movement:NA
